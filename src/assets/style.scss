@@ -1,0 +1,16 @@
+@import 'fonts';
+
+$base-color: #fff;
+$hover-color: #72A8BA;
+$button-color: #DAB189;
+$main-text-color: #494B55;
+$search-color: #rgba(73, 75, 85, 1);
+$M-size: 25px;
+
+body {
+  font-family: 'Nunito', sans-serif;
+}
+.card-title {
+  font-size: $M-size;
+  font-weight: 400;
+}
