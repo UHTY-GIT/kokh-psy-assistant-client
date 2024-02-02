@@ -1,6 +1,8 @@
 <template>
   <div class="background-login">
     <div class="empty-layout">
+      <div class="elipse_login_1"></div>
+      <div class="elipse_login_2"></div>
       <form class="card auth-card" @submit.prevent="submitHandler">
         <div class="card-content">
           <span class="card-title">Psy Assistant</span>
@@ -52,7 +54,7 @@
         <div class="card-action">
           <div class="butt_login">
             <button
-                class="btn waves-effect waves-light auth-submit"
+                class="btn auth-submit"
                 type="submit"
             >
               Увійти
@@ -69,7 +71,7 @@
 import { ref } from 'vue';
 import useVuelidate from '@vuelidate/core'
 import { required, email, minLength } from '@vuelidate/validators'
-import {inject} from "vue";
+//import {inject} from "vue";
 import {useRouter} from "vue-router";
 import messages from "@/utils/messages";
 //import apiService from '@/services/apiService';
@@ -79,7 +81,7 @@ export default {
   name: 'loginPage',
   data () {
     return {
-      backgroundClass: null,
+      // backgroundClass: null,
     }
   },
   setup () {
@@ -157,7 +159,7 @@ export default {
     }
   },
   created() {
-    this.backgroundClass = inject('backgroundClass');
+    // this.backgroundClass = inject('backgroundClass');
   },
   mounted() {
     //повідомлення про вихід з системи переться по ключу з get запиту

@@ -20,6 +20,36 @@ const routes = [
     meta: {layout: 'Login'},
     component: () => import('../views/UserLogin.vue')
   },
+  {
+    path: '/session',
+    name: 'mySession',
+    meta: {layout: 'main'},
+    component: () => import('../views/MySessionPage.vue')
+  },
+  {
+    path: '/clients',
+    name: 'clients',
+    meta: {layout: 'main'},
+    component: () => import('../views/AllClientPage.vue')
+  },
+  {
+    path: '/support',
+    name: 'support',
+    meta: {layout: 'main'},
+    component: () => import('../views/SupportPage.vue')
+  },
+  {
+    path: '/bank-info',
+    name: 'bank-info',
+    meta: {layout: 'main'},
+    component: () => import('../views/BankInformationPage.vue')
+  },
+  {
+    path: '/profile',
+    name: 'profile',
+    meta: {layout: 'main'},
+    component: () => import('../views/UserProfile.vue')
+  },
 ]
 
 const router = createRouter({
