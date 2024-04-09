@@ -43,49 +43,10 @@ export default {
     closeModal() {
       this.$emit('close'); // Емітуйте подію 'close'
     },
-    // async sendTemplat1e() {
-    //   if (this.selectedTemplateId && this.selectedClientId && this.selectedTelegramClientId) {
-    //     // Створюємо унікальне посилання
-    //     const uniqueLink = `http://localhost:8080/send-form?client=${this.selectedClientId}&template=${this.selectedTemplateId}`;
-    //
-    //     try {
-    //       // Тут виконуємо POST запит до Telegram бота
-    //       let response = await fetch('https://psykokhbot.herokuapp.com/send_template', {
-    //         method: 'POST',
-    //         headers: {
-    //           'Content-Type': 'application/json',
-    //         },
-    //         body: JSON.stringify({
-    //           client_id: this.selectedTelegramClientId,
-    //           url: uniqueLink,
-    //         }),
-    //       });
-    //
-    //       if (response.ok) {
-    //         let jsonResponse = await response.json();
-    //         // Перевірка відповіді від бота
-    //         if (jsonResponse.success) {
-    //           M.toast({html: 'Шаблон успішно надіслано.'});
-    //         } else {
-    //           M.toast({html: 'Виникла помилка при надсиланні шаблону.'});
-    //         }
-    //       } else {
-    //         throw new Error('Network response was not ok.');
-    //       }
-    //     } catch (error) {
-    //       console.error('Виникла помилка при надсиланні шаблону:', error);
-    //       M.toast({html: `Помилка: ${error.message}`});
-    //     }
-    //
-    //     this.closeModal(); // Закриття модального вікна після відправки
-    //   } else {
-    //     M.toast({html: 'Будь ласка, виберіть шаблон для відправки.'});
-    //   }
-    // },
     async sendTemplate() {
       if (this.selectedTemplateId && this.selectedClientId && this.selectedTelegramClientId) {
         // Генерація унікального посилання
-        const uniqueLink = `http://localhost:8080/send-form?client=${this.selectedClientId}&template=${this.selectedTemplateId}`;
+        const uniqueLink = `http://assistant.psy-kokh.online:8080/send-form?client=${this.selectedClientId}&template=${this.selectedTemplateId}`;
 
         try {
           const response = await apiService.sendTelegramTemplate(this.selectedTelegramClientId, uniqueLink);
