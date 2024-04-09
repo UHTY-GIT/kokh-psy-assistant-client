@@ -11,7 +11,7 @@
           <th>Номер сесії</th>
           <th>Дата сесії</th>
           <th>Ім'я клієнта</th>
-          <th>Дії</th>
+<!--          <th>Дії</th>-->
         </tr>
         </thead>
         <tbody>
@@ -22,7 +22,7 @@
           <td>Андрій</td>
           <td class="all-butt-management">
             <button class="btn-action">
-              <img src="@/assets/icons/downloads-client.svg" alt="Завантажити">
+              <img src="@/assets/icons/downloads-client.svg" alt="Завантажити" style="width: 18px;">
             </button>
             <button class="btn-action">
               <img src="@/assets/icons/visible-client.svg" alt="Переглянути">
@@ -35,7 +35,25 @@
 <!--            </button>-->
           </td>
         </tr>
-        <!-- Подальші рядки... -->
+        <tr>
+          <td>Сесія 1</td>
+          <td>14.01.2024</td>
+          <td>Андрій</td>
+          <td class="all-butt-management">
+            <button class="btn-action">
+              <img src="@/assets/icons/downloads-client.svg" alt="Завантажити" style="width: 18px;">
+            </button>
+            <button class="btn-action">
+              <img src="@/assets/icons/visible-client.svg" alt="Переглянути">
+            </button>
+            <button class="btn-action">
+              <img src="@/assets/icons/edit-client.svg" alt="Редагувати">
+            </button>
+            <!--            <button class="btn-action">-->
+            <!--              <img src="@/assets/icons/trash-client.svg" alt="Видалити">-->
+            <!--            </button>-->
+          </td>
+        </tr>
         </tbody>
       </table>
     </div>

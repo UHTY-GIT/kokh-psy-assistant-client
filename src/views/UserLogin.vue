@@ -71,22 +71,16 @@
 import { ref } from 'vue';
 import useVuelidate from '@vuelidate/core'
 import { required, email, minLength } from '@vuelidate/validators'
-//import {inject} from "vue";
 import {useRouter} from "vue-router";
 import messages from "@/utils/messages";
-//import apiService from '@/services/apiService';
-//import M from 'materialize-css';
+import apiService from '@/services/apiService';
+import M from 'materialize-css';
 
 export default {
   name: 'loginPage',
-  data () {
-    return {
-      // backgroundClass: null,
-    }
-  },
   setup () {
-    //const token = localStorage.removeItem('token');
-    //console.log("token now " + token);
+    const token = localStorage.removeItem('token');
+    console.log("token now " + token);
 
     const email = ref('');
     const password = ref('');
@@ -99,31 +93,37 @@ export default {
         return;
       }
 
-      const formData = {
-        email: email.value,
-        password: password.value
-      };
-      console.log(formData);
+      // const formData = {
+      //   email: email.value,
+      //   password: password.value
+      // };
+      // console.log(formData);
+      //
+      // router.push('/');
 
-      router.push('/');
-
-      // try {
-      //   const response = await apiService.loginUser(email.value, password.value);
-      //   console.log(response.data.data.token);
-      //   if (response.data && response.data.data.token) {
-      //     localStorage.setItem('token', response.data.data.token);
-      //     router.push('/');
-      //   }
-      // } catch (error) {
-      //   // Перевіряємо, чи є помилка з кодом 422
-      //   if (error.response && error.response.status === 422) {
-      //     // Виводимо повідомлення про помилку
-      //     M.toast({ html: `[Помилка]: Введено невірно логін або пароль` });
-      //   } else {
-      //     // Виводимо інші помилки
-      //     M.toast({ html: `[Помилка]: ${error.message || "Невідома помилка"}` });
-      //   }
-      // }
+      try {
+        const response = await apiService.loginUser(email.value, password.value);
+        console.log(response.data.token);
+        // Додати перевірку на наявність response.data і response.data.data перед доступом до token
+        if (response.data && response.data.token) {
+          localStorage.setItem('token', response.data.token);
+          router.push('/');
+        }
+        // console.log(response.data.data.token);
+        // if (response.data && response.data.data.token) {
+        //   localStorage.setItem('token', response.data.data.token);
+        //   router.push('/');
+        // }
+      } catch (error) {
+        // Перевіряємо, чи є помилка з кодом 422
+        if (error.response && error.response.status === 409) {
+          // Виводимо повідомлення про помилку
+          M.toast({ html: `Введено невірно логін або пароль` });
+        } else {
+          // Виводимо інші помилки
+          M.toast({ html: `[Помилка]: ${error.message || "Невідома помилка"}` });
+        }
+      }
 
     }
 
@@ -157,9 +157,6 @@ export default {
       email: { required, email },
       password: { required, minLength: minLength(6) } // припустимо, мінімальна довжина пароля - 6 символів
     }
-  },
-  created() {
-    // this.backgroundClass = inject('backgroundClass');
   },
   mounted() {
     //повідомлення про вихід з системи переться по ключу з get запиту

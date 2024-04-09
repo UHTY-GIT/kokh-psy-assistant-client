@@ -9,6 +9,7 @@
 <script>
 import LoginLayout from "@/layouts/LoginLayout.vue";
 import MainLayout from "@/layouts/MainLayout.vue";
+import FormsLayout from "@/layouts/FormsLayout.vue"
 export default {
   computed: {
     layout() {
@@ -17,7 +18,7 @@ export default {
     }
   },
   components: {
-    LoginLayout, MainLayout
+    LoginLayout, MainLayout, FormsLayout
   }
 }
 </script>

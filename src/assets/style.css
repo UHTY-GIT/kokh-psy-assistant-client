@@ -135,6 +135,28 @@ body {
 }
 
 /*Кастомний Скролбар - кінець*/
+.toast {
+  font-family: "Nunito", sans-serif;
+  border-radius: 10px;
+  top: 35px;
+  width: auto;
+  margin-top: 10px;
+  position: relative;
+  max-width: 100%;
+  height: auto;
+  min-height: 48px;
+  line-height: 1.5em;
+  background-color: rgb(73, 75, 85);
+  padding: 10px 25px;
+  font-size: 1.1rem;
+  font-weight: 300;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: default;
+}
+
 .background-login {
   background-color: #FDF8F3;
 }
@@ -280,7 +302,7 @@ input:not([type]):focus:not([readonly]) + label, input[type=text]:not(.browser-d
 }
 
 .background-navbar {
-  background: url(@/assets/photo/back-users-1.png) center center;
+  background-position: center;
   background-size: cover;
   height: 155px;
   background-color: #72A8BA;
@@ -303,9 +325,13 @@ input:not([type]):focus:not([readonly]) + label, input[type=text]:not(.browser-d
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
 }
 .user-photo img {
-  width: 70px;
+  width: 100%;
+  height: 100%;
+  border-radius: 50px;
+  object-fit: cover;
 }
 
 .container-user-name {
@@ -539,6 +565,96 @@ Main styles
   margin: 0 30px;
 }
 
+.fc-toolbar-title {
+  font-weight: 700;
+  color: #494B55;
+}
+
+.fc-scrollgrid-sync-inner a {
+  color: #494B55;
+  font-weight: 700;
+}
+
+.fc-h-event {
+  background-color: #72A8BA;
+  border: 1px solid #72A8BA;
+  display: block;
+}
+
+.fc-daygrid-event-dot {
+  border: calc(var(--fc-daygrid-event-dot-width) / 2) solid #72A8BA;
+  border-radius: calc(var(--fc-daygrid-event-dot-width) / 2);
+}
+
+.fc-theme-standard .fc-scrollgrid {
+  border-radius: 10px;
+  border: 2px solid #494B55;
+}
+
+.fc-theme-standard td, .fc-theme-standard th {
+  border: 2px solid #494B55;
+}
+
+.fc .fc-scrollgrid-section > * {
+  border-left-width: 0px;
+  border-top-width: 0px;
+  border-right-width: 0px;
+  border-bottom-width: 0px;
+}
+
+.fc-button {
+  display: flex;
+  font-family: "Nunito";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 17px;
+  padding: 10px 10px;
+  text-align: center;
+  color: #FFFFFF;
+  background: #DAB189 !important;
+  box-shadow: 0px 4px 0px #BA9571 !important;
+  border-radius: 10px;
+  border: none;
+  transition: 0.3s;
+  height: auto;
+  line-height: normal;
+  align-items: center;
+  justify-content: center;
+}
+.fc-button:hover {
+  background: #DAB189;
+}
+.fc-button:active {
+  -webkit-transform: translateY(5px);
+  -ms-transform: translateY(5px);
+  transform: translateY(5px);
+  -webkit-box-shadow: 0px 2px 0px #BA9571;
+  box-shadow: 0px 2px 0px #BA9571 !important;
+}
+
+.fc-direction-ltr .fc-button-group > .fc-button:not(:first-child) {
+  border-bottom-left-radius: 0px;
+  border-top-left-radius: 0px;
+  margin-left: 1px;
+}
+
+.fc .fc-button-primary {
+  border-color: transparent !important;
+  color: #fff;
+  font-weight: 700;
+}
+
+.fc-v-event {
+  background-color: #72A8BA;
+  border: 1px solid #72A8BA;
+  display: block;
+  font-weight: 600;
+}
+
+.fc .fc-cell-shaded, .fc .fc-day-disabled {
+  background: #494B55;
+}
+
 /*
 Client styles
 */
@@ -550,6 +666,7 @@ Client styles
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin: 0 0 20px;
 }
 
 .btn-add-client {
@@ -656,7 +773,8 @@ Client styles
 }
 
 .table {
-  border-collapse: initial;
+  border-collapse: separate;
+  border-spacing: 0px 5px;
 }
 .table thead {
   font-weight: 700;
@@ -671,6 +789,9 @@ Client styles
   background: #72A8BA;
   color: #FFFFFF;
 }
+.table tbody tr:nth-child(even) {
+  background: rgb(56, 94, 108);
+}
 
 .btn-action {
   background-color: transparent;
@@ -683,7 +804,7 @@ Client styles
 
 .all-butt-management {
   display: flex;
-  justify-content: flex-start;
+  justify-content: flex-end;
 }
 .all-butt-management button {
   margin: 0 5px 0 0;
@@ -741,6 +862,589 @@ Client styles
 }
 .client-footer .pagination-controls .after {
   border-radius: 0px 10px 10px 0px;
+}
+
+/*
+Profile styles
+*/
+.profile-section {
+  margin: 0 0 0 30px;
+}
+
+.profile_tittle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 30px 10px;
+}
+.profile_tittle p {
+  font-family: "Nunito";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 26px;
+  color: #494B55;
+  margin: 0;
+}
+.profile_tittle button {
+  display: flex;
+  font-family: "Nunito";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 17px;
+  padding: 8px 20px;
+  text-align: center;
+  text-transform: none;
+  color: #FFFFFF;
+  background: #DAB189 !important;
+  box-shadow: 0px 4px 0px #BA9571 !important;
+  border-radius: 10px;
+  border: none;
+  transition: 0.3s;
+  height: auto;
+  line-height: normal;
+  align-items: center;
+  justify-content: center;
+}
+.profile_tittle button:hover {
+  background: #DAB189;
+}
+.profile_tittle button:active {
+  -webkit-transform: translateY(5px);
+  -ms-transform: translateY(5px);
+  transform: translateY(5px);
+  -webkit-box-shadow: 0px 2px 0px #BA9571;
+  box-shadow: 0px 2px 0px #BA9571 !important;
+}
+
+.hr_profile {
+  border-radius: 10px 0 0 10px;
+  border: 0px solid #494B55;
+  background: #494B55;
+  height: 3px;
+}
+
+.profile_block {
+  margin: 0 30px;
+}
+
+.update_profile_tittle {
+  font-family: "Nunito";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 22px;
+  color: #494B55;
+  margin: 0;
+}
+
+.input-field-text, .file-upload-field, .select-field, .date-field, .checkbox-field, .forms-name-add {
+  margin: 0 0 10px;
+}
+.input-field-text .container-input, .file-upload-field .container-input, .select-field .container-input, .date-field .container-input, .checkbox-field .container-input, .forms-name-add .container-input {
+  display: flex;
+  align-items: center;
+}
+.input-field-text .container-input label, .file-upload-field .container-input label, .select-field .container-input label, .date-field .container-input label, .checkbox-field .container-input label, .forms-name-add .container-input label {
+  color: #FFF;
+  font-family: Nunito;
+  font-size: 18px;
+  font-weight: 700;
+  background-color: #72A8BA;
+  border-radius: 10px;
+  width: 250px;
+  padding: 10px 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  line-height: normal;
+}
+.input-field-text .container-input input, .file-upload-field .container-input input, .select-field .container-input input, .date-field .container-input input, .checkbox-field .container-input input, .forms-name-add .container-input input {
+  color: #FFFFFF;
+  font-family: Nunito;
+  font-size: 18px;
+  font-weight: 600;
+  border-radius: 10px;
+  padding: 10px 15px;
+  border-bottom: none;
+  background-color: #494B55;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: 55%;
+  height: auto !important;
+  margin: 0 0 0 15px;
+  line-height: normal;
+  max-width: 420px;
+}
+.input-field-text .container-input input::placeholder, .file-upload-field .container-input input::placeholder, .select-field .container-input input::placeholder, .date-field .container-input input::placeholder, .checkbox-field .container-input input::placeholder, .forms-name-add .container-input input::placeholder {
+  color: #C8C8C8;
+}
+.input-field-text .container-input input[type=file], .file-upload-field .container-input input[type=file], .select-field .container-input input[type=file], .date-field .container-input input[type=file], .checkbox-field .container-input input[type=file], .forms-name-add .container-input input[type=file] {
+  display: none;
+}
+.input-field-text .container-input .file-chosen, .file-upload-field .container-input .file-chosen, .select-field .container-input .file-chosen, .date-field .container-input .file-chosen, .checkbox-field .container-input .file-chosen, .forms-name-add .container-input .file-chosen {
+  color: #FFFFFF;
+  font-family: Nunito;
+  font-size: 18px;
+  font-weight: 600;
+  border-radius: 10px;
+  padding: 10px 15px;
+  border-bottom: none;
+  background-color: #494B55;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: 55%;
+  height: auto !important;
+  margin: 0 0 0 15px;
+  line-height: normal;
+  max-width: 450px;
+  cursor: pointer;
+}
+.input-field-text .container-input select, .file-upload-field .container-input select, .select-field .container-input select, .date-field .container-input select, .checkbox-field .container-input select, .forms-name-add .container-input select {
+  color: #FFFFFF;
+  font-family: Nunito;
+  font-size: 18px;
+  font-weight: 600;
+  border-radius: 10px;
+  padding: 10px 15px;
+  border-bottom: none;
+  background-color: #494B55;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: 55%;
+  height: auto !important;
+  margin: 0 0 0 15px;
+  line-height: normal;
+  max-width: 450px;
+}
+.input-field-text .container-input .checkbox-group, .file-upload-field .container-input .checkbox-group, .select-field .container-input .checkbox-group, .date-field .container-input .checkbox-group, .checkbox-field .container-input .checkbox-group, .forms-name-add .container-input .checkbox-group {
+  display: flex;
+  justify-content: space-between;
+  width: 465px;
+  margin: 0 0 0 10px;
+}
+.input-field-text .container-input .checkbox-group label, .file-upload-field .container-input .checkbox-group label, .select-field .container-input .checkbox-group label, .date-field .container-input .checkbox-group label, .checkbox-field .container-input .checkbox-group label, .forms-name-add .container-input .checkbox-group label {
+  color: #494B55;
+  font-family: Nunito;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: normal;
+  background-color: transparent;
+  border-radius: initial;
+  width: auto;
+  padding: 5px 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.input-field-text .container-input .checkbox-group label input, .file-upload-field .container-input .checkbox-group label input, .select-field .container-input .checkbox-group label input, .date-field .container-input .checkbox-group label input, .checkbox-field .container-input .checkbox-group label input, .forms-name-add .container-input .checkbox-group label input {
+  display: none;
+}
+.input-field-text .container-input .checkbox-group label span, .file-upload-field .container-input .checkbox-group label span, .select-field .container-input .checkbox-group label span, .date-field .container-input .checkbox-group label span, .checkbox-field .container-input .checkbox-group label span, .forms-name-add .container-input .checkbox-group label span {
+  display: inline-block;
+  width: 35px;
+  height: 35px;
+  background: #494B55;
+  border-radius: 10px;
+  margin-right: 10px;
+}
+.input-field-text .container-input .checkbox-group label span .svg-checkmark .checkmark-path, .file-upload-field .container-input .checkbox-group label span .svg-checkmark .checkmark-path, .select-field .container-input .checkbox-group label span .svg-checkmark .checkmark-path, .date-field .container-input .checkbox-group label span .svg-checkmark .checkmark-path, .checkbox-field .container-input .checkbox-group label span .svg-checkmark .checkmark-path, .forms-name-add .container-input .checkbox-group label span .svg-checkmark .checkmark-path {
+  stroke-dasharray: 32.9983329773;
+  stroke-dashoffset: 32.9983329773; /* Шлях спочатку не видно */
+  transition: stroke-dashoffset 0.3s ease-in-out; /* Плавний перехід для анімації */
+}
+.input-field-text .container-input .checkbox-group label p, .file-upload-field .container-input .checkbox-group label p, .select-field .container-input .checkbox-group label p, .date-field .container-input .checkbox-group label p, .checkbox-field .container-input .checkbox-group label p, .forms-name-add .container-input .checkbox-group label p {
+  cursor: pointer;
+  margin: 0;
+}
+
+.custom-checkbox input[type=checkbox]:checked + .checkmark .svg-checkmark .checkmark-path {
+  stroke-dashoffset: 0;
+}
+
+[type=checkbox] + span:not(.lever):before, [type=checkbox]:not(.filled-in) + span:not(.lever):after {
+  content: none;
+}
+
+[type=checkbox] + span:not(.lever) {
+  padding-left: 0px !important;
+  cursor: inherit;
+}
+
+.container-global-form-edit {
+  margin: 15px 5px 10px;
+  display: flex;
+  justify-content: flex-end;
+  width: 710px;
+}
+.container-global-form-edit button {
+  cursor: pointer;
+  display: flex;
+  width: 220px;
+  font-family: "Nunito";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 17px;
+  padding: 8px 20px;
+  text-align: center;
+  color: #FFFFFF;
+  background: #DAB189;
+  box-shadow: 0px 4px 0px #BA9571;
+  border-radius: 10px;
+  border: none;
+  transition: 0.3s;
+  height: auto;
+  line-height: normal;
+  align-items: center;
+  justify-content: center;
+}
+.container-global-form-edit button:hover {
+  background: #DAB189;
+}
+.container-global-form-edit button:active {
+  -webkit-transform: translateY(5px);
+  -ms-transform: translateY(5px);
+  transform: translateY(5px);
+  -webkit-box-shadow: 0px 2px 0px #BA9571;
+  box-shadow: 0px 2px 0px #BA9571 !important;
+}
+.container-global-form-edit button img {
+  padding: 0 7px 0 0;
+  width: 30px;
+}
+
+.button-disabled {
+  background-color: #ccc !important;
+  cursor: not-allowed !important;
+  box-shadow: 0px 4px 0px #bbbbbb !important;
+}
+
+/* Звичайний стиль кнопки, коли чекбокс активний */
+.global-form-edit:not(.button-disabled) {
+  background-color: #DAB189;
+  box-shadow: 0px 4px 0px #BA9571;
+  cursor: pointer;
+}
+
+.validate-error {
+  color: #df4545;
+  font-weight: 700;
+}
+
+.change-password {
+  position: relative;
+  right: 35px;
+  top: 0px;
+  color: #fff;
+}
+
+/* Bank Information Forms */
+.form-bank-info-container {
+  margin: 22px 30px 0;
+}
+
+.undertittle-on-bank-ifro {
+  font-family: "Nunito";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 22px;
+  color: #494B55;
+  margin: 0;
+}
+
+.bank-button-forms {
+  display: flex;
+}
+
+.no-template-message p {
+  font-family: "Nunito";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 20px;
+  color: #494B55;
+  margin: 30px 0;
+  text-align: center;
+}
+
+.create-template {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.btn-action {
+  position: relative;
+}
+.btn-action[data-tooltip]:hover::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #333;
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 4px;
+  white-space: nowrap;
+  z-index: 1000;
+  /* Додайте наступні властивості для покращення візуального вигляду */
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s, visibility 0.2s;
+}
+.btn-action[data-tooltip]:hover::after {
+  opacity: 1;
+  visibility: visible;
+}
+
+button:focus {
+  outline: none;
+  background-color: transparent;
+}
+
+.modal-btn {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.btn-send-templates {
+  display: flex;
+  font-family: "Nunito";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 17px;
+  padding: 8px 20px;
+  text-align: center;
+  text-transform: none;
+  color: #FFFFFF;
+  background: #DAB189 !important;
+  box-shadow: 0px 4px 0px #BA9571 !important;
+  border-radius: 10px;
+  border: none;
+  transition: 0.3s;
+  height: auto;
+  line-height: normal;
+  align-items: center;
+  justify-content: center;
+  margin: 20px 0 0;
+}
+.btn-send-templates:hover {
+  background: #DAB189;
+}
+.btn-send-templates:active {
+  -webkit-transform: translateY(5px);
+  -ms-transform: translateY(5px);
+  transform: translateY(5px);
+  -webkit-box-shadow: 0px 2px 0px #BA9571;
+  box-shadow: 0px 2px 0px #BA9571 !important;
+}
+
+.container-input_froms_user {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.container-input_froms_user label {
+  color: #FFF;
+  font-family: Nunito;
+  font-size: 18px;
+  font-weight: 700;
+  background-color: #72A8BA;
+  border-radius: 10px;
+  width: 500px;
+  padding: 10px 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  line-height: normal;
+}
+.container-input_froms_user input {
+  color: #FFFFFF;
+  font-family: Nunito;
+  font-size: 18px !important;
+  font-weight: 600;
+  border-radius: 10px !important;
+  padding: 10px 15px !important;
+  border-bottom: none !important;
+  background-color: #494B55 !important;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  height: auto !important;
+  margin: 0 0 0 15px !important;
+  line-height: normal;
+  max-width: 650px;
+}
+.container-input_froms_user input::placeholder {
+  color: #C8C8C8;
+}
+.container-input_froms_user input[type=file] {
+  display: none;
+}
+.container-input_froms_user .file-chosen {
+  color: #FFFFFF;
+  font-family: Nunito;
+  font-size: 18px;
+  font-weight: 600;
+  border-radius: 10px;
+  padding: 10px 15px;
+  border-bottom: none;
+  background-color: #494B55;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: 55%;
+  height: auto !important;
+  margin: 0 0 0 15px;
+  line-height: normal;
+  max-width: 450px;
+  cursor: pointer;
+}
+.container-input_froms_user select {
+  color: #FFFFFF;
+  font-family: Nunito;
+  font-size: 18px;
+  font-weight: 600;
+  border-radius: 10px;
+  padding: 10px 15px;
+  border-bottom: none;
+  background-color: #494B55;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: 55%;
+  height: auto !important;
+  margin: 0 0 0 15px;
+  line-height: normal;
+  max-width: 450px;
+}
+.container-input_froms_user .checkbox-group {
+  display: flex;
+  justify-content: space-between;
+  width: 465px;
+  margin: 0 0 0 10px;
+}
+.container-input_froms_user .checkbox-group label {
+  color: #494B55;
+  font-family: Nunito;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: normal;
+  background-color: transparent;
+  border-radius: initial;
+  width: auto;
+  padding: 5px 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.container-input_froms_user .checkbox-group label input {
+  display: none;
+}
+.container-input_froms_user .checkbox-group label span {
+  display: inline-block;
+  width: 35px;
+  height: 35px;
+  background: #494B55;
+  border-radius: 10px;
+  margin-right: 10px;
+}
+.container-input_froms_user .checkbox-group label span .svg-checkmark .checkmark-path {
+  stroke-dasharray: 32.9983329773;
+  stroke-dashoffset: 32.9983329773; /* Шлях спочатку не видно */
+  transition: stroke-dashoffset 0.3s ease-in-out; /* Плавний перехід для анімації */
+}
+.container-input_froms_user .checkbox-group label p {
+  cursor: pointer;
+  margin: 0;
+}
+
+.title_form_from_user p {
+  font-family: Nunito;
+  font-size: 25px !important;
+  font-weight: 600;
+  text-align: center;
+  color: #494B55;
+}
+
+.width-input-1200 {
+  width: 1200px !important;
+}
+
+.center_group {
+  justify-content: center;
+}
+
+.width-container_for_butt {
+  width: 1200px;
+  margin: 15px auto;
+}
+
+.container-text-for-form {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 5px 10px;
+}
+.container-text-for-form .title_n_text {
+  color: #494B55;
+  font-family: Nunito;
+  font-size: 18px !important;
+  font-weight: 600;
+}
+.container-text-for-form .title_n_text b {
+  display: flex;
+  justify-content: center;
+}
+.container-text-for-form .title_n_text p {
+  text-align: justify;
+}
+.container-text-for-form .content_user_form {
+  color: #494B55;
+  font-family: Nunito;
+  font-size: 18px !important;
+  font-weight: 600;
+}
+.container-text-for-form .content_user_form span {
+  font-weight: 800;
+}
+.container-text-for-form .content_user_form p {
+  text-align: justify;
+}
+.container-text-for-form .content_user_form p b {
+  font-weight: 800;
+}
+.container-text-for-form .content_user_form ul {
+  margin: 0 0 20px 20px;
+}
+.container-text-for-form .content_user_form ul li {
+  list-style-type: disc;
+}
+.container-text-for-form .content_user_form table tr {
+  border-bottom: 2px solid rgb(73, 75, 85);
+}
+
+.header_forms_for_users {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #72A8BA;
+  padding: 30px;
+}
+.header_forms_for_users img {
+  width: 300px;
+}
+
+.thank-you-text {
+  max-width: 1440px;
+  margin: 30px auto;
+  padding: 10px;
+}
+.thank-you-text p {
+  text-align: center;
+  color: #494B55;
+  font-family: Nunito;
+  font-size: 20px;
+  font-weight: 600;
 }
 
 /*# sourceMappingURL=style.css.map */
