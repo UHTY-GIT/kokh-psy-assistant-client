@@ -62,6 +62,12 @@ const routes = [
     meta: {layout: 'forms', requiresAuth: false},
     component: () => import('../views/ThankYouPage.vue')
   },
+  {
+    path: '/active-session',
+    name: 'ActiveSession',
+    meta: {layout: 'main', requiresAuth: true},
+    component: () => import('../views/ActiveSessionPage.vue')
+  },
 ]
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),

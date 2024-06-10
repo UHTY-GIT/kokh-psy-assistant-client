@@ -107,6 +107,58 @@ const apiService = {
         });
         return response;
     },
+
+    // Функція для створення подій у календарі
+    createEvent: async (token, name, clientId, customFormId, originType, date) => {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                'authtoken': token // передача токена в заголовках
+            }
+        };
+        const formData = {
+            name: name,
+            client_id: clientId,
+            custom_form_id: customFormId,
+            originType: originType,
+            date: date
+        };
+        const response = await axios.post(`${BASE_URL}/api/v1/events`, formData, config);
+        return response.data; // повертаємо дані отримані з сервера
+    },
+
+    // Функція для отримання даних про події у календарі
+    getEvents: async (token) => {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                'authtoken': token // передача токена в заголовках
+            }
+        };
+        const response = await axios.get(`${BASE_URL}/api/v1/events`, config);
+        return response.data; // повертаємо дані отримані з сервера
+    },
+
+    // Функція отримання даних сьогоднішніх сесій (консультацій)
+    getConsultations: async (token) => {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                'authtoken': token // передача токена в заголовках
+            }
+        };
+        const response = await axios.get(`${BASE_URL}/api/v1/consultations`, config);
+        return response.data; // повертаємо дані отримані з сервера
+    },
+
+    // Функція відправки заповненої форми з активної сесії
+    submitSessionAnswers: (payload) => {
+        return axios.post(`${BASE_URL}/api/v1/answers`, JSON.stringify(payload), {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+    },
 };
 
 export default apiService;

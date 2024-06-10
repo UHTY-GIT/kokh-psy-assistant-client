@@ -119,7 +119,7 @@ export default {
       } catch (error) {
         // console.error('Error fetching clients:', error);
         M.toast({ html: `Увійдіть у систему` });
-        router.push('/login');
+        router.push({name: 'login'});
       }
     };
 

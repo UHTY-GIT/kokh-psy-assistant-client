@@ -1447,4 +1447,75 @@ button:focus {
   font-weight: 600;
 }
 
+.none-content {
+  max-width: 1440px;
+  margin: 30px auto;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+}
+.none-content span {
+  text-align: center;
+  color: #494B55;
+  font-family: Nunito;
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.block_active_session {
+  margin: 22px 30px 0;
+}
+.block_active_session .titte_field {
+  margin: 0 0 15px 0;
+}
+.block_active_session .titte_field p {
+  font-family: "Nunito";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 26px;
+  color: #494B55;
+  margin: 0;
+}
+
+.active_session_fields .container-input {
+  display: flex;
+  align-items: stretch;
+}
+.active_session_fields .container-input label {
+  width: 300px;
+}
+.active_session_fields .container-input textarea {
+  color: #FFFFFF;
+  font-family: Nunito;
+  font-size: 18px;
+  font-weight: 600;
+  border-radius: 10px;
+  padding: 10px 15px;
+  border-bottom: none;
+  background-color: #494B55;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: 55%;
+  margin: 0 0 0 15px;
+  line-height: normal;
+  max-width: 530px;
+  min-height: 44px;
+}
+.active_session_fields .container-input input {
+  width: 52%;
+  max-width: 500px;
+}
+.active_session_fields .container-input select {
+  max-width: 530px;
+}
+
+.active_session_button {
+  width: 840px;
+}
+
+.btn-margin-modal {
+  margin: 20px 15px 0 0;
+}
+
 /*# sourceMappingURL=style.css.map */

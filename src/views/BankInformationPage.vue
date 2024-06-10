@@ -57,7 +57,6 @@
 import { useRouter } from 'vue-router';
 import apiService from '@/services/apiService';
 import M from "materialize-css";
-// import M from 'materialize-css';
 
 export default {
   name: 'BankInformation',
@@ -93,7 +92,7 @@ export default {
       } catch (error) {
         // console.error('Error fetching clients:', error);
         M.toast({ html: `Увійдіть у систему` });
-        this.$router.push('/login');
+        this.$router.push({name: 'login'});
       }
     },
   },

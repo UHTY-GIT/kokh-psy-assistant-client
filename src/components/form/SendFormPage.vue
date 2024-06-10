@@ -277,17 +277,6 @@
       </div>
     </div>
 
-
-
-
-
-
-
-
-
-
-
-
     <!-- Рендеринг для типу форми "consent_couple" -->
     <div v-if="formType === 'consent_couple'">
       <div class="title_form_from_user">
@@ -641,19 +630,168 @@
       </div>
     </div>
 
+    <!-- Рендеринг для типу форми "primary_poll_individual" -->
+    <div v-if="formType === 'primary_poll_individual'">
+      <div class="title_form_from_user">
+        <p>
+          Первинне опитування для клієнта терапевтичного альянсу
+        </p>
+      </div>
 
+      <!-- спеціальна розмітка для первинного опитування індивідуального -->
+      <form v-if="formFields.length > 0" @submit.prevent="submitForm">
 
+        <div class="container-text-for-form">
+<!--          <div class="title_n_text">-->
+<!--            <b>Інформована згода психологічного консультування</b>-->
+<!--            <p>-->
+<!--              Цей документ інформує людину, що шукає допомоги у вирішенні психологічних або життєвих труднощів, іменована надалі як «Клієнт / ка», про особливості психологічного консультування та умови надання послуг.-->
+<!--            </p>-->
+<!--          </div>-->
+          <div class="content_user_form">
+            <span>Доброго дня, шановний клієнт.</span>
+            <p>
+              Пропоную вам пройти первинне опитування. Дане опитування допоможе мені краще зрозуміти вас та вашу життєву історію перед початком нашої спільної з вами роботи. Дане опитування складається з базових питань та серії незакінчених речень.  Деякі питання можуть здаватися вам дивними, проте я прошу відповідати перше, що спало на думку та не пропустити жодного пункту. Ваші відповіді Ми обов’язково обговоримо на консультативній сесії.
+            </p>
+            <span>
+              Відповіді на дані твердження займуть 15 хв.
+            </span> <br> <br>
+            <span>
+              Будь ласка, будьте чесними з собою та спробуйте відпустити «контроль відповідей».
+            </span> <br><br>
+          </div>
+        </div>
 
+        <div v-for="(field, index) in formFields" :key="index">
 
+          <!-- Для не-boolean типів поля -->
+          <div v-if="field.field_type !== 'boolean'" class="input-field-text">
+            <div class="container-input_froms_user">
+              <label :for="`field-${index}`">{{ field.field_name }}</label>
+              <input :id="`field-${index}`" type="text" v-model="field.value" placeholder="Ваша відповідь"/>
+            </div>
+          </div>
+
+          <!-- Для boolean типів поля -->
+          <div v-if="field.field_type === 'boolean'" class="checkbox-field">
+            <div class="container-input center_group">
+              <div class="checkbox-group width-input-1200">
+                <label class="custom-checkbox" :for="`field-${index}`">
+                  <!--                  <input :id="`field-${index}`" type="checkbox" v-model="field.value"  required>-->
+                  <input :id="`field-${index}`" type="checkbox" :checked="field.value" @change="checkboxChanged(field, $event)">
+                  <span class="checkmark">
+                    <svg class="svg-checkmark" xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 35 35" fill="none">
+                      <path class="checkmark-path" d="M5.83301 18.9585L13.1247 26.2502L29.1663 10.2085" stroke="white" stroke-width="3" stroke-linecap="round" stroke-dasharray="32.99833297729492" stroke-dashoffset="32.99833297729492"/>
+                    </svg>
+                  </span>
+                  <p>{{ field.field_name }}</p>
+                </label>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <div class="container-global-form-edit width-container_for_butt">
+          <button
+              class="global-form-edit"
+              type="submit"
+          >
+            <span class="edit-link">Надіслати</span>
+          </button>
+        </div>
+      </form>
+      <div v-else>
+        <p>Завантаження форми...</p>
+      </div>
+    </div>
+
+    <!-- Рендеринг для типу форми "primary_poll_individual" -->
+    <div v-if="formType === 'primary_poll_couple'">
+      <div class="title_form_from_user">
+        <p>
+          Первинне опитування пари терапевтичного альянсу
+        </p>
+      </div>
+
+      <!-- спеціальна розмітка для первинного опитування індивідуального -->
+      <form v-if="formFields.length > 0" @submit.prevent="submitForm">
+
+        <div class="container-text-for-form">
+          <!--          <div class="title_n_text">-->
+          <!--            <b>Інформована згода психологічного консультування</b>-->
+          <!--            <p>-->
+          <!--              Цей документ інформує людину, що шукає допомоги у вирішенні психологічних або життєвих труднощів, іменована надалі як «Клієнт / ка», про особливості психологічного консультування та умови надання послуг.-->
+          <!--            </p>-->
+          <!--          </div>-->
+          <div class="content_user_form">
+            <span>Доброго дня, шановний клієнт.</span>
+            <p>
+              Пропоную вам пройти первинне опитування сімейної парної консультації. Дане опитування допоможе мені краще зрозуміти вас та вашу сімейну історію перед початком нашої спільної з вами роботи. Дане опитування складається з базових питань та серії незакінчених речень.  Деякі питання можуть здаватися вам дивними, проте я прошу відповідати перше, що спало на думку та не пропустити жодного пункту. Будь ласка до сімейної консультації не обговорюйте з партнером відповідей, що були дані на первинному опитуванні.
+              Ми обов’язково все обсудимо на консультативній сесії.
+            </p>
+            <span>
+              Відповіді на дані твердження займуть 15 хв.
+            </span>
+            <span>
+              Опитування є конфіденційним. Вся інформація отримана шляхом опитування захищена Етичним кодексом психолога (Розділ VI. п.4.1.)
+            </span> <br><br>
+            <span>
+              Будь ласка, будьте чесними з собою та спробуйте відпустити «контроль відповідей».
+            </span> <br><br>
+          </div>
+        </div>
+
+        <div v-for="(field, index) in formFields" :key="index">
+
+          <!-- Для не-boolean типів поля -->
+          <div v-if="field.field_type !== 'boolean'" class="input-field-text">
+            <div class="container-input_froms_user">
+              <label :for="`field-${index}`">{{ field.field_name }}</label>
+              <input :id="`field-${index}`" type="text" v-model="field.value" placeholder="Ваша відповідь"/>
+            </div>
+          </div>
+
+          <!-- Для boolean типів поля -->
+          <div v-if="field.field_type === 'boolean'" class="checkbox-field">
+            <div class="container-input center_group">
+              <div class="checkbox-group width-input-1200">
+                <label class="custom-checkbox" :for="`field-${index}`">
+                  <!--                  <input :id="`field-${index}`" type="checkbox" v-model="field.value"  required>-->
+                  <input :id="`field-${index}`" type="checkbox" :checked="field.value" @change="checkboxChanged(field, $event)">
+                  <span class="checkmark">
+                    <svg class="svg-checkmark" xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 35 35" fill="none">
+                      <path class="checkmark-path" d="M5.83301 18.9585L13.1247 26.2502L29.1663 10.2085" stroke="white" stroke-width="3" stroke-linecap="round" stroke-dasharray="32.99833297729492" stroke-dashoffset="32.99833297729492"/>
+                    </svg>
+                  </span>
+                  <p>{{ field.field_name }}</p>
+                </label>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <div class="container-global-form-edit width-container_for_butt">
+          <button
+              class="global-form-edit"
+              type="submit"
+          >
+            <span class="edit-link">Надіслати</span>
+          </button>
+        </div>
+      </form>
+      <div v-else>
+        <p>Завантаження форми...</p>
+      </div>
+    </div>
 
 
 
 
     <!-- Рендеринг, коли тип форми не відповідає жодному визначеному варіанту -->
-    <div v-if="formType !== 'consent_couple' && formType !== 'consent_individual' &&
+    <div class="none-content" v-if="formType !== 'consent_couple' && formType !== 'consent_individual' &&
                formType !== 'primary_poll_couple' && formType !== 'primary_poll_individual'
     ">
-      <p>Неідентифікований тип форми</p>
+      <span>Неідентифікований тип форми</span>
     </div>
   </div>
 </template>

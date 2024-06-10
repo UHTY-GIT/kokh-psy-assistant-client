@@ -47,6 +47,7 @@ export default {
       if (this.selectedTemplateId && this.selectedClientId && this.selectedTelegramClientId) {
         // Генерація унікального посилання
         const uniqueLink = `http://assistant.psy-kokh.online:8080/send-form?client=${this.selectedClientId}&template=${this.selectedTemplateId}`;
+        //const uniqueLink = `http://localhost:8080/send-form?client=${this.selectedClientId}&template=${this.selectedTemplateId}`;
 
         try {
           const response = await apiService.sendTelegramTemplate(this.selectedTelegramClientId, uniqueLink);

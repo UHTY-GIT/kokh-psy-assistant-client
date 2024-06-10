@@ -93,14 +93,6 @@ export default {
         return;
       }
 
-      // const formData = {
-      //   email: email.value,
-      //   password: password.value
-      // };
-      // console.log(formData);
-      //
-      // router.push('/');
-
       try {
         const response = await apiService.loginUser(email.value, password.value);
         console.log(response.data.token);
@@ -109,22 +101,29 @@ export default {
           localStorage.setItem('token', response.data.token);
           router.push('/');
         }
-        // console.log(response.data.data.token);
-        // if (response.data && response.data.data.token) {
-        //   localStorage.setItem('token', response.data.data.token);
-        //   router.push('/');
-        // }
       } catch (error) {
-        // Перевіряємо, чи є помилка з кодом 422
+        console.error("Помилка під час спроби входу:", error);
+
         if (error.response && error.response.status === 409) {
-          // Виводимо повідомлення про помилку
-          M.toast({ html: `Введено невірно логін або пароль` });
+          // Перевіряємо, чи помилка містить конкретне повідомлення
+          const isIncorrectCredentials = error.response.data.error.some(
+              (err) => err.message === "email or password is incorrect"
+          );
+
+          if (isIncorrectCredentials) {
+            // Виводимо повідомлення про невірний логін або пароль
+            M.toast({html: 'Введено невірно логін або пароль'});
+          } else {
+            // Виводимо повідомлення про інші помилки, які можуть бути у відповіді
+            error.response.data.error.forEach((err) => {
+              M.toast({html: `[Помилка]: ${err.message || "Невідома помилка"}`});
+            });
+          }
         } else {
-          // Виводимо інші помилки
-          M.toast({ html: `[Помилка]: ${error.message || "Невідома помилка"}` });
+          // Виводимо інші помилки, які не стосуються відповіді API
+          M.toast({html: `[Помилка]: ${error.message || "Невідома помилка"}`});
         }
       }
-
     }
 
     // Реактивний стан для перевірки видимості пароля

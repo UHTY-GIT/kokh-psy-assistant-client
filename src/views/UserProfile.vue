@@ -23,10 +23,10 @@
 </template>
 <script>
 //import apiService from '@/services/apiService.js';
-//import M from 'materialize-css';
 import ProfilePsycologistForm from "@/components/profile/ProfilePsycologistForm.vue";
 import ProfilePasswordForm from "@/components/profile/ProfilePasswordForm.vue";
 import ProfileWorkDayForm from "@/components/profile/ProfileWorkDayForm.vue";
+import M from "materialize-css";
 
 export default {
   name: 'ProfileUser',
@@ -45,8 +45,9 @@ export default {
         localStorage.removeItem('token');  // Видаляємо токен з localStorage
         this.$router.push('/login?message=logout');
       } else {
-        console.log("Токен не знайдений. Перенаправлення на сторінку входу.");
-        this.$router.push('/login');
+        //console.log("Токен не знайдений. Перенаправлення на сторінку входу.");
+        M.toast({ html: `Токен не знайдений. Перенаправлення на сторінку входу.` });
+        this.$router.push({name: 'login'});
       }
     }
   },
