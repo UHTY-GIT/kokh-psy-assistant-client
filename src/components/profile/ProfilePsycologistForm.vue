@@ -7,22 +7,6 @@
     </div>
     <div>
       <form class="name-update-form" @submit.prevent="submitUserProfile">
-<!--        <div class="input-field">-->
-<!--          <input-->
-<!--              id="name"-->
-<!--              type="text"-->
-<!--              v-model.trim="name"-->
-<!--              :class="{-->
-<!--              invalid: v$.name.$dirty && v$.name.required.$invalid,-->
-<!--              validate: v$.name.$dirty && !v$.name.required.$invalid-->
-<!--            }"-->
-<!--          >-->
-<!--          <label for="name">Ім'я</label>-->
-<!--          <small-->
-<!--              class="helper-text invalid"-->
-<!--              v-if="v$.name.$dirty && v$.name.required.$invalid"-->
-<!--          >Введіть ваше ім'я</small>-->
-<!--        </div>-->
         <!-- Поле для введення імені -->
         <div class="input-field-text">
           <div class="container-input">
@@ -58,7 +42,7 @@
             <input
                 type="file"
                 ref="fileInputBackPhoto"
-                @change="handleFileUpload($event, 'image')"
+                @change="handleFileUpload($event, 'background_photo')"
             >
             <span class="file-chosen" @click="triggerFileInputBackPhoto">{{ fileNameImage ? fileNameImage : "Натисніть щоб вибрати файл" }}</span>
           </div>
@@ -157,13 +141,14 @@ import { useVuelidate } from '@vuelidate/core';
 import { required } from '@vuelidate/validators';
 import { timezoneNames } from '@progress/kendo-date-math';
 import '@progress/kendo-date-math/tz/all';
+import apiService from "@/services/apiService";
 
 export default {
   setup() {
     const profile = ref({
       name: '',
       avatar: null,
-      image: null,
+      background_photo: null,
       country: '',
       timezone: '',
       birthdate: '',
@@ -174,6 +159,30 @@ export default {
     const fileInputAvatar = ref(null);
     const fileInputBackPhoto = ref(null);
     const timezones = ref([]);
+
+
+    // Отримую дані профілю користувача та заповніть форму
+    const fetchUserProfile = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        const userProfile = await apiService.getUserProfile(token);
+        console.log(userProfile.data)
+        profile.value = {
+          name: userProfile.data.name,
+          avatar: userProfile.data.avatar_url,
+          background_photo: userProfile.data.background_photo_url,
+          country: userProfile.data.country,
+          timezone: userProfile.data.timezone,
+          birthdate: userProfile.data.birth_date,
+          workType: [], // Assuming this needs to be mapped from userProfile
+          qualification: userProfile.data.qualification,
+        };
+        fileNameAvatar.value = userProfile.avatar_url ? userProfile.avatar_url.split('/').pop() : "Натисніть щоб вибрати файл";
+        fileNameImage.value = userProfile.background_photo_url ? userProfile.background_photo_url.split('/').pop() : "Натисніть щоб вибрати файл";
+      } catch (error) {
+        console.error('Error fetching user profile:', error);
+      }
+    };
 
     //Надсилання даних з форми на апі
     const submitUserProfile = () => {
@@ -199,7 +208,7 @@ export default {
         // Оновлюємо назву файлу залежно від поля
         if(field === 'avatar') {
           fileNameAvatar.value = event.target.files[0].name;
-        } else if(field === 'image') {
+        } else if(field === 'background_photo') {
           fileNameImage.value = event.target.files[0].name;
         }
       } else {
@@ -226,10 +235,14 @@ export default {
     };
 
     // Завантажуємо часові пояси і налаштовуємо метод натискання
-    onMounted(() => {
+    onMounted(async () => {
       timezones.value = timezoneNames()
           .filter(zone => zone.includes('/'))
           .sort((a, b) => a.localeCompare(b));
+
+      console.log(timezones.value)
+
+      await fetchUserProfile();
 
       // часовий пояс за умовчанням
       profile.value.timezone = timezones.value.includes(profile.value.timezone)
@@ -256,8 +269,8 @@ export default {
     return {
       profile: { // Тепер використовуємо profile як реактивне джерело для валідацій
         name: {required},
-        avatar: {required},
-        image: {required},
+        avatar: {},
+        background_photo: {},
         country: {required},
         timezone: {required},
         birthdate: {required},

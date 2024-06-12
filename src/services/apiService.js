@@ -159,6 +159,19 @@ const apiService = {
             }
         });
     },
+
+    // Функція зміни паролю авторизованого користувача
+    changePassword: (token, oldPassword, newPassword, confirmPassword) => {
+        const config = {
+            headers: { 'authtoken': token }
+        };
+        const formData = {
+            old_password: oldPassword,
+            new_password: newPassword,
+            confirmation_password: confirmPassword
+        };
+        return axios.post(`${BASE_URL}/api/v1/psychologist_profile/change_password`, formData, config);
+    }
 };
 
 export default apiService;
