@@ -1,3 +1,4 @@
+<!--src/views/CalendarPage.vue-->
 <template>
   <div class="calendar-width">
 
@@ -11,12 +12,21 @@
   </div>
   <!--  Модальне вікно-->
   <ModalCalendar
-      v-if="showModal"
-      :showModal="showModal"
+      v-if="showCreateModal"
+      :showModal="showCreateModal"
       :start="showStart"
       :end="showEnd"
       :allDay="showAllDay"
-      @close="showModal = false"
+      @close="closeCreateModal"
+  />
+  <!--  Модальне вікно для видалення -->
+  <ModalDeleteCalendar
+      v-if="showDeleteModal"
+      :showModal="showDeleteModal"
+      :nameSession="nameSession"
+      :firstNameClient="firstNameClient"
+      @close="closeDeleteModal"
+      @confirm="deleteSession"
   />
 </template>
 <script>
@@ -27,6 +37,7 @@ import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import ukLocale from '@fullcalendar/core/locales/uk';
 import ModalCalendar from "@/components/modal/ModalCalendar.vue";
+import ModalDeleteCalendar from "@/components/modal/ModalDeleteCalendar.vue";
 import apiService from "@/services/apiService";
 import M from "materialize-css";
 import {useRouter} from "vue-router";
@@ -34,13 +45,18 @@ import {useRouter} from "vue-router";
 export default defineComponent({
   components: {
     FullCalendar,
-    ModalCalendar
+    ModalCalendar,
+    ModalDeleteCalendar
   },
   setup() {
-    const showModal = ref(false);
+    const showCreateModal = ref(false);
+    const showDeleteModal = ref(false);
     const showStart = ref('');
     const showEnd = ref('');
     const showAllDay = ref(false);
+    const nameSession = ref('');
+    const firstNameClient = ref('');
+    const eventId = ref(null);
     const events = ref([]);
     const router = useRouter();
 
@@ -100,15 +116,28 @@ export default defineComponent({
     }
 
     function handleDateSelect(selectInfo) {
-      showModal.value = true;
+      showCreateModal.value = true;
       showStart.value = formatDate(selectInfo.startStr);
       showEnd.value = formatDate(selectInfo.endStr);
       showAllDay.value = selectInfo.allDay;
     }
 
     function handleEventClick(clickInfo) {
-      if (confirm(`Are you sure you want to delete the event '${clickInfo.event.title}'`)) {
-        clickInfo.event.remove();
+      showDeleteModal.value = true;
+      nameSession.value = clickInfo.event.title.split(' - ')[0];
+      firstNameClient.value = clickInfo.event.title.split(' - ')[1];
+      eventId.value = clickInfo.event.id;
+    }
+
+    async function deleteSession() {
+      try {
+        const token = localStorage.getItem('token');
+        await apiService.deleteEvent(token, eventId.value);
+        closeDeleteModal();
+        fetchEvents();
+      } catch (error) {
+        console.error('Error deleting event:', error);
+        M.toast({ html: 'Помилка видалення події' });
       }
     }
 
@@ -116,19 +145,30 @@ export default defineComponent({
       // This could be used to manage state about events
     }
 
-    function closeModal() {
-      showModal.value = false;
+    function closeCreateModal() {
+      showCreateModal.value = false;
+      fetchEvents();
+    }
+
+    function closeDeleteModal() {
+      showDeleteModal.value = false;
+      fetchEvents();
     }
 
     onMounted(fetchEvents);
 
     return {
-      showModal,
+      showCreateModal,
+      showDeleteModal,
       showStart,
       showEnd,
       showAllDay,
+      nameSession,
+      firstNameClient,
       calendarOptions,
-      closeModal
+      closeCreateModal,
+      closeDeleteModal,
+      deleteSession
     };
   }
 });

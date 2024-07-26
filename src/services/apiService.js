@@ -1,7 +1,7 @@
 // services/apiService.js
 import axios from 'axios';
 
-const BASE_URL = 'http://assistant.psy-kokh.online:3000';
+const BASE_URL = 'https://assistant.psy-kokh.online';
 const BASE_URL_TELEGRAM = 'https://psykokhbot.herokuapp.com';
 
 const apiService = {
@@ -171,7 +171,58 @@ const apiService = {
             confirmation_password: confirmPassword
         };
         return axios.post(`${BASE_URL}/api/v1/psychologist_profile/change_password`, formData, config);
-    }
+    },
+
+    // Функція видалення події в календарі
+    deleteEvent: async (token, eventId) => {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                'authtoken': token // передача токена в заголовках
+            }
+        };
+        const response = await axios.delete(`${BASE_URL}/api/v1/events/${eventId}`, config);
+        return response.data;
+    },
+
+    // Функція для отримання нотаток
+    getNotes: async (token) => {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                'authtoken': token // передача токена в заголовках
+            }
+        };
+        const response = await axios.get(`${BASE_URL}/api/v1/notes`, config);
+        return response.data;
+    },
+
+    // Функція для створення нотаток
+    createNote: async (token, content) => {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                'authtoken': token // передача токена в заголовках
+            }
+        };
+        const formData = {
+            content: content
+        };
+        const response = await axios.post(`${BASE_URL}/api/v1/notes`, formData, config);
+        return response.data;
+    },
+
+    // Функція для видалення нотаток
+    deleteNote: async (token, noteId) => {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                'authtoken': token // передача токена в заголовках
+            }
+        };
+        const response = await axios.delete(`${BASE_URL}/api/v1/notes/${noteId}`, config);
+        return response.data;
+    },
 };
 
 export default apiService;

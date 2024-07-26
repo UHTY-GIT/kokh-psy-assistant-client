@@ -132,9 +132,10 @@ export default {
         //   M.toast({ html: 'Подія успішно створена!' });
         //   closeModal();
         // }
-        if (response.status === 200) {
+        if (response.data) {
           M.toast({ html: 'Подія успішно створена!' });
           closeModal();
+          emit('close');
         }
       } catch (error) {
         //console.error('Error sending event:', error);
@@ -171,7 +172,7 @@ export default {
 <style>
 .modal-window {
   position: fixed;
-  z-index: 3;
+  z-index: 3 !important;
   left: 0;
   top: 0;
   width: 100%;

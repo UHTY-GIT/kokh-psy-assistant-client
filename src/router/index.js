@@ -68,6 +68,12 @@ const routes = [
     meta: {layout: 'main', requiresAuth: true},
     component: () => import('../views/ActiveSessionPage.vue')
   },
+  {
+    path: '/view-client-info',
+    name: 'ClientInformation',
+    meta: {layout: 'main', requiresAuth: true},
+    component: () => import('../views/ClientInformationPage.vue')
+  },
 ]
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),

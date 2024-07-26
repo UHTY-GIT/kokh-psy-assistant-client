@@ -49,22 +49,8 @@
       </div>
     </div>
     <div class="under-block">
-      <div class="title-notification">
-        <img class="menu-icon" src="@/assets/icons/Speech%20Balloon.svg" alt="icon Notification">
-        <span>Примітка</span>
-      </div>
-      <div class="button-add-notf">
-        <button class="btn">
-          <img src="@/assets/icons/more.svg" alt="icon add">
-          <span>Додати примітку</span>
-        </button>
-      </div>
-      <div class="block-notification">
-        <div class="notification-text">
-          <img src="@/assets/icons/edit.svg" alt="icon edit">
-          <span>Не забути перевірити нові оновлення в розділі "Календар"!</span>
-        </div>
-      </div>
+<!--      Нотатки психолога-->
+      <NotesComponent />
     </div>
   </div>
 </template>
@@ -75,8 +61,13 @@ import clientsIcon from '@/assets/icons/users-avatar.svg';
 import supportIcon from '@/assets/icons/handshake.svg';
 import bankInformationIcon from '@/assets/icons/info.svg';
 import { ref, computed, onMounted, onUnmounted } from 'vue';
+import NotesComponent from "@/components/notes/NotesComponent.vue";
+
 export default {
   name: 'SideBar',
+  components: {
+    NotesComponent
+  },
   data: () => ({
     links: [
       { title: 'Календар', url: '/', icon: calendarIcon },

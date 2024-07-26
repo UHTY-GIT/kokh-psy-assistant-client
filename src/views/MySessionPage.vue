@@ -117,7 +117,8 @@ export default {
           customFormId: consultation.custom_form.id,
           customFormTitle: consultation.custom_form.title,
           sessionNumber: consultation.number,
-          IDconsultation: consultation.id
+          IDconsultation: consultation.id,
+          dateConsultation: consultation.consultation_date
         }
       });
     };

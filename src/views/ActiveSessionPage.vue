@@ -1,51 +1,53 @@
-<!-- src/views/ActiveSessionPage.vue -->
 <template>
   <div>
     <div class="profile_tittle">
       <p>
         Сесія №{{ sessionNumber }}, клієнт {{ clientName }}
       </p>
+      <p>
+        {{ formattedDate }}
+      </p>
     </div>
     <hr class="hr_profile">
   </div>
   <div class="block_active_session">
-    <div class="titte_field">
-      <p>
-        Базові поля
-      </p>
-    </div>
-    <div class="block_input_field">
-      <form @submit.prevent="openModal">
-        <div v-for="field in formData.fields" :key="field.id" class="forms-name-add active_session_fields">
-          <div class="container-input">
-            <label :for="field.field_name">{{ field.field_name }}</label>
-            <textarea
-                v-if="field.field_type === 'text'"
-                :id="field.field_name"
-                v-model="field.value"
-                :placeholder="'Введіть ' + field.field_name"
-            ></textarea>
-            <input
-                v-else-if="field.field_type === 'string'"
-                type="text"
-                :id="field.field_name"
-                v-model="field.value"
-                :placeholder="'Введіть ' + field.field_name"
-            >
-            <select v-else-if="field.field_type === 'select_v2'" :id="field.field_name" v-model="field.value">
-              <option disabled value="">Оберіть варіант</option>
-              <option v-for="variant in field.variants" :key="variant">{{ variant }}</option>
-            </select>
+    <form @submit.prevent="openModal">
+      <div v-for="(fields, title) in categorizedFields" :key="title">
+        <div class="titte_field">
+          <p>{{ title }}</p>
+        </div>
+        <div class="block_input_field">
+          <div v-for="field in fields" :key="field.id" class="forms-name-add active_session_fields">
+            <div class="container-input">
+              <label :for="field.field_name">{{ field.field_name }}</label>
+              <textarea
+                  v-if="field.field_type === 'text'"
+                  :id="field.field_name"
+                  v-model="field.value"
+                  :placeholder="'Введіть ' + field.field_name"
+              ></textarea>
+              <input
+                  v-else-if="field.field_type === 'string'"
+                  type="text"
+                  :id="field.field_name"
+                  v-model="field.value"
+                  :placeholder="'Введіть ' + field.field_name"
+              >
+              <select v-else-if="field.field_type === 'select_v2'" :id="field.field_name" v-model="field.value">
+                <option disabled value="">Оберіть варіант</option>
+                <option v-for="variant in field.variants" :key="variant">{{ variant }}</option>
+              </select>
+            </div>
           </div>
         </div>
-        <div class="container-global-form-edit active_session_button">
-          <button class="global-form-edit" type="submit">
-            <img src="@/assets/icons/share.svg" alt="Send name form">
-            <span class="edit-link">Завершити сесію</span>
-          </button>
-        </div>
-      </form>
-    </div>
+      </div>
+      <div class="container-global-form-edit active_session_button">
+        <button class="global-form-edit" type="submit">
+          <img src="@/assets/icons/share.svg" alt="Send name form">
+          <span class="edit-link">Завершити сесію</span>
+        </button>
+      </div>
+    </form>
   </div>
   <!--  Модальне вікно-->
   <ModalSessionSuccess
@@ -60,7 +62,7 @@
 </template>
 
 <script>
-import { ref, onMounted } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import apiService from "@/services/apiService";
 import ModalSessionSuccess from "@/components/modal/ModalSessionSuccess.vue";
@@ -74,7 +76,7 @@ export default {
     const route = useRoute();
     const router = useRouter();
     const formData = ref({
-      fields: [],
+      fields: []
     });
 
     const showModal = ref(false);
@@ -84,6 +86,7 @@ export default {
     const customFormTitle = route.query.customFormTitle;
     const sessionNumber = route.query.sessionNumber;
     const IDconsultation = route.query.IDconsultation;
+    const dateConsultation = route.query.dateConsultation;
 
     const fetchFormData = async () => {
       try {
@@ -96,6 +99,7 @@ export default {
           id: item.id,
           field_name: item.field_name,
           field_type: item.field_type,
+          title: item.title,
           variants: item.variants || [],
           value: ''
         }));
@@ -104,9 +108,28 @@ export default {
       }
     };
 
+    const categorizedFields = computed(() => {
+      return formData.value.fields.reduce((acc, field) => {
+        if (!acc[field.title]) {
+          acc[field.title] = [];
+        }
+        acc[field.title].push(field);
+        return acc;
+      }, {});
+    });
+
+    const formatDate = (dateString) => {
+      const options = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' };
+      const date = new Date(dateString);
+      return date.toLocaleDateString('uk-UA', options);
+    };
+
+    const formattedDate = computed(() => {
+      return dateConsultation ? formatDate(dateConsultation) : '';
+    });
+
     const openModal = () => {
       showModal.value = true;
-      //console.log("відкрити модальне вікно" + showModal.value)
     };
 
     const submitForm = async () => {
@@ -126,9 +149,8 @@ export default {
         if (response) {
           showModal.value = false;
           M.toast({html: 'Дані сесії успішно збережено'});
-          router.push({ name: 'mySession' });
+          router.push({name: 'mySession'});
         }
-
       } catch (error) {
         M.toast({html: 'Помилка надсилання даних сесії'});
         console.error('Error submitting form:', error);
@@ -147,7 +169,9 @@ export default {
       IDconsultation,
       showModal,
       openModal,
-      submitForm
+      submitForm,
+      categorizedFields,
+      formattedDate
     };
   }
 }
