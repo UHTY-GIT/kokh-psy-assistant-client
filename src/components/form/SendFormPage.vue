@@ -869,7 +869,7 @@ export default {
             window.location.href = '/thank-you';
           }
         }
-        if (formType.value === 'primary_poll_couple' || formType.value === 'primary_poll_individual') {
+        else if (formType.value === 'primary_poll_couple' || formType.value === 'primary_poll_individual') {
           if (isCheckboxChecked.value) {
             await apiService.updateClientPrimaryPoll(clientId.value, true);
             M.toast({ html: `Первинне опитування відправлено.` });
