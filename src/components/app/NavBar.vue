@@ -24,18 +24,18 @@ export default {
       userPhoto: defaultUserPhoto,
       userName: '',
       backgroundImage: defaultBackgroundImage,
-      baseImageUrl: 'http://assistant.psy-kokh.online:3000',
+      baseImageUrl: 'https://assistant.psy-kokh.online',
     };
   },
   computed: {
     fullUserPhotoUrl() {
       // Якщо userPhoto не null і містить шлях, який не починається з 'http', додаємо baseImageUrl
-      return this.userPhoto && !this.userPhoto.startsWith('http') ? `${this.baseImageUrl}${this.userPhoto}` : this.userPhoto;
+      return this.userPhoto && !this.userPhoto.startsWith('https') ? `${this.baseImageUrl}${this.userPhoto}` : this.userPhoto;
     },
     fullBackgroundImageUrl() {
       // Якщо backgroundImage містить шлях, який не починається з 'http', додаємо baseImageUrl
       // В іншому випадку, повертаємо сам backgroundImage або defaultBackgroundImage, якщо перший null
-      return this.backgroundImage && !this.backgroundImage.startsWith('http') ? `${this.baseImageUrl}${this.backgroundImage}` : (this.backgroundImage || defaultBackgroundImage);
+      return this.backgroundImage && !this.backgroundImage.startsWith('https') ? `${this.baseImageUrl}${this.backgroundImage}` : (this.backgroundImage || defaultBackgroundImage);
     }
   },
   async mounted() {

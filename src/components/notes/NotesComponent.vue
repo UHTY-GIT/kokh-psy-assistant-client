@@ -40,6 +40,7 @@ import { ref, onMounted } from 'vue';
 import apiService from '@/services/apiService';
 import ModalNotesAdd from "@/components/modal/ModalNotesAdd.vue";
 import ModalNotesDelete from "@/components/modal/ModalNotesDelete.vue";
+import M from "materialize-css";
 
 export default {
   components: {
@@ -68,8 +69,10 @@ export default {
         await apiService.createNote(token, title);
         showModalNotes.value = false;
         fetchNotes();
+        M.toast({ html: `Нотатка успішно додана` });
       } catch (error) {
         console.error('Error adding note:', error);
+        M.toast({ html: `Помилка: Нотатка не додана` });
       }
     };
 
@@ -79,8 +82,10 @@ export default {
         await apiService.deleteNote(token, idNotes.value);
         showDeleteNotes.value = false;
         fetchNotes();
+        M.toast({ html: `Нотатка видалена` });
       } catch (error) {
         console.error('Error deleting note:', error);
+        M.toast({ html: `Помилка: Нотатка не видалена` });
       }
     };
 
