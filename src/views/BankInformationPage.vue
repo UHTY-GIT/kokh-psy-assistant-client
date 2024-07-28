@@ -1,10 +1,11 @@
+<!--src/views/BankInformationPage.vue-->
 <template>
   <section class="client-section">
     <div class="client-header">
       <button class="btn-add-client" @click="goToAddTemplate">
         Додати шаблон
       </button>
-      <button class="btn-refresh">
+      <button class="btn-refresh" @click="fetchAllForms">
         <img src="@/assets/icons/refresh.svg" alt="Оновити">
       </button>
     </div>
@@ -23,17 +24,16 @@
           </tr>
           </thead>
           <tbody>
-
           <tr v-for="form in allforms" :key="form.id">
-            <td>{{form.title}}</td>
+            <td>{{ form.title }}</td>
             <td class="all-butt-management">
-              <button class="btn-action">
+              <button class="btn-action" data-tooltip="Переглянути шаблон" @click="viewTemplate(form.id)">
                 <img src="@/assets/icons/visible-client.svg" alt="Переглянути">
               </button>
-              <button class="btn-action">
+              <button class="btn-action" data-tooltip="Редагувати">
                 <img src="@/assets/icons/edit-client.svg" alt="Редагувати">
               </button>
-              <button class="btn-action">
+              <button class="btn-action" data-tooltip="Видалити">
                 <img src="@/assets/icons/trash-client.svg" alt="Видалити">
               </button>
             </td>
@@ -53,48 +53,52 @@
     </div>
   </section>
 </template>
+
 <script>
+import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import apiService from '@/services/apiService';
 import M from "materialize-css";
 
 export default {
   name: 'BankInformation',
-  data() {
-    return {
-      allforms: [], // Масив для зберігання даних форм
-    };
-  },
   setup() {
     const router = useRouter();
+    const allforms = ref([]);
 
-    const goToAddTemplate = () => {
-      router.push({ name: 'AddTemplate' });
-    };
-
-    return {
-      goToAddTemplate,
-    };
-  },
-  async mounted() {
-    await this.fetchAllForms();
-  },
-  methods: {
-    async fetchAllForms() {
+    const fetchAllForms = async () => {
       try {
         const token = localStorage.getItem('token'); // Отримання токена з локального сховища
         if (token) {
           const response = await apiService.getForms(token);
           if (response && response.data && response.data.data) {
-            this.allforms = response.data.data; // Зберігання даних форм у масив
+            allforms.value = response.data.data; // Зберігання даних форм у масив
           }
         }
       } catch (error) {
-        // console.error('Error fetching clients:', error);
         M.toast({ html: `Увійдіть у систему` });
-        this.$router.push({name: 'login'});
+        router.push({ name: 'login' });
       }
-    },
-  },
+    };
+
+    const goToAddTemplate = () => {
+      router.push({ name: 'AddTemplate' });
+    };
+
+    const viewTemplate = (templateId) => {
+      router.push({ name: 'ViewsTemplatesBankInformationPage', params: { id: templateId } });
+    };
+
+    onMounted(() => {
+      fetchAllForms();
+    });
+
+    return {
+      allforms,
+      goToAddTemplate,
+      fetchAllForms,
+      viewTemplate
+    };
+  }
 };
 </script>

@@ -86,7 +86,7 @@ export default {
     const customFormId = route.query.customFormId;
     const customFormTitle = route.query.customFormTitle;
     const sessionNumber = route.query.sessionNumber;
-    const IDconsultation = route.query.IDconsultation;
+    const IDconsultation = parseInt(route.query.IDconsultation);
     const dateConsultation = route.query.dateConsultation;
 
     const fetchFormData = async () => {
@@ -137,12 +137,12 @@ export default {
       const answers = formData.value.fields.map(field => ({
         form_item_id: field.id,
         text_answer: field.value,
-        consultation_id: IDconsultation
       }));
 
       const payload = {
         client_id: clientId,
-        answers_data: answers
+        answers_data: answers,
+        consultation_id: IDconsultation
       };
 
       try {

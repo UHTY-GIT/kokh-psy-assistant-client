@@ -74,6 +74,13 @@ const routes = [
     meta: {layout: 'main', requiresAuth: true},
     component: () => import('../views/ClientInformationPage.vue')
   },
+  {
+    path: '/view-templates/:id',
+    name: 'ViewsTemplatesBankInformationPage',
+    meta: {layout: 'main', requiresAuth: true},
+    component: () => import('../views/ViewsTemplatesBankInformationPage.vue'),
+    props: true,
+  },
 ]
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
