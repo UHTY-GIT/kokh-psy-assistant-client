@@ -104,6 +104,7 @@ export default {
       } catch (error) {
         console.error('Error fetching clients:', error);
         M.toast({ html: `Увійдіть у систему` });
+        router.push({name: 'login'});
       }
     };
 
@@ -126,13 +127,13 @@ export default {
     const openModal = (clientId, TelegramClientId, clientConsent, clientPrimaryPoll) => {
       showModal.value = true;
       selectedClientId.value = clientId;
-      console.log(`ID клієнта для відправки ${selectedClientId.value}`);
+      //console.log(`ID клієнта для відправки ${selectedClientId.value}`);
       selectedTelegramClientId.value = TelegramClientId;
-      console.log(`Телеграм ID клієнта для відправки ${selectedTelegramClientId.value}`);
+      //console.log(`Телеграм ID клієнта для відправки ${selectedTelegramClientId.value}`);
       clientWasAgreedConsent.value = clientConsent;
-      console.log(`Клієнт прийняв інформовану згоду ${clientWasAgreedConsent.value}`);
+      //console.log(`Клієнт прийняв інформовану згоду ${clientWasAgreedConsent.value}`);
       clientPrimaryPollComplete.value = clientPrimaryPoll;
-      console.log(`Клієнт пройшов первинне опитування ${clientPrimaryPollComplete.value}`);
+      //console.log(`Клієнт пройшов первинне опитування ${clientPrimaryPollComplete.value}`);
       fetchTemplates();
     };
 

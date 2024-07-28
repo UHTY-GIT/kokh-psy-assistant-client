@@ -114,6 +114,7 @@ export default {
         query: {
           clientId: consultation.client.id,
           clientName: consultation.client.first_name,
+          TelegramId: consultation.client.telegram_id,
           customFormId: consultation.custom_form.id,
           customFormTitle: consultation.custom_form.title,
           sessionNumber: consultation.number,

@@ -82,6 +82,7 @@ export default {
     const showModal = ref(false);
     const clientId = route.query.clientId;
     const clientName = route.query.clientName;
+    const clientTelegramId = route.query.TelegramId;
     const customFormId = route.query.customFormId;
     const customFormTitle = route.query.customFormTitle;
     const sessionNumber = route.query.sessionNumber;
@@ -149,6 +150,17 @@ export default {
         if (response) {
           showModal.value = false;
           M.toast({html: 'Дані сесії успішно збережено'});
+
+          // Відправка повідомлення в телеграм
+          try {
+            await apiService.sendSessionEndNotification(clientTelegramId);
+            M.toast({html: 'Повідомлення у телеграм успішно надіслано'});
+          } catch (telegramError) {
+            console.error('Error sending Telegram notification:', telegramError);
+            M.toast({html: 'Помилка надсилання повідомлення у телеграм'});
+          }
+
+
           router.push({name: 'mySession'});
         }
       } catch (error) {
@@ -163,6 +175,7 @@ export default {
       formData,
       clientId,
       clientName,
+      clientTelegramId,
       customFormId,
       customFormTitle,
       sessionNumber,

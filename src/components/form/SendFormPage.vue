@@ -233,7 +233,7 @@
           </div>
         </div>
 
-        <div v-for="(field, index) in formFields" :key="index">
+        <div class="container-for-label-and-input" v-for="(field, index) in formFields" :key="index">
 
           <!-- Для не-boolean типів поля -->
           <div v-if="field.field_type !== 'boolean'" class="input-field-text">
@@ -443,13 +443,13 @@
               </tr>
               <tr>
                 <td>Короткостроковий формат парного консультування (до 10 парних консультацій)</td>
-                <td>4600 грн</td>
+                <td>5700 грн</td>
                 <td>125$/125€</td>
               </tr>
               <tr>
                 <td>Довгостроковий формат парного консультування / Парна психотерапія (40 парних консультацій)</td>
-                <td>3700 грн</td>
-                <td>97$/97€</td>
+                <td>4500 грн</td>
+                <td>98$/98€</td>
               </tr>
             </table>
 
@@ -586,7 +586,7 @@
         </div>
 
 
-        <div v-for="(field, index) in formFields" :key="index">
+        <div class="container-for-label-and-input" v-for="(field, index) in formFields" :key="index">
 
           <!-- Для не-boolean типів поля -->
           <div v-if="field.field_type !== 'boolean'" class="input-field-text">
@@ -662,7 +662,7 @@
           </div>
         </div>
 
-        <div v-for="(field, index) in formFields" :key="index">
+        <div class="container-for-label-and-input" v-for="(field, index) in formFields" :key="index">
 
           <!-- Для не-boolean типів поля -->
           <div v-if="field.field_type !== 'boolean'" class="input-field-text">
@@ -705,7 +705,7 @@
       </div>
     </div>
 
-    <!-- Рендеринг для типу форми "primary_poll_individual" -->
+    <!-- Рендеринг для типу форми "primary_poll_couple" -->
     <div v-if="formType === 'primary_poll_couple'">
       <div class="title_form_from_user">
         <p>
@@ -741,7 +741,7 @@
           </div>
         </div>
 
-        <div v-for="(field, index) in formFields" :key="index">
+        <div class="container-for-label-and-input" v-for="(field, index) in formFields" :key="index">
 
           <!-- Для не-boolean типів поля -->
           <div v-if="field.field_type !== 'boolean'" class="input-field-text">
@@ -859,6 +859,7 @@ export default {
 
       try {
         await apiService.submitAnswers(JSON.stringify(payload)); // це ваш попередній запит для надсилання відповідей форми
+        console.log("formType" + formType.value);
         M.toast({ html: `Відповіді форми відправлено.` });
 
         // Тепер перевіряємо тип форми та відправляємо на апі значення true для відповідного поля
@@ -868,13 +869,10 @@ export default {
             M.toast({ html: `Інформовану згоду відправлено.` });
             window.location.href = '/thank-you';
           }
-        }
-        else if (formType.value === 'primary_poll_couple' || formType.value === 'primary_poll_individual') {
-          if (isCheckboxChecked.value) {
-            await apiService.updateClientPrimaryPoll(clientId.value, true);
-            M.toast({ html: `Первинне опитування відправлено.` });
-            window.location.href = '/thank-you';
-          }
+        } else if (formType.value === 'primary_poll_couple' || formType.value === 'primary_poll_individual') {
+          await apiService.updateClientPrimaryPoll(clientId.value, true);
+          M.toast({ html: `Первинне опитування відправлено.` });
+          window.location.href = '/thank-you';
         }
 
       } catch (error) {

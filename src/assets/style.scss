@@ -1177,9 +1177,12 @@ button:focus {
     box-shadow: 0px 2px 0px #BA9571 !important;
   }
 }
+.container-for-label-and-input {
+  margin: 10px;
+}
 .container-input_froms_user {
   display: flex;
-  align-items: center;
+  //align-items: center;
   justify-content: center;
 
   label {
@@ -1213,6 +1216,7 @@ button:focus {
     margin: 0 0 0 15px !important;
     line-height: normal;
     max-width: 650px;
+
 
     &::placeholder {
       color: #C8C8C8;
@@ -1304,15 +1308,57 @@ button:focus {
       }
     }
   }
+
+  @media (max-width: 800px) {
+    display: flex;
+    align-items: stretch;
+    justify-content: center;
+    flex-direction: column;
+
+    label {
+      width: auto;
+      margin: 0 10px 10px;
+      padding: 10px 10px;
+    }
+    input {
+      margin: 0 10px !important;
+      width: auto !important;
+      max-width: 100% !important;
+    }
+  }
+  @media (max-width: 500px) {
+
+    label {
+      margin: 0 0 10px;
+      padding: 10px 10px;
+    }
+    input {
+      margin:0 !important;
+    }
+  }
+
 }
 .title_form_from_user {
 
   p {
-    font-family: Nunito;
+    font-family: 'Nunito';
     font-size: 25px !important;
     font-weight: 600;
     text-align: center;
     color: $main-text-color;
+  }
+
+  @media (max-width: 800px) {
+
+    p {
+      font-size: 23px !important;
+    }
+  }
+  @media (max-width: 500px) {
+
+    p {
+      font-size: 20px !important;
+    }
   }
 }
 .width-input-1200 {
@@ -1324,6 +1370,10 @@ button:focus {
 .width-container_for_butt {
   width: 1200px;
   margin: 15px auto;
+
+  @media (max-width: 1230px) {
+    width: 220px;
+  }
 }
 .container-text-for-form {
   max-width: 1200px;
@@ -1373,6 +1423,24 @@ button:focus {
         border-bottom: 2px solid rgb(73 75 85);
       }
     }
+
+    @media (max-width: 800px) {
+      color: $main-text-color;
+      font-family: Nunito;
+      font-size: 18px !important;
+      font-weight: 600;
+
+      span {
+        font-weight: 700;
+      }
+      p {
+        text-align: justify;
+
+        b {
+          font-weight: 700;
+        }
+      }
+    }
   }
 
 }
@@ -1386,6 +1454,14 @@ button:focus {
   img {
     width: 300px;
   }
+
+  @media (max-width: 500px) {
+    padding: 25px;
+
+    img {
+      width: 220px;
+    }
+  }
 }
 .thank-you-text {
   max-width: 1440px;
@@ -1398,6 +1474,41 @@ button:focus {
     font-family: Nunito;
     font-size: 20px;
     font-weight: 600;
+  }
+
+  .title-thank-you {
+    font-size: 25px;
+    font-weight: 700
+  }
+
+  @media (max-width: 800px) {
+    margin: 20px auto;
+
+    .title-thank-you {
+      font-size: 20px;
+      font-weight: 700;
+    }
+
+    p {
+      font-size: 18px;
+    }
+  }
+
+  @media (max-width: 500px) {
+    //max-width: 400px;
+    margin: 10px auto;
+    padding: 10px 15px;
+
+    .title-thank-you {
+      font-size: 20px;
+      font-weight: 700;
+      text-align: center;
+    }
+
+    p {
+      font-size: 18px;
+      text-align: justify;
+    }
   }
 }
 .none-content {

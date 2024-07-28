@@ -1,6 +1,6 @@
 <template>
   <div class="thank-you-text">
-    <p style="font-size: 25px; font-weight: 700">
+    <p class="title-thank-you">
       Щиро дякуємо Вам за довіру до нас і за виявлену готовність співпрацювати у процесі
       психологічного консультування.
     </p>

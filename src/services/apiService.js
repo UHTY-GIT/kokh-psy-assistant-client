@@ -108,6 +108,18 @@ const apiService = {
         return response;
     },
 
+    // Функція для надсилання на телеграм бота конфігу з позначкою що сесія успішно завершена
+    sendSessionEndNotification: async (clientTelegramId) => {
+        const response = await axios.post(`${BASE_URL_TELEGRAM}/session_end`, {
+            client_id: clientTelegramId,
+        }, {
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        });
+        return response.data;
+    },
+
     // Функція для створення подій у календарі
     createEvent: async (token, name, clientId, customFormId, originType, date) => {
         const config = {

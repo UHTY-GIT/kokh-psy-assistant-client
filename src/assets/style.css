@@ -1239,9 +1239,12 @@ button:focus {
   box-shadow: 0px 2px 0px #BA9571 !important;
 }
 
+.container-for-label-and-input {
+  margin: 10px;
+}
+
 .container-input_froms_user {
   display: flex;
-  align-items: center;
   justify-content: center;
 }
 .container-input_froms_user label {
@@ -1358,13 +1361,50 @@ button:focus {
   cursor: pointer;
   margin: 0;
 }
+@media (max-width: 800px) {
+  .container-input_froms_user {
+    display: flex;
+    align-items: stretch;
+    justify-content: center;
+    flex-direction: column;
+  }
+  .container-input_froms_user label {
+    width: auto;
+    margin: 0 10px 10px;
+    padding: 10px 10px;
+  }
+  .container-input_froms_user input {
+    margin: 0 10px !important;
+    width: auto !important;
+    max-width: 100% !important;
+  }
+}
+@media (max-width: 500px) {
+  .container-input_froms_user label {
+    margin: 0 0 10px;
+    padding: 10px 10px;
+  }
+  .container-input_froms_user input {
+    margin: 0 !important;
+  }
+}
 
 .title_form_from_user p {
-  font-family: Nunito;
+  font-family: "Nunito";
   font-size: 25px !important;
   font-weight: 600;
   text-align: center;
   color: #494B55;
+}
+@media (max-width: 800px) {
+  .title_form_from_user p {
+    font-size: 23px !important;
+  }
+}
+@media (max-width: 500px) {
+  .title_form_from_user p {
+    font-size: 20px !important;
+  }
 }
 
 .width-input-1200 {
@@ -1378,6 +1418,11 @@ button:focus {
 .width-container_for_butt {
   width: 1200px;
   margin: 15px auto;
+}
+@media (max-width: 1230px) {
+  .width-container_for_butt {
+    width: 220px;
+  }
 }
 
 .container-text-for-form {
@@ -1422,6 +1467,23 @@ button:focus {
 .container-text-for-form .content_user_form table tr {
   border-bottom: 2px solid rgb(73, 75, 85);
 }
+@media (max-width: 800px) {
+  .container-text-for-form .content_user_form {
+    color: #494B55;
+    font-family: Nunito;
+    font-size: 18px !important;
+    font-weight: 600;
+  }
+  .container-text-for-form .content_user_form span {
+    font-weight: 700;
+  }
+  .container-text-for-form .content_user_form p {
+    text-align: justify;
+  }
+  .container-text-for-form .content_user_form p b {
+    font-weight: 700;
+  }
+}
 
 .header_forms_for_users {
   display: flex;
@@ -1432,6 +1494,14 @@ button:focus {
 }
 .header_forms_for_users img {
   width: 300px;
+}
+@media (max-width: 500px) {
+  .header_forms_for_users {
+    padding: 25px;
+  }
+  .header_forms_for_users img {
+    width: 220px;
+  }
 }
 
 .thank-you-text {
@@ -1445,6 +1515,37 @@ button:focus {
   font-family: Nunito;
   font-size: 20px;
   font-weight: 600;
+}
+.thank-you-text .title-thank-you {
+  font-size: 25px;
+  font-weight: 700;
+}
+@media (max-width: 800px) {
+  .thank-you-text {
+    margin: 20px auto;
+  }
+  .thank-you-text .title-thank-you {
+    font-size: 20px;
+    font-weight: 700;
+  }
+  .thank-you-text p {
+    font-size: 18px;
+  }
+}
+@media (max-width: 500px) {
+  .thank-you-text {
+    margin: 10px auto;
+    padding: 10px 15px;
+  }
+  .thank-you-text .title-thank-you {
+    font-size: 20px;
+    font-weight: 700;
+    text-align: center;
+  }
+  .thank-you-text p {
+    font-size: 18px;
+    text-align: justify;
+  }
 }
 
 .none-content {
