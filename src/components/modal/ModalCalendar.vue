@@ -82,7 +82,7 @@ export default {
         const response = await apiService.getForms(token);
         if (response && response.data && response.data.data) {
           filteredTemplates.value = response.data.data.filter(template =>
-              template.form_type === 'couple_consultation' || template.form_type === 'individual_consultation'
+              template.form_type === 'couple_classic_consultation' || template.form_type === 'individual_consultation'
           );
         }
       } catch (error) {
