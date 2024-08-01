@@ -33,9 +33,9 @@
             <div class="container-input">
               <select v-model="selectedOriginType">
                 <option disabled value="">Будь ласка, виберіть тип консультації</option>
-                <option value="individual">Індивідуальна</option>
-                <option value="couple_classic">Парна класична</option>
-                <option value="couple_diagnostic">Парна діагностична</option>
+                <option value="individual_consultation">Індивідуальна</option>
+                <option value="couple_classic_consultation">Парна класична</option>
+                <option value="couple_diagnostic_consultation">Парна діагностична</option>
               </select>
             </div>
           </div>
