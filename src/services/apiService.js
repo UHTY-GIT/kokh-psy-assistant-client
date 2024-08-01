@@ -132,7 +132,7 @@ const apiService = {
             name: name,
             client_id: clientId,
             custom_form_id: customFormId,
-            originType: originType,
+            origin_type: originType,
             date: date
         };
         const response = await axios.post(`${BASE_URL}/api/v1/events`, formData, config);
