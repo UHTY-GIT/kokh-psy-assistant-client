@@ -26,6 +26,9 @@
             <button class="btn-action" data-tooltip="Статус сесії">
               <img src="@/assets/icons/status.svg" alt="Статус">
             </button>
+            <button class="btn-action" data-tooltip="Переглянути дані сесії" @click="openViewSession(consultation.id)">
+              <img src="@/assets/icons/visible-client.svg" alt="Переглянути">
+            </button>
             <button class="btn-action" data-tooltip="Перейти до сесії" @click="openModal(consultation)">
               <img src="@/assets/icons/share.svg" alt="Почати сесію">
             </button>
@@ -124,6 +127,13 @@ export default {
       });
     };
 
+    const openViewSession = (id) => {
+      router.push({
+        name: 'ViewOneSession',
+        params: { id }
+      });
+    };
+
     onMounted(fetchConsultations);
 
     return {
@@ -132,6 +142,7 @@ export default {
       formatTime,
       openModal,
       startSession,
+      openViewSession,
       showModal,
       selectedConsultation
     };

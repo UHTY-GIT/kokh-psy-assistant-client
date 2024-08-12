@@ -1,3 +1,4 @@
+<!--src/views/AllClientPage.vue-->
 <template>
   <section class="client-section">
     <div class="client-header">
@@ -33,7 +34,7 @@
             <button class="btn-action" data-tooltip="Надіслати повідомлення" @click="openModal(client.id, client.telegram_id, client.was_agreed, client.primary_poll_complete)">
               <img src="@/assets/icons/send-template-white.svg" alt="Надіслати повідомлення">
             </button>
-            <button class="btn-action" data-tooltip="Переглянути">
+            <button class="btn-action" data-tooltip="Переглянути" @click="viewClientInfo(client.id)">
               <img src="@/assets/icons/visible-client.svg" alt="Переглянути">
             </button>
             <button class="btn-action" data-tooltip="Редагувати">
@@ -137,6 +138,10 @@ export default {
       fetchTemplates();
     };
 
+    const viewClientInfo = (clientId) => {
+      router.push({ name: 'ClientInformation', params: { id: clientId } });
+    };
+
     // Перенесіть логіку з mounted сюди, якщо потрібно запустити щось при створенні компонента
     fetchClients();
 
@@ -148,7 +153,8 @@ export default {
       selectedClientId,
       selectedTelegramClientId,
       clientWasAgreedConsent,
-      clientPrimaryPollComplete
+      clientPrimaryPollComplete,
+      viewClientInfo
     }
   }
 };

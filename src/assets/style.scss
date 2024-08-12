@@ -887,6 +887,7 @@ Profile styles
       justify-content: center;
       align-items: center;
       line-height: normal;
+      text-align: center;
     }
     input {
       color: #FFFFFF;
@@ -1629,7 +1630,11 @@ button:focus {
         height: auto !important;
         margin: 0 0 0 15px;
         line-height: normal;
-        max-width: 420px;
+        word-wrap: break-word;
+        word-break: break-word;
+        overflow-wrap: break-word;
+        white-space: pre-wrap;
+        //max-width: 420px;
 
         &::placeholder {
           color: #C8C8C8;
@@ -1642,4 +1647,118 @@ button:focus {
     }
   }
 
+}
+.block_info_client {
+  margin: 0 0 10px;
+
+  .text-template-for-view {
+    display: flex;
+    align-items: stretch;
+    max-width: 1200px;
+
+    .type-for-view {
+
+      p {
+        color: #FFF;
+        font-family: Nunito;
+        font-size: 18px;
+        font-weight: 700;
+        background-color: $hover-color;
+        border-radius: 10px;
+        width: 270px;
+        padding: 10px 5px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        line-height: normal;
+        margin: 0;
+      }
+    }
+
+    .type-of-answers {
+
+      p {
+        color: #FFFFFF;
+        font-family: Nunito;
+        font-size: 18px;
+        font-weight: 600;
+        border-radius: 10px;
+        padding: 10px 15px;
+        border-bottom: none;
+        background-color: $main-text-color;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        width: auto;
+        height: auto !important;
+        min-width: 350px;
+        margin: 0 0 0 15px;
+        line-height: normal;
+        word-wrap: break-word;
+        word-break: break-word;
+        overflow-wrap: break-word;
+        white-space: pre-wrap;
+        //max-width: 420px;
+
+        &::placeholder {
+          color: #C8C8C8;
+        }
+        &[type="file"] {
+          display: none;
+        }
+      }
+
+    }
+  }
+}
+.Block_client {
+  margin: 0 0 0 30px;
+
+  .titte_field {
+    margin: 17px 0 22px 0;
+    p {
+      font-family: "Nunito";
+      font-style: normal;
+      font-weight: 700;
+      font-size: 26px;
+      color: #494B55;
+      margin: 0;
+    }
+  }
+
+  .name-update-form {
+
+    .forms-name-add {
+      .container-input {
+
+        label {
+          width: 300px;
+        }
+        select {
+          max-width: 530px;
+        }
+      }
+    }
+  }
+}
+.block_button_client_page {
+  display: flex;
+  justify-content: flex-end;
+  margin: 10px 30px 0;
+}
+.submit-coupe-partner {
+  display: flex;
+  justify-content: flex-end;
+  width: 840px;
+
+  button {
+    width: 260px;
+  }
+}
+.cycle_button_submit {
+
+  button {
+    width: 250px;
+    padding: 11px 20px;
+  }
 }

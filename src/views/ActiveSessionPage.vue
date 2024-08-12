@@ -80,7 +80,7 @@ export default {
     });
 
     const showModal = ref(false);
-    const clientId = route.query.clientId;
+    const clientId = parseInt(route.query.clientId);
     const clientName = route.query.clientName;
     const clientTelegramId = route.query.TelegramId;
     const customFormId = route.query.customFormId;

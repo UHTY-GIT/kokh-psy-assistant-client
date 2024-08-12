@@ -95,6 +95,28 @@ const apiService = {
         return response;
     },
 
+    // Функція для встановлення пари клієнта
+    updateClientСoupleData: async (clientId, data, token) => {
+        const response = await axios.patch(`${BASE_URL}/api/v1/clients/${clientId}`, data, {
+            headers: {
+                'Content-Type': 'application/json',
+                'authtoken': token // передача токена в заголовках
+            }
+        });
+        return response.data;
+    },
+
+    // Функція для отримання даних одного клієнта
+    getClientById: async (token, clientId) => {
+        const response = await axios.get(`${BASE_URL}/api/v1/clients/${clientId}`, {
+            headers: {
+                'Content-Type': 'application/json',
+                'authtoken': token // передача токена в заголовках
+            }
+        });
+        return response.data;
+    },
+
     // Функція для надсилання посилання у телеграм бот
     sendTelegramTemplate: async (clientId, url) => {
         const response = await axios.post(`${BASE_URL_TELEGRAM}/send_template`, {
@@ -160,6 +182,18 @@ const apiService = {
             }
         };
         const response = await axios.get(`${BASE_URL}/api/v1/consultations`, config);
+        return response.data; // повертаємо дані отримані з сервера
+    },
+
+    // Функція отримання даних з конкретної завершеної сесії (консультації)
+    getOneConsultation: async (token, id) => {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                'authtoken': token // передача токена в заголовках
+            }
+        };
+        const response = await axios.get(`${BASE_URL}/api/v1/consultations/${id}`, config);
         return response.data; // повертаємо дані отримані з сервера
     },
 

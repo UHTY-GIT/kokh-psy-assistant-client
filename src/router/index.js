@@ -69,10 +69,11 @@ const routes = [
     component: () => import('../views/ActiveSessionPage.vue')
   },
   {
-    path: '/view-client-info',
+    path: '/view-client-info/:id',
     name: 'ClientInformation',
     meta: { layout: 'main', requiresAuth: true },
-    component: () => import('../views/ClientInformationPage.vue')
+    component: () => import('../views/ClientInformationPage.vue'),
+    props: true,
   },
   {
     path: '/view-templates/:id',
@@ -80,6 +81,19 @@ const routes = [
     meta: { layout: 'main', requiresAuth: true },
     component: () => import('../views/ViewsTemplatesBankInformationPage.vue'),
     props: true,
+  },
+  {
+    path: '/view-one-session/:id',
+    name: 'ViewOneSession',
+    meta: { layout: 'main', requiresAuth: true },
+    component: () => import('../views/OneSessionPage.vue'),
+    props: true,
+  },
+  {
+    path: '/couple-cycle/:id',
+    name: 'CoupleCycle',
+    meta: { layout: 'main', requiresAuth: true },
+    component: () => import('../views/CoupleCyclePage.vue'),
   },
   {
     path: '/:pathMatch(.*)*',
@@ -99,9 +113,14 @@ router.beforeEach((to, from, next) => {
     // Перевірка наявності токена аутентифікації
     const isAuthenticated = localStorage.getItem('token');
     if (!isAuthenticated) {
-      console.log('Є токент?' + isAuthenticated);
+      console.log('Є токент?' + isAuthenticated)
       // Якщо користувач не аутентифікований, перенаправлення на сторінку входу
-      window.location.href = 'https://crm-assistant.psy-kokh.online/login?message=redirect';
+      // window.location.href = 'https://crm-assistant.psy-kokh.online/login?message=redirect';
+      //window.location.href = 'https://crm-assistant.psy-kokh.online/';
+      next({
+        path: '/',
+        //query: { message: 'redirect' } // Збереження маршруту для можливого перенаправлення після входу
+      });
     } else {
       // Якщо аутентифікований, продовження навігації
       next();

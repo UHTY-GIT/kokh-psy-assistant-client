@@ -956,6 +956,7 @@ Profile styles
   justify-content: center;
   align-items: center;
   line-height: normal;
+  text-align: center;
 }
 .input-field-text .container-input input, .file-upload-field .container-input input, .select-field .container-input input, .date-field .container-input input, .checkbox-field .container-input input, .forms-name-add .container-input input {
   color: #FFFFFF;
@@ -1658,13 +1659,109 @@ button:focus {
   height: auto !important;
   margin: 0 0 0 15px;
   line-height: normal;
-  max-width: 420px;
+  word-wrap: break-word;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  white-space: pre-wrap;
 }
 .template-container-for-view .text-template-for-view .type-of-answers p::placeholder {
   color: #C8C8C8;
 }
 .template-container-for-view .text-template-for-view .type-of-answers p[type=file] {
   display: none;
+}
+
+.block_info_client {
+  margin: 0 0 10px;
+}
+.block_info_client .text-template-for-view {
+  display: flex;
+  align-items: stretch;
+  max-width: 1200px;
+}
+.block_info_client .text-template-for-view .type-for-view p {
+  color: #FFF;
+  font-family: Nunito;
+  font-size: 18px;
+  font-weight: 700;
+  background-color: #72A8BA;
+  border-radius: 10px;
+  width: 270px;
+  padding: 10px 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  line-height: normal;
+  margin: 0;
+}
+.block_info_client .text-template-for-view .type-of-answers p {
+  color: #FFFFFF;
+  font-family: Nunito;
+  font-size: 18px;
+  font-weight: 600;
+  border-radius: 10px;
+  padding: 10px 15px;
+  border-bottom: none;
+  background-color: #494B55;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: auto;
+  height: auto !important;
+  min-width: 350px;
+  margin: 0 0 0 15px;
+  line-height: normal;
+  word-wrap: break-word;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  white-space: pre-wrap;
+}
+.block_info_client .text-template-for-view .type-of-answers p::placeholder {
+  color: #C8C8C8;
+}
+.block_info_client .text-template-for-view .type-of-answers p[type=file] {
+  display: none;
+}
+
+.Block_client {
+  margin: 0 0 0 30px;
+}
+.Block_client .titte_field {
+  margin: 17px 0 22px 0;
+}
+.Block_client .titte_field p {
+  font-family: "Nunito";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 26px;
+  color: #494B55;
+  margin: 0;
+}
+.Block_client .name-update-form .forms-name-add .container-input label {
+  width: 300px;
+}
+.Block_client .name-update-form .forms-name-add .container-input select {
+  max-width: 530px;
+}
+
+.block_button_client_page {
+  display: flex;
+  justify-content: flex-end;
+  margin: 10px 30px 0;
+}
+
+.submit-coupe-partner {
+  display: flex;
+  justify-content: flex-end;
+  width: 840px;
+}
+.submit-coupe-partner button {
+  width: 260px;
+}
+
+.cycle_button_submit button {
+  width: 250px;
+  padding: 11px 20px;
 }
 
 /*# sourceMappingURL=style.css.map */
