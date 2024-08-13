@@ -89,9 +89,10 @@ export default {
     const client = ref({});
     const availablePartners = ref([]);
     const selectedPartnerId = ref('');
-    const clientId = route.params.id;
+    const clientId = Number(route.params.id);
     const showCoupleCycleForm = ref(false);
     const cycleFormFields = ref([]);
+    const coupleCycleId = ref();
 
     const fetchClientInfo = async () => {
       const token = localStorage.getItem('token');
@@ -104,6 +105,12 @@ export default {
       try {
         const response = await apiService.getClientById(token, clientId);
         client.value = response.data;
+
+        // Check if the client has a partner_id
+        if (client.value.partner_id) {
+          selectedPartnerId.value = client.value.partner_id; // Set the selected partner ID
+          await fetchCycleForm();
+        }
       } catch (error) {
         console.error('Error fetching client info:', error);
       }
@@ -119,7 +126,7 @@ export default {
 
       try {
         const response = await apiService.getClients(token);
-        availablePartners.value = response.data.data.filter(c => c.id !== clientId);
+        availablePartners.value = response.data.data.filter(c => Number(c.id) !== clientId);
       } catch (error) {
         console.error('Error fetching clients:', error);
         M.toast({ html: 'Помилка при завантаженні клієнтів' });
@@ -135,7 +142,7 @@ export default {
       }
 
       try {
-        //await apiService.updateClientСoupleData(clientId, { partner_id: selectedPartnerId.value }, token);
+        await apiService.updateClientСoupleData(clientId, { partner_id: selectedPartnerId.value }, token);
         M.toast({ html: 'Партнер призначений успішно' });
         await fetchCycleForm();
       } catch (error) {
@@ -147,8 +154,12 @@ export default {
     const fetchCycleForm = async () => {
       const formId = 90;
       try {
+        const token = localStorage.getItem('token');
+        const response_id = await apiService.createCoupleCycle(token,90, clientId)
+        coupleCycleId.value = response_id.data.id
+
         const response = await apiService.getCustomFormById(formId);
-        console.log('Full response from getCustomFormById:', response);
+        //console.log('Full response from getCustomFormById:', response);
 
         const form = response.data.data;
 
@@ -159,7 +170,7 @@ export default {
             value: ''
           }));
           showCoupleCycleForm.value = true;
-          console.log('Form items successfully processed:', cycleFormFields.value);
+          //console.log('Form items successfully processed:', cycleFormFields.value);
         } else {
           console.error('Form items are not defined or not an array.');
           M.toast({ html: 'Помилка при завантаженні форми циклу пари' });
@@ -170,10 +181,33 @@ export default {
       }
     };
 
+    const submitCycleForm = async () => {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        M.toast({ html: 'Будь ласка, увійдіть у систему' });
+        router.push({ name: 'login' });
+        return;
+      }
 
-    const submitCycleForm = () => {
-      // Реалізація логіки відправки форми
-      M.toast({ html: 'Цикл пари надіслано' });
+      try {
+        const answers = cycleFormFields.value.map(field => ({
+          form_item_id: field.id,
+          text_answer: field.value,
+        }));
+
+        const response = await apiService.submitCoupleCycleAnswers(token, clientId, coupleCycleId.value, answers);
+        if (response.data) {
+          router.push({ name: 'ClientInformation', params: { id: clientId } });
+          M.toast({ html: 'Цикл пари надіслано успішно' });
+        } else {
+          M.toast({ html: 'Помилка, цикл пари не надіслано' });
+        }
+
+        // Optionally, redirect or reset the form after submission
+      } catch (error) {
+        console.error('Error submitting couple cycle form:', error);
+        M.toast({ html: 'Помилка при надсиланні циклу пари' });
+      }
     };
 
     onMounted(() => {
@@ -193,4 +227,3 @@ export default {
   }
 };
 </script>
-

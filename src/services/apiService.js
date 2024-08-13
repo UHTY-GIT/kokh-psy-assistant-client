@@ -269,6 +269,46 @@ const apiService = {
         const response = await axios.delete(`${BASE_URL}/api/v1/notes/${noteId}`, config);
         return response.data;
     },
+
+    // Функція для створення циклу пари для отримання couple_cycle_id
+    createCoupleCycle: async (token, customFormId, clientId) => {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                'authtoken': token
+            }
+        };
+
+        const formData = {
+            custom_form_id: customFormId, // ID кастомної форми
+            client_id: clientId,          // ID основного клієнта
+            //couple_client_id: coupleClientId // ID клієнта-партнера
+        };
+
+        const response = await axios.post(`${BASE_URL}/api/v1/couple_cycles`, formData, config);
+        return response.data;
+    },
+
+    // Функція для надсилання полів циклу пари
+    submitCoupleCycleAnswers: async (token, clientId, coupleCycleId, answers) => {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                'authtoken': token,
+            },
+        };
+
+        const formData = {
+            client_id: clientId,
+            couple_cycle_id: coupleCycleId,
+            answers_data: answers,
+        };
+
+        const response = await axios.post(`${BASE_URL}/api/v1/answers`, formData, config);
+        return response.data;
+    },
+
+
 };
 
 export default apiService;
