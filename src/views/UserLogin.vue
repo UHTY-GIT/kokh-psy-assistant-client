@@ -79,8 +79,8 @@ import M from 'materialize-css';
 export default {
   name: 'loginPage',
   setup () {
-    localStorage.removeItem('token');
-    //console.log("token now " + token);
+    const token = localStorage.removeItem('token');
+    console.log("token now " + token);
 
     const email = ref('');
     const password = ref('');

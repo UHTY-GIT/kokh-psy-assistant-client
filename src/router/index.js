@@ -118,7 +118,7 @@ router.beforeEach((to, from, next) => {
       // window.location.href = 'https://crm-assistant.psy-kokh.online/login?message=redirect';
       //window.location.href = 'https://crm-assistant.psy-kokh.online/';
       next({
-        path: '/',
+        path: '/login',
         //query: { message: 'redirect' } // Збереження маршруту для можливого перенаправлення після входу
       });
     } else {
