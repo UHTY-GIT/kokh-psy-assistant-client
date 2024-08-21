@@ -841,7 +841,7 @@ export default {
 
     const submitForm = async () => {
       try {
-        // Check the form type and register the appropriate data
+        // Перевірка типу форми та реєстрація відповідних даних
         if (formType.value === 'consent_couple' || formType.value === 'consent_individual') {
           const response = await apiService.registerClientInformationConsents(clientId.value);
           answerableId.value = response.data.id;
@@ -864,8 +864,8 @@ export default {
           answers_data: answersData
         };
 
-        // Submit the answers using the updated payload
-        await apiService.submitAnswers(JSON.stringify(payload));
+        // Відправка даних з правильним payload
+        await apiService.submitAnswers(payload.client_id, payload.answerable_id, payload.answerable_type, payload.answers_data);
 
         M.toast({ html: `Відповіді форми відправлено.` });
 
@@ -887,6 +887,7 @@ export default {
         M.toast({ html: `Помилка, форму не надіслано: ${error.message}` });
       }
     };
+
 
     return {
       formFields,
