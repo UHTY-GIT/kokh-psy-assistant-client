@@ -67,6 +67,7 @@ import M from "materialize-css";
 import ModalStartSession from "@/components/modal/ModalStartSession.vue";
 
 export default {
+  name: "mySession",
   components: {
     ModalStartSession
   },

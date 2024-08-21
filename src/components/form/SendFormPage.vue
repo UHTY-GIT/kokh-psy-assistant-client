@@ -807,7 +807,9 @@ export default {
     const formType = ref([]);
     const clientId = ref(null);
     const templateId = ref(null);
-    const isCheckboxChecked= ref(false);
+    const isCheckboxChecked = ref(false);
+    const answerableId = ref(null);
+    const answerableType = ref("");
 
     onMounted(async () => {
       const queryParams = new URLSearchParams(window.location.search);
@@ -838,28 +840,33 @@ export default {
     };
 
     const submitForm = async () => {
-      const answersData = formFields.value.map(field => {
-        if (field.field_type === 'boolean') {
-          return {
-            form_item_id: field.id,
-            text_answer: field.value
-          };
-        } else {
-          return {
-            form_item_id: field.id,
-            text_answer: field.value
-          };
-        }
-      });
-
-      const payload = {
-        client_id: clientId.value,
-        answers_data: answersData
-      };
-
       try {
-        await apiService.submitAnswers(JSON.stringify(payload)); // це ваш попередній запит для надсилання відповідей форми
-        console.log("formType" + formType.value);
+        // Check the form type and register the appropriate data
+        if (formType.value === 'consent_couple' || formType.value === 'consent_individual') {
+          const response = await apiService.registerClientInformationConsents(clientId.value);
+          answerableId.value = response.data.id;
+          answerableType.value = 'InformationConsent';
+        } else if (formType.value === 'primary_poll_couple' || formType.value === 'primary_poll_individual') {
+          const response = await apiService.registerClientPrimaryPoll(clientId.value);
+          answerableId.value = response.data.id;
+          answerableType.value = 'PrimaryPoll';
+        }
+
+        const answersData = formFields.value.map(field => ({
+          form_item_id: field.id,
+          text_answer: field.value
+        }));
+
+        const payload = {
+          client_id: clientId.value,
+          answerable_id: answerableId.value,
+          answerable_type: answerableType.value,
+          answers_data: answersData
+        };
+
+        // Submit the answers using the updated payload
+        await apiService.submitAnswers(JSON.stringify(payload));
+
         M.toast({ html: `Відповіді форми відправлено.` });
 
         // Тепер перевіряємо тип форми та відправляємо на апі значення true для відповідного поля
@@ -880,7 +887,6 @@ export default {
         M.toast({ html: `Помилка, форму не надіслано: ${error.message}` });
       }
     };
-
 
     return {
       formFields,

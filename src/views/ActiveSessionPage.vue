@@ -93,7 +93,9 @@ export default {
       try {
         const token = localStorage.getItem('token');
         if (!token) {
-          throw new Error('No authentication token found');
+          M.toast({ html: 'Будь ласка, увійдіть у систему' });
+          router.push({ name: 'login' });
+          return;
         }
         const response = await apiService.getCustomFormById(customFormId);
         formData.value.fields = response.data.data.form_items.map(item => ({
@@ -134,19 +136,29 @@ export default {
     };
 
     const submitForm = async () => {
-      const answers = formData.value.fields.map(field => ({
-        form_item_id: field.id,
-        text_answer: field.value,
-      }));
-
-      const payload = {
-        client_id: clientId,
-        answers_data: answers,
-        consultation_id: IDconsultation
-      };
+      const token = localStorage.getItem('token');
+      if (!token) {
+        M.toast({ html: 'Будь ласка, увійдіть у систему' });
+        router.push({ name: 'login' });
+        return;
+      }
 
       try {
-        const response = await apiService.submitSessionAnswers(payload);
+        // Now prepare the answers for submission
+        const answers = formData.value.fields.map(field => ({
+          form_item_id: field.id,
+          text_answer: field.value,
+        }));
+
+        const payload = {
+          client_id: clientId,
+          answerable_id: IDconsultation,
+          answerable_type: "Consultation",
+          answers_data: answers,
+        };
+
+
+        const response = await apiService.submitSessionAnswers(payload, token);
         if (response) {
           showModal.value = false;
           M.toast({html: 'Дані сесії успішно збережено'});
@@ -154,20 +166,20 @@ export default {
           // Відправка повідомлення в телеграм
           try {
             await apiService.sendSessionEndNotification(clientTelegramId);
-            M.toast({html: 'Повідомлення у телеграм успішно надіслано'});
+            M.toast({ html: 'Повідомлення у телеграм успішно надіслано' });
           } catch (telegramError) {
             console.error('Error sending Telegram notification:', telegramError);
-            M.toast({html: 'Помилка надсилання повідомлення у телеграм'});
+            M.toast({ html: 'Помилка надсилання повідомлення у телеграм' });
           }
 
-
-          router.push({name: 'mySession'});
+          router.push({ name: 'mySession' });
         }
       } catch (error) {
-        M.toast({html: 'Помилка надсилання даних сесії'});
+        M.toast({ html: 'Помилка надсилання даних сесії' });
         console.error('Error submitting form:', error);
       }
     };
+
 
     onMounted(fetchFormData);
 

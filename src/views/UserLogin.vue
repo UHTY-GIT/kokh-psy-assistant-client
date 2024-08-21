@@ -79,8 +79,8 @@ import M from 'materialize-css';
 export default {
   name: 'loginPage',
   setup () {
-    const token = localStorage.removeItem('token');
-    console.log("token now " + token);
+    localStorage.removeItem('token');
+    //console.log("token now " + token);
 
     const email = ref('');
     const password = ref('');
@@ -89,7 +89,7 @@ export default {
     const submitHandler = async () => {
       if (v$.value.$invalid) {
         v$.value.$touch();
-        console.log("click to submitHandler")
+        //console.log("click to submitHandler")
         return;
       }
 

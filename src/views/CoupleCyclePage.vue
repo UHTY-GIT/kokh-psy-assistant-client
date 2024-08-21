@@ -154,10 +154,6 @@ export default {
     const fetchCycleForm = async () => {
       const formId = 90;
       try {
-        const token = localStorage.getItem('token');
-        const response_id = await apiService.createCoupleCycle(token,90, clientId)
-        coupleCycleId.value = response_id.data.id
-
         const response = await apiService.getCustomFormById(formId);
         //console.log('Full response from getCustomFormById:', response);
 
@@ -188,6 +184,9 @@ export default {
         router.push({ name: 'login' });
         return;
       }
+
+      const response_id = await apiService.createCoupleCycle(token,90, clientId);
+      coupleCycleId.value = response_id.data;
 
       try {
         const answers = cycleFormFields.value.map(field => ({
