@@ -813,7 +813,7 @@ export default {
 
     onMounted(async () => {
       const queryParams = new URLSearchParams(window.location.search);
-      clientId.value = queryParams.get('client');
+      clientId.value = Number(queryParams.get('client'));
       templateId.value = queryParams.get('template');
       await fetchFormData();
     });
@@ -844,11 +844,11 @@ export default {
         // Перевірка типу форми та реєстрація відповідних даних
         if (formType.value === 'consent_couple' || formType.value === 'consent_individual') {
           const response = await apiService.registerClientInformationConsents(clientId.value);
-          answerableId.value = response.data;
+          answerableId.value = response.data.data;
           answerableType.value = 'InformationConsent';
         } else if (formType.value === 'primary_poll_couple' || formType.value === 'primary_poll_individual') {
           const response = await apiService.registerClientPrimaryPoll(clientId.value);
-          answerableId.value = response.data;
+          answerableId.value = response.data.data;
           answerableType.value = 'PrimaryPoll';
         }
 
