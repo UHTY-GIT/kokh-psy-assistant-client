@@ -333,6 +333,41 @@ const apiService = {
         return response.data;
     },
 
+    // Функція для отримання даних циклу пари
+    getCoupleCycleData: async (token, clientId) => {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                'authtoken': token,
+            },
+        };
+        const response = await axios.get(`${BASE_URL}/api/v1/clients/${clientId}/couple_cycle`, config);
+        return response.data;
+    },
+
+    // Функція для отримання даних первинного опитування
+    getPrimaryPollData: async (token, clientId) => {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                'authtoken': token,
+            },
+        };
+        const response = await axios.get(`${BASE_URL}/api/v1/clients/${clientId}/primary_poll`, config);
+        return response.data;
+    },
+
+    // Функція для отримання даних інформованої згоди
+    getInformationConsentData: async (token, clientId) => {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                'authtoken': token,
+            },
+        };
+        const response = await axios.get(`${BASE_URL}/api/v1/clients/${clientId}/information_consent`, config);
+        return response.data;
+    },
 
 };
 

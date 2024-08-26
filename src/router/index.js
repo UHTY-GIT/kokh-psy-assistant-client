@@ -90,10 +90,28 @@ const routes = [
     props: true,
   },
   {
-    path: '/couple-cycle/:id',
+    path: '/create-couple-cycle/:id',
     name: 'CoupleCycle',
     meta: { layout: 'main', requiresAuth: true },
     component: () => import('../views/CoupleCyclePage.vue'),
+  },
+  {
+    path: '/view-primary-poll/:id',
+    name: 'ViewPrimaryPoll',
+    meta: { layout: 'main', requiresAuth: true },
+    component: () => import('../views/client/ViewPrimaryPollClient.vue'),
+  },
+  {
+    path: '/view-information-consent/:id',
+    name: 'ViewInformationConsent',
+    meta: { layout: 'main', requiresAuth: true },
+    component: () => import('../views/client/ViewInformationConsentClient.vue'),
+  },
+  {
+    path: '/view-couple-cycle/:id',
+    name: 'ViewCoupleCycle',
+    meta: { layout: 'main', requiresAuth: true },
+    component: () => import('../views/client/ViewCoupleCycle.vue'),
   },
   {
     path: '/:pathMatch(.*)*',

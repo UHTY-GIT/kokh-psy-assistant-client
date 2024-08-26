@@ -70,6 +70,7 @@ export default {
         numberConsultation.value = data.number;
         formItems.value = data.answers;
       } catch (err) {
+        M.toast({ html: 'Помилка при перегляді даних сесії' });
         console.error('Error fetching consultation:', err);
       }
     };

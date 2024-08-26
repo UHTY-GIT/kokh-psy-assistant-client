@@ -10,9 +10,24 @@
       <hr class="hr_profile">
     </div>
     <div class="block_button_client_page">
-      <button class="btn-add-client" @click="goToAddCoupleCycle">
-        Додати цикл пари
-      </button>
+      <!-- Кнопка для відкриття випадаючого списку -->
+      <div class="dropdown">
+        <button class="btn-dropdown" @click="toggleDropdown">
+          <img src="@/assets/icons/more.png" alt="Menu" />
+        </button>
+        <!-- Випадаючий список -->
+        <div v-if="isDropdownOpen" class="dropdown-menu">
+          <button @click.prevent="goToAddCoupleCycle">Додати цикл пари</button>
+          <button @click.prevent="goToViewCoupleCycle">Переглянути цикл пари</button>
+          <button @click.prevent="goToAddDigest">Додати дайджест психотерапевтичних думок</button>
+          <button @click.prevent="goToViewDigest">Переглянути дайджест психотерапевтичних думок</button>
+          <button @click.prevent="goToAddExpertRating">Додати оцінку експерта</button>
+          <button @click.prevent="goToViewExpertRating">Переглянути оцінку експерта</button>
+        </div>
+      </div>
+<!--      <button class="btn-add-client" @click="goToAddCoupleCycle">-->
+<!--        Додати цикл пари-->
+<!--      </button>-->
     </div>
     <div>
       <div class="Block_client">
@@ -58,7 +73,13 @@
                 <p>Інформована згода</p>
               </div>
               <div class="type-of-answers">
-                <p>{{ client.was_agreed ? 'Прийняв' : 'Не прийняв' }}</p>
+                <p v-if="client.was_agreed" class="link-in-page">
+                  <router-link :to="{ name: 'ViewInformationConsent', params: { id: clientId } }">
+                    Прийняв
+                    <img src="@/assets/icons/share.svg" alt="icon">
+                  </router-link>
+                </p>
+                <p v-else>Не прийняв</p>
               </div>
             </div>
           </div>
@@ -68,7 +89,13 @@
                 <p>Первинне опитування</p>
               </div>
               <div class="type-of-answers">
-                <p>{{ client.primary_poll_complete ? 'Пройшов' : 'Не пройшов' }}</p>
+                <p v-if="client.primary_poll_complete" class="link-in-page">
+                  <router-link :to="{ name: 'ViewPrimaryPoll', params: { id: clientId } }">
+                    Пройшов
+                    <img src="@/assets/icons/share.svg" alt="icon">
+                  </router-link>
+                </p>
+                <p v-else>Не пройшов</p>
               </div>
             </div>
           </div>
@@ -108,7 +135,12 @@
                 <p>Партнер</p>
               </div>
               <div class="type-of-answers">
-                <p>{{ client.partner_id }}</p>
+                <p class="link-in-page">
+                  <router-link :to="{ name: 'ClientInformation', params: { id: client.partner_id } }">
+                    {{ client.partner_id }}
+                    <img src="@/assets/icons/share.svg" alt="icon">
+                  </router-link>
+                </p>
               </div>
             </div>
           </div>
@@ -119,7 +151,7 @@
 </template>
 
 <script>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, watch, onBeforeUnmount } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import apiService from '@/services/apiService';
 import M from 'materialize-css';
@@ -129,8 +161,9 @@ export default {
   setup() {
     const route = useRoute();
     const client = ref({});
-    const clientId = route.params.id;
+    const clientId = ref(route.params.id)
     const router = useRouter();
+    const isDropdownOpen = ref(false);
 
     const fetchClientInfo = async () => {
       const token = localStorage.getItem('token');
@@ -141,12 +174,21 @@ export default {
       }
 
       try {
-        const response = await apiService.getClientById(token, clientId);
+        const response = await apiService.getClientById(token, clientId.value);
         client.value = response.data;
       } catch (error) {
         console.error('Error fetching client info:', error);
       }
     };
+
+    // Спостерігач за зміною clientId
+    watch(
+        () => route.params.id,
+        (newId) => {
+          clientId.value = newId;
+          fetchClientInfo();
+        }
+    );
 
     const formatOriginType = (type) => {
       switch (type) {
@@ -173,8 +215,48 @@ export default {
     };
 
     const goToAddCoupleCycle = () => {
-      router.push({ name: 'CoupleCycle', params: { id: clientId } });
+      router.push({ name: 'CoupleCycle', params: { id: clientId.value } });
     };
+
+    const goToViewCoupleCycle = () => {
+      router.push({ name: 'ViewCoupleCycle', params: { id: clientId.value } });
+    };
+
+    const goToAddDigest = () => {
+      router.push({ name: 'AddDigest', params: { id: clientId.value } });
+    };
+
+    const goToViewDigest = () => {
+      router.push({ name: 'ViewDigest', params: { id: clientId.value } });
+    };
+
+    const goToAddExpertRating = () => {
+      router.push({ name: 'AddExpertRating', params: { id: clientId.value } });
+    };
+
+    const goToViewExpertRating = () => {
+      router.push({ name: 'ViewExpertRating', params: { id: clientId.value } });
+    };
+
+    const toggleDropdown = () => {
+      isDropdownOpen.value = !isDropdownOpen.value;
+    };
+
+    const closeDropdown = (event) => {
+      if (!event.target.closest('.dropdown')) {
+        isDropdownOpen.value = false;
+      }
+    };
+
+    // Додаємо слухача події для закриття випадаючого списку при кліку поза його межами
+    onMounted(() => {
+      document.addEventListener('click', closeDropdown);
+    });
+
+    // Видаляємо слухача події при знищенні компонента
+    onBeforeUnmount(() => {
+      document.removeEventListener('click', closeDropdown);
+    });
 
     onMounted(fetchClientInfo);
 
@@ -183,6 +265,13 @@ export default {
       formatOriginType,
       formatServiceType,
       goToAddCoupleCycle,
+      goToViewCoupleCycle,
+      goToAddDigest,
+      goToViewDigest,
+      goToAddExpertRating,
+      goToViewExpertRating,
+      toggleDropdown,
+      isDropdownOpen
     };
   }
 };
