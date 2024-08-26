@@ -807,11 +807,13 @@ export default {
     const formType = ref([]);
     const clientId = ref(null);
     const templateId = ref(null);
-    const isCheckboxChecked= ref(false);
+    const isCheckboxChecked = ref(false);
+    const answerableId = ref(null);
+    const answerableType = ref("");
 
     onMounted(async () => {
       const queryParams = new URLSearchParams(window.location.search);
-      clientId.value = queryParams.get('client');
+      clientId.value = Number(queryParams.get('client'));
       templateId.value = queryParams.get('template');
       await fetchFormData();
     });
@@ -838,28 +840,33 @@ export default {
     };
 
     const submitForm = async () => {
-      const answersData = formFields.value.map(field => {
-        if (field.field_type === 'boolean') {
-          return {
-            form_item_id: field.id,
-            text_answer: field.value
-          };
-        } else {
-          return {
-            form_item_id: field.id,
-            text_answer: field.value
-          };
-        }
-      });
-
-      const payload = {
-        client_id: clientId.value,
-        answers_data: answersData
-      };
-
       try {
-        await apiService.submitAnswers(JSON.stringify(payload)); // це ваш попередній запит для надсилання відповідей форми
-        console.log("formType" + formType.value);
+        // Перевірка типу форми та реєстрація відповідних даних
+        if (formType.value === 'consent_couple' || formType.value === 'consent_individual') {
+          const response = await apiService.registerClientInformationConsents(clientId.value);
+          answerableId.value = response.data.data;
+          answerableType.value = 'InformationConsent';
+        } else if (formType.value === 'primary_poll_couple' || formType.value === 'primary_poll_individual') {
+          const response = await apiService.registerClientPrimaryPoll(clientId.value);
+          answerableId.value = response.data.data;
+          answerableType.value = 'PrimaryPoll';
+        }
+
+        const answersData = formFields.value.map(field => ({
+          form_item_id: field.id,
+          text_answer: field.value
+        }));
+
+        const payload = {
+          client_id: clientId.value,
+          answerable_id: answerableId.value,
+          answerable_type: answerableType.value,
+          answers_data: answersData
+        };
+
+        // Відправка даних з правильним payload
+        await apiService.submitAnswers(payload.client_id, payload.answerable_id, payload.answerable_type, payload.answers_data);
+
         M.toast({ html: `Відповіді форми відправлено.` });
 
         // Тепер перевіряємо тип форми та відправляємо на апі значення true для відповідного поля

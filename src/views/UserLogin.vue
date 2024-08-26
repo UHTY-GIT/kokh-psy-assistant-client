@@ -89,7 +89,7 @@ export default {
     const submitHandler = async () => {
       if (v$.value.$invalid) {
         v$.value.$touch();
-        console.log("click to submitHandler")
+        //console.log("click to submitHandler")
         return;
       }
 

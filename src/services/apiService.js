@@ -71,11 +71,18 @@ const apiService = {
     },
 
     //Функція для надсилання полів форми користувача
-    submitAnswers: (payload) => {
+    submitAnswers: (clientId, answerableId, answerableType, answers) => {
+        const payload = {
+            client_id: clientId,
+            answerable_id: answerableId,
+            answerable_type: answerableType,
+            answers_data: answers,
+        };
+
         return axios.post(`${BASE_URL}/api/v1/answers`, payload, {
             headers: {
-                'Content-Type': 'application/json'
-            }
+                'Content-Type': 'application/json',
+            },
         });
     },
 
@@ -91,6 +98,22 @@ const apiService = {
     updateClientPrimaryPoll: async (clientId, primaryPollComplete) => {
         const response = await axios.post(`${BASE_URL}/api/v1/clients/${clientId}/client_info`, {
             primary_poll_complete: primaryPollComplete,
+        });
+        return response;
+    },
+
+    // Функція для реєстрації первинного опитування клієінта, повертає id первинки яке привязане до клієнта
+    registerClientPrimaryPoll: async (clientId) => {
+        const response = await axios.post(`${BASE_URL}/api/v1/primary_polls`, {
+            client_id: clientId,
+        });
+        return response;
+    },
+
+    // Функція для реєстації інформованої згоди клієнта,  повертає id інформовваної згоди яке привязане до клієнта
+    registerClientInformationConsents: async (clientId) => {
+        const response = await axios.post(`${BASE_URL}/api/v1/information_consents`, {
+            client_id: clientId,
         });
         return response;
     },
@@ -198,11 +221,12 @@ const apiService = {
     },
 
     // Функція відправки заповненої форми з активної сесії
-    submitSessionAnswers: (payload) => {
-        return axios.post(`${BASE_URL}/api/v1/answers`, JSON.stringify(payload), {
+    submitSessionAnswers: (payload, token) => {
+        return axios.post(`${BASE_URL}/api/v1/answers`, payload, {
             headers: {
-                'Content-Type': 'application/json'
-            }
+                'Content-Type': 'application/json',
+                'authtoken': token,
+            },
         });
     },
 
@@ -298,13 +322,14 @@ const apiService = {
             },
         };
 
-        const formData = {
+        const payload = {
             client_id: clientId,
-            couple_cycle_id: coupleCycleId,
+            answerable_id: coupleCycleId,
+            answerable_type: 'CoupleCycle',
             answers_data: answers,
         };
 
-        const response = await axios.post(`${BASE_URL}/api/v1/answers`, formData, config);
+        const response = await axios.post(`${BASE_URL}/api/v1/answers`, payload, config);
         return response.data;
     },
 

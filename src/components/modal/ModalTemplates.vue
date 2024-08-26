@@ -22,6 +22,7 @@
     </div>
   </div>
 </template>
+
 <script>
 import M from 'materialize-css';
 import apiService from '@/services/apiService';
@@ -36,18 +37,16 @@ export default {
   },
   data() {
     return {
-      selectedTemplateId: '' // Додано змінну для зберігання вибраного ID шаблону
+      selectedTemplateId: '' // Зберігання вибраного ID шаблону
     };
   },
   methods: {
     closeModal() {
-      this.$emit('close'); // Емітуйте подію 'close'
+      this.$emit('close'); // Закриття модального вікна
     },
     async sendTemplate() {
       if (this.selectedTemplateId && this.selectedClientId && this.selectedTelegramClientId) {
-        // Генерація унікального посилання
         const uniqueLink = `https://crm-assistant.psy-kokh.online/send-form?client=${this.selectedClientId}&template=${this.selectedTemplateId}`;
-        //const uniqueLink = `http://localhost:8081/send-form?client=${this.selectedClientId}&template=${this.selectedTemplateId}`;
 
         try {
           const response = await apiService.sendTelegramTemplate(this.selectedTelegramClientId, uniqueLink);
@@ -72,20 +71,33 @@ export default {
       // Якщо клієнт дав згоду, виключаємо шаблони з типом 'consent_individual' та 'consent_couple'
       // Якщо клієнт пройшов первинне опитування, виключаємо 'primary_poll_individual' та 'primary_poll_couple'
       return this.templates.filter(template => {
+        // Відображаються тільки ті форми які записні у validFormTypes
+        const validFormTypes = ['consent_individual', 'consent_couple', 'primary_poll_individual', 'primary_poll_couple'];
+
+        // Виключаємо форми, які не є допустимими типами
+        if (!validFormTypes.includes(template.form_type)) {
+          return false;
+        }
+
+        // Виключаємо форми, якщо вони вже були заповнені
         const isConsentType = ['consent_individual', 'consent_couple'].includes(template.form_type);
         const isPrimaryPollType = ['primary_poll_individual', 'primary_poll_couple'].includes(template.form_type);
+
         if (this.clientWasAgreedConsent && isConsentType) {
           return false;
         }
+
         if (this.clientPrimaryPollComplete && isPrimaryPollType) {
           return false;
         }
+
         return true;
       });
     }
   },
 };
 </script>
+
 <style>
 .modal-window {
   position: fixed;
