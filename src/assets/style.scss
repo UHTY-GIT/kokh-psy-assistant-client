@@ -1225,6 +1225,30 @@ button:focus {
     &[type="file"] {
       display: none;
     }
+
+    select {
+      color: #FFFFFF;
+      font-family: Nunito;
+      font-size: 18px !important;
+      font-weight: 600;
+      border-radius: 10px !important;
+      padding: 10px 15px !important;
+      border-bottom: none !important;
+      background-color: $main-text-color !important;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      width: 100% !important;
+      height: auto !important;
+      margin: 0 0 0 15px !important;
+      line-height: normal;
+      max-width: 680px;
+
+
+      &::placeholder {
+        color: #C8C8C8;
+      }
+    }
   }
   .file-chosen {
     color: #FFFFFF;
@@ -1326,6 +1350,12 @@ button:focus {
       width: auto !important;
       max-width: 100% !important;
     }
+    select {
+      margin: 0 10px !important;
+      width: auto !important;
+      max-width: 100% !important;
+    }
+
   }
   @media (max-width: 500px) {
 
@@ -1334,6 +1364,9 @@ button:focus {
       padding: 10px 10px;
     }
     input {
+      margin:0 !important;
+    }
+    select {
       margin:0 !important;
     }
   }
