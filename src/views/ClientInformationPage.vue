@@ -10,12 +10,10 @@
       <hr class="hr_profile">
     </div>
     <div class="block_button_client_page">
-      <!-- Кнопка для відкриття випадаючого списку -->
       <div class="dropdown">
         <button class="btn-dropdown" @click="toggleDropdown">
           <img src="@/assets/icons/more.png" alt="Menu" />
         </button>
-        <!-- Випадаючий список -->
         <div v-if="isDropdownOpen" class="dropdown-menu">
           <button @click.prevent="goToAddCoupleCycle">Додати цикл пари</button>
           <button @click.prevent="goToViewCoupleCycle">Переглянути цикл пари</button>
@@ -25,9 +23,6 @@
           <button @click.prevent="goToViewExpertRating">Переглянути оцінку експерта</button>
         </div>
       </div>
-<!--      <button class="btn-add-client" @click="goToAddCoupleCycle">-->
-<!--        Додати цикл пари-->
-<!--      </button>-->
     </div>
     <div>
       <div class="Block_client">
