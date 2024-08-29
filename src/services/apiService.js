@@ -369,6 +369,75 @@ const apiService = {
         return response.data;
     },
 
+    // Функція для створення оцінки експерта
+    createExpertAssessment: async (token, clientId, content) => {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                'authtoken': token,
+            },
+        };
+
+        const payload = {
+            client_id: clientId,
+            content: content,
+        };
+
+        const response = await axios.post(`${BASE_URL}/api/v1/expert_assessments`, payload, config);
+        return response.data;
+    },
+
+
+    // Функція для отримання даних оцінки експерта
+    getExpertAssessments: async (token, clientId) => {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                'authtoken': token,
+            },
+            params: {
+                client_id: clientId,
+            },
+        };
+        const response = await axios.get(`${BASE_URL}/api/v1/expert_assessments`, config);
+        return response.data;
+    },
+
+    // Функція для створення дайджеста психотерапевтичних думок
+    createDigestPsyMind: async (token, clientId, content) => {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                'authtoken': token,
+            },
+        };
+
+        const payload = {
+            client_id: clientId,
+            content: content,
+        };
+
+        const response = await axios.post(`${BASE_URL}/api/v1/digest_opinions`, payload, config);
+        return response.data;
+    },
+
+
+    // Функція для отримання даних дайджеста психотерапевтичних думок
+    getDigestPsyMind: async (token, clientId) => {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                'authtoken': token,
+            },
+            params: {
+                client_id: clientId,
+            },
+        };
+        const response = await axios.get(`${BASE_URL}/api/v1/digest_opinions`, config);
+        return response.data;
+    },
+
+
 };
 
 export default apiService;

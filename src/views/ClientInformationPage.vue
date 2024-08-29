@@ -218,11 +218,11 @@ export default {
     };
 
     const goToAddDigest = () => {
-      router.push({ name: 'AddDigest', params: { id: clientId.value } });
+      router.push({ name: 'AddDigestPsyMind', params: { id: clientId.value } });
     };
 
     const goToViewDigest = () => {
-      router.push({ name: 'ViewDigest', params: { id: clientId.value } });
+      router.push({ name: 'ViewDigestPsyMind', params: { id: clientId.value } });
     };
 
     const goToAddExpertRating = () => {

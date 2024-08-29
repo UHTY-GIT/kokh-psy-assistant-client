@@ -1925,4 +1925,25 @@ button:focus {
   border-bottom: 2px dashed #72A8BA;
 }
 
+.container-view-client-info {
+  border-bottom: 2px dashed #72A8BA;
+  font-family: "Nunito", sans-serif;
+}
+.container-view-client-info .date-calendar-block p {
+  color: #494B55;
+  font-size: 18px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+}
+.container-view-client-info .date-calendar-block p img {
+  width: 20px;
+  margin: 0 10px 0 0;
+}
+.container-view-client-info .content-view p {
+  color: #494B55;
+  font-size: 18px;
+  font-weight: 600;
+}
+
 /*# sourceMappingURL=style.css.map */

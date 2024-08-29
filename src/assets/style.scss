@@ -1943,3 +1943,33 @@ button:focus {
     }
   }
 }
+
+.container-view-client-info {
+  border-bottom: 2px dashed #72A8BA;
+  font-family: "Nunito", sans-serif;
+
+  .date-calendar-block {
+
+    p {
+      color: #494B55;
+      font-size: 18px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+
+      img {
+        width: 20px;
+        margin: 0 10px 0 0;
+      }
+    }
+  }
+
+  .content-view {
+
+    p {
+      color: #494B55;
+      font-size: 18px;
+      font-weight: 600;
+    }
+  }
+}
