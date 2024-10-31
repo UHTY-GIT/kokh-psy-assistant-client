@@ -29,7 +29,11 @@
             <button class="btn-action" data-tooltip="Переглянути дані сесії" @click="openViewSession(consultation.id)">
               <img src="@/assets/icons/visible-client.svg" alt="Переглянути">
             </button>
-            <button class="btn-action" data-tooltip="Видалити сесію" @click="deleteClientSession(consultation.id)">
+            <button
+                class="btn-action"
+                data-tooltip="Видалити сесію"
+                @click="deleteClientSession(consultation.id)"
+            >
               <img src="@/assets/icons/trash-client.svg" alt="Видалити сесію">
             </button>
             <button

@@ -48,7 +48,7 @@
             </div>
           </div>
           <div class="modal-btn">
-            <button class="btn-send-templates" @click="sendEvent">Надіслати</button>
+            <button class="btn-send-templates" @click="sendEvent">Створити</button>
           </div>
         </div>
       </div>
