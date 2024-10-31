@@ -220,6 +220,36 @@ const apiService = {
         return response.data; // повертаємо дані отримані з сервера
     },
 
+    // Функція для оновлення даних івента у календарі (консультації)
+    updateConsultationCalendar: async (token, consultationId, consultationData) => {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                'authtoken': token,
+            }
+        };
+
+        const payload = {
+            id: consultationId,
+            consultation_date: consultationData.date,
+        };
+
+        const response = await axios.patch(`${BASE_URL}/api/v1/consultations/${consultationId}`, payload, config);
+        return response.data;
+    },
+
+    // Функція для видалення сесії зі сторінки Мої сесії
+    deleteClientConsultation: async (token, consultationId) => {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                'authtoken': token,
+            },
+        };
+        const response = await axios.delete(`${BASE_URL}/api/v1/consultations/${consultationId}`, config);
+        return response.data;
+    },
+
     // Функція відправки заповненої форми з активної сесії
     submitSessionAnswers: (payload, token) => {
         return axios.post(`${BASE_URL}/api/v1/answers`, payload, {
@@ -227,6 +257,16 @@ const apiService = {
                 'Content-Type': 'application/json',
                 'authtoken': token,
             },
+        });
+    },
+
+    // Функція для відправки оновлених даних сесії
+    sendEditedConsultation: (payload, token) => {
+        return axios.patch(`${BASE_URL}/api/v1/answers`, payload, {
+            headers: {
+                "Content-Type": "application/json",
+                authtoken: token
+            }
         });
     },
 
@@ -437,7 +477,48 @@ const apiService = {
         return response.data;
     },
 
+    //Функція для відображення всіх заархівованих клієнтів
+    getArchiveClients: (token) => {
+        return axios.get(`${BASE_URL}/api/v1/clients/archive`, {
+            headers: { 'authtoken': token }
+        });
+    },
 
+    // Функція архівування клієнтів
+    AddArchiveClient: async (token, clientId) => {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                'authtoken': token,
+            },
+        };
+        const response = await axios.post(`${BASE_URL}/api/v1/clients/${clientId}/soft_delete`, {}, config);
+        return response.data;
+    },
+
+    // Функція розархівування клієнтів
+    RestoreArchiveClient: async (token, clientId) => {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                'authtoken': token,
+            },
+        };
+        const response = await axios.post(`${BASE_URL}/api/v1/clients/${clientId}/restore`, {}, config);
+        return response.data;
+    },
+
+    // Функція отримання сесій конкретного клієнта
+    getClientConsultations: async (token, clientId) => {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                'authtoken': token,
+            },
+        };
+        const response = await axios.get(`${BASE_URL}/api/v1/clients/${clientId}/consultations`, config);
+        return response.data;
+    },
 };
 
 export default apiService;

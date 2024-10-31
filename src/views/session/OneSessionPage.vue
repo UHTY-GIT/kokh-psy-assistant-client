@@ -6,9 +6,14 @@
         <p>
           Сесія №{{ numberConsultation }} "{{ consultationTitle }}", клієнт {{ clientName }}
         </p>
-        <p>
-          {{ formattedDate }}
-        </p>
+        <div class="block-btn-view-session">
+          <p>
+            {{ formattedDate }}
+          </p>
+          <button class="btn-editing" @click="openEditSession">
+            <img src="../../assets/icons/edit-form.svg" alt="Редагування полів форми">
+          </button>
+        </div>
       </div>
       <hr class="hr_profile">
     </div>
@@ -50,6 +55,7 @@ export default {
     const formItems = ref([]);
     const dateConsultation = ref();
     const numberConsultation = ref();
+    const consultationId = ref(route.params.id);
 
     const fetchConsultation = async () => {
       const token = localStorage.getItem('token'); // отримання токена з локального сховища
@@ -95,6 +101,13 @@ export default {
       return dateConsultation.value ? formatDate(dateConsultation.value) : '';
     });
 
+    const openEditSession = () => {
+      router.push({
+        name: 'EditOneSession',
+        params: { id: consultationId.value }
+      });
+    };
+
     onMounted(fetchConsultation);
 
     return {
@@ -103,7 +116,8 @@ export default {
       formItems,
       categorizedFields,
       numberConsultation,
-      formattedDate
+      formattedDate,
+      openEditSession
     };
   },
 };

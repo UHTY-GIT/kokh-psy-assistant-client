@@ -66,7 +66,7 @@ const routes = [
     path: '/active-session',
     name: 'ActiveSession',
     meta: { layout: 'main', requiresAuth: true },
-    component: () => import('../views/ActiveSessionPage.vue')
+    component: () => import('../views/session/ActiveSessionPage.vue')
   },
   {
     path: '/view-client-info/:id',
@@ -86,7 +86,14 @@ const routes = [
     path: '/view-one-session/:id',
     name: 'ViewOneSession',
     meta: { layout: 'main', requiresAuth: true },
-    component: () => import('../views/OneSessionPage.vue'),
+    component: () => import('../views/session/OneSessionPage.vue'),
+    props: true,
+  },
+  {
+    path: '/edit-one-session/:id',
+    name: 'EditOneSession',
+    meta: { layout: 'main', requiresAuth: true },
+    component: () => import('../views/session/EditOneSessionPage.vue'),
     props: true,
   },
   {
@@ -136,6 +143,12 @@ const routes = [
     name: 'ViewExpertRating',
     meta: { layout: 'main', requiresAuth: true },
     component: () => import('../views/client/ViewExpertRating.vue'),
+  },
+  {
+    path: '/view-all-archive-client',
+    name: 'AllClientsArchivePage',
+    meta: { layout: 'main', requiresAuth: true },
+    component: () => import('../views/all-clients/AllClientsArchivePage.vue'),
   },
   {
     path: '/:pathMatch(.*)*',

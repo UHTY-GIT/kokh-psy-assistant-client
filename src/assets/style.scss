@@ -701,6 +701,7 @@ Client styles
   thead {
     font-weight: 700;
     font-size: $XS-size;
+    color: #494B55;
   }
   tbody {
     font-weight: 600;
@@ -1973,3 +1974,147 @@ button:focus {
     }
   }
 }
+
+.group-button-all-client {
+  display: flex;
+
+  .btn-archive {
+    display: flex;
+    font-family: "Nunito";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 17px;
+    padding: 10px 10px;
+    margin: 0 0 0 10px;
+    text-align: center;
+    color: #FFFFFF;
+    background: #DAB189 !important;
+    box-shadow: 0px 4px 0px #BA9571 !important;
+    border-radius: 10px;
+    border: none;
+    transition: 0.3s;
+    height: auto;
+    line-height: normal;
+    align-items: center;
+    justify-content: center;
+
+
+    &:hover {
+      background: #DAB189;
+
+    }
+
+    &:active {
+      -webkit-transform: translateY(5px);
+      -ms-transform: translateY(5px);
+      transform: translateY(5px);
+      -webkit-box-shadow: 0px 2px 0px #BA9571;
+      box-shadow: 0px 2px 0px #BA9571 !important;
+    }
+
+    img {
+      width: 22px;
+    }
+  }
+}
+.title-archive {
+  padding: 0 10px 10px;
+}
+.non-archive-client {
+  p {
+    font-weight: 700;
+    font-size: 18px;
+    color: #494B55;
+    padding: 15px 15px !important;
+    border-radius: 0px;
+    text-align: center;
+    width: 100%;
+  }
+}
+.block-btn-view-session {
+  display: flex;
+  align-items: center;
+
+  .btn-editing {
+    display: flex;
+    font-family: "Nunito";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 17px;
+    padding: 10px 10px;
+    margin: 0 0 0 10px;
+    text-align: center;
+    color: #FFFFFF;
+    background: #DAB189 !important;
+    box-shadow: 0px 4px 0px #BA9571 !important;
+    border-radius: 10px;
+    border: none;
+    transition: 0.3s;
+    height: auto;
+    line-height: normal;
+    align-items: center;
+    justify-content: center;
+
+
+    &:hover {
+      background: #DAB189;
+
+    }
+
+    &:active {
+      -webkit-transform: translateY(5px);
+      -ms-transform: translateY(5px);
+      transform: translateY(5px);
+      -webkit-box-shadow: 0px 2px 0px #BA9571;
+      box-shadow: 0px 2px 0px #BA9571 !important;
+    }
+
+    img {
+      width: 22px;
+    }
+  }
+}
+.container-all-session-client {
+  display: flex;
+  flex-wrap: wrap;
+
+  .block_one_consultation {
+    background-color: $search-color;
+    border-radius: 12px;
+    padding: 13px 17px;
+    min-width: 400px;
+    margin: 10px 10px 0 0;
+
+    a {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      div {
+        display: flex;
+        align-items: center;
+
+        p {
+          font-weight: 600;
+          font-size: 18px;
+          color: #FFFFFF;
+          margin: 0;
+
+          span:nth-child(2) {
+            padding: 0 0 0 10px;
+          }
+        }
+        .date-consultation-client {
+          //font-size: 15px;
+        }
+
+        img {
+          width: 20px;
+          height: 20px;
+          margin: 0 0 0 10px;
+        }
+      }
+    }
+  }
+}
+

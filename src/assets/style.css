@@ -779,6 +779,7 @@ Client styles
 .table thead {
   font-weight: 700;
   font-size: 18px;
+  color: #494B55;
 }
 .table tbody {
   font-weight: 600;
@@ -1944,6 +1945,130 @@ button:focus {
   color: #494B55;
   font-size: 18px;
   font-weight: 600;
+}
+
+.group-button-all-client {
+  display: flex;
+}
+.group-button-all-client .btn-archive {
+  display: flex;
+  font-family: "Nunito";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 17px;
+  padding: 10px 10px;
+  margin: 0 0 0 10px;
+  text-align: center;
+  color: #FFFFFF;
+  background: #DAB189 !important;
+  box-shadow: 0px 4px 0px #BA9571 !important;
+  border-radius: 10px;
+  border: none;
+  transition: 0.3s;
+  height: auto;
+  line-height: normal;
+  align-items: center;
+  justify-content: center;
+}
+.group-button-all-client .btn-archive:hover {
+  background: #DAB189;
+}
+.group-button-all-client .btn-archive:active {
+  -webkit-transform: translateY(5px);
+  -ms-transform: translateY(5px);
+  transform: translateY(5px);
+  -webkit-box-shadow: 0px 2px 0px #BA9571;
+  box-shadow: 0px 2px 0px #BA9571 !important;
+}
+.group-button-all-client .btn-archive img {
+  width: 22px;
+}
+
+.title-archive {
+  padding: 0 10px 10px;
+}
+
+.non-archive-client p {
+  font-weight: 700;
+  font-size: 18px;
+  color: #494B55;
+  padding: 15px 15px !important;
+  border-radius: 0px;
+  text-align: center;
+  width: 100%;
+}
+
+.block-btn-view-session {
+  display: flex;
+  align-items: center;
+}
+.block-btn-view-session .btn-editing {
+  display: flex;
+  font-family: "Nunito";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 17px;
+  padding: 10px 10px;
+  margin: 0 0 0 10px;
+  text-align: center;
+  color: #FFFFFF;
+  background: #DAB189 !important;
+  box-shadow: 0px 4px 0px #BA9571 !important;
+  border-radius: 10px;
+  border: none;
+  transition: 0.3s;
+  height: auto;
+  line-height: normal;
+  align-items: center;
+  justify-content: center;
+}
+.block-btn-view-session .btn-editing:hover {
+  background: #DAB189;
+}
+.block-btn-view-session .btn-editing:active {
+  -webkit-transform: translateY(5px);
+  -ms-transform: translateY(5px);
+  transform: translateY(5px);
+  -webkit-box-shadow: 0px 2px 0px #BA9571;
+  box-shadow: 0px 2px 0px #BA9571 !important;
+}
+.block-btn-view-session .btn-editing img {
+  width: 22px;
+}
+
+.container-all-session-client {
+  display: flex;
+  flex-wrap: wrap;
+}
+.container-all-session-client .block_one_consultation {
+  background-color: rgb(73, 75, 85);
+  border-radius: 12px;
+  padding: 13px 17px;
+  min-width: 400px;
+  margin: 10px 10px 0 0;
+}
+.container-all-session-client .block_one_consultation a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.container-all-session-client .block_one_consultation a div {
+  display: flex;
+  align-items: center;
+}
+.container-all-session-client .block_one_consultation a div p {
+  font-weight: 600;
+  font-size: 18px;
+  color: #FFFFFF;
+  margin: 0;
+}
+.container-all-session-client .block_one_consultation a div p span:nth-child(2) {
+  padding: 0 0 0 10px;
+}
+.container-all-session-client .block_one_consultation a div img {
+  width: 20px;
+  height: 20px;
+  margin: 0 0 0 10px;
 }
 
 /*# sourceMappingURL=style.css.map */

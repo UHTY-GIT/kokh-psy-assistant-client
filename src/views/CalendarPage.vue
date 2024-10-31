@@ -1,7 +1,6 @@
-<!--src/views/CalendarPage.vue-->
+<!-- src/views/CalendarPage.vue -->
 <template>
   <div class="calendar-width">
-
     <FullCalendar
         class='demo-app-calendar'
         :options='calendarOptions'
@@ -10,7 +9,7 @@
       <!--      <i>{{ arg.event.title }}</i>-->
     </FullCalendar>
   </div>
-  <!--  Модальне вікно-->
+  <!--  Модальні вікна для створення та видалення -->
   <ModalCalendar
       v-if="showCreateModal"
       :showModal="showCreateModal"
@@ -19,7 +18,6 @@
       :allDay="showAllDay"
       @close="closeCreateModal"
   />
-  <!--  Модальне вікно для видалення -->
   <ModalDeleteCalendar
       v-if="showDeleteModal"
       :showModal="showDeleteModal"
@@ -29,6 +27,7 @@
       @confirm="deleteSession"
   />
 </template>
+
 <script>
 import { defineComponent, ref, onMounted } from 'vue';
 import FullCalendar from '@fullcalendar/vue3';
@@ -40,7 +39,7 @@ import ModalCalendar from "@/components/modal/ModalCalendar.vue";
 import ModalDeleteCalendar from "@/components/modal/ModalDeleteCalendar.vue";
 import apiService from "@/services/apiService";
 import M from "materialize-css";
-import {useRouter} from "vue-router";
+import { useRouter } from "vue-router";
 
 export default defineComponent({
   components: {
@@ -77,6 +76,7 @@ export default defineComponent({
       events: events.value,
       select: handleDateSelect,
       eventClick: handleEventClick,
+      eventDrop: handleEventDrop,  // Подія для обробки drag-and-drop
       eventsSet: handleEvents
     });
 
@@ -86,6 +86,7 @@ export default defineComponent({
         const response = await apiService.getEvents(token);
         events.value = response.data.map(event => ({
           id: event.id,
+          consultation_id: event.consultation_id || null,
           title: `${event.name} - ${event.client.first_name}`,
           start: event.date,
           end: event.date,
@@ -95,24 +96,13 @@ export default defineComponent({
       } catch (error) {
         console.error('Error fetching events:', error);
         M.toast({ html: `Увійдіть у систему` });
-        router.push({name: 'login'});
+        router.push({ name: 'login' });
       }
     }
 
     function formatDate(date) {
-      let d = new Date(date);
-      let year = d.getFullYear();
-      let month = (d.getMonth() + 1).toString().padStart(2, '0');
-      let day = d.getDate().toString().padStart(2, '0');
-      let hours = d.getHours().toString().padStart(2, '0');
-      let minutes = d.getMinutes().toString().padStart(2, '0');
-      let seconds = d.getSeconds().toString().padStart(2, '0');
-      let milliseconds = d.getMilliseconds().toString().padStart(6, '0');
-      let timezoneOffset = -d.getTimezoneOffset();
-      let sign = timezoneOffset >= 0 ? '+' : '-';
-      let offsetHours = Math.floor(Math.abs(timezoneOffset) / 60).toString().padStart(2, '0');
-      let offsetMinutes = (Math.abs(timezoneOffset) % 60).toString().padStart(2, '0');
-      return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}.${milliseconds} ${sign}${offsetHours}${offsetMinutes}`;
+      const d = new Date(date);
+      return d.toISOString(); // Форматуємо дату для API
     }
 
     function handleDateSelect(selectInfo) {
@@ -127,6 +117,30 @@ export default defineComponent({
       nameSession.value = clickInfo.event.title.split(' - ')[0];
       firstNameClient.value = clickInfo.event.title.split(' - ')[1];
       eventId.value = clickInfo.event.id;
+    }
+
+    async function handleEventDrop(dropInfo) {
+      const token = localStorage.getItem('token');
+      const consultationId = dropInfo.event.extendedProps.consultation_id;
+
+      if (!consultationId) {
+        M.toast({ html: "До цієї події не прив’язана консультація" });
+        return;
+      }
+
+      const updatedEvent = {
+        id: consultationId,
+        date: formatDate(dropInfo.event.start)
+      };
+
+      try {
+        await apiService.updateConsultationCalendar(token, updatedEvent.id, updatedEvent);
+        M.toast({ html: `Консультацію оновлено` });
+        fetchEvents();
+      } catch (error) {
+        console.error("Помилка оновлення консультації:", error);
+        M.toast({ html: "Не вдалося оновити консультацію" });
+      }
     }
 
     async function deleteSession() {

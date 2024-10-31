@@ -43,7 +43,7 @@
       </div>
       <div class="container-global-form-edit active_session_button">
         <button class="global-form-edit" type="submit">
-          <img src="@/assets/icons/share.svg" alt="Send name form">
+          <img src="../../assets/icons/share.svg" alt="Send name form">
           <span class="edit-link">Завершити сесію</span>
         </button>
       </div>

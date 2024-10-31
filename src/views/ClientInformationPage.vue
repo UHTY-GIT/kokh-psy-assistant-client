@@ -140,6 +140,32 @@
             </div>
           </div>
         </div>
+        <div class="titte_field">
+          <p>
+            Сесії клієнта
+          </p>
+        </div>
+        <div class="container-all-session-client">
+          <div
+              v-for="consultation in consultations" :key="consultation.id" class="block_one_consultation"
+          >
+            <router-link :to="{ name: 'ViewOneSession', params: { id: consultation.id } }"
+                         v-if="consultation && consultation.id">
+              <div>
+                <p>
+                  <span>№{{ consultation.number }}</span>
+                  <span>{{ consultation.title }}</span>
+                </p>
+              </div>
+              <div>
+                <p class="date-consultation-client">
+                  {{ formatDate(consultation.consultation_date) }}
+                </p>
+                <img src="@/assets/icons/share.svg" alt="View consultation client">
+              </div>
+            </router-link>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -159,6 +185,7 @@ export default {
     const clientId = ref(route.params.id)
     const router = useRouter();
     const isDropdownOpen = ref(false);
+    const consultations = ref([]);
 
     const fetchClientInfo = async () => {
       const token = localStorage.getItem('token');
@@ -173,6 +200,23 @@ export default {
         client.value = response.data;
       } catch (error) {
         console.error('Error fetching client info:', error);
+      }
+    };
+
+    // Функція для отримання всіх сесій клієнта
+    const fetchClientConsultations = async () => {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        M.toast({ html: 'Будь ласка, увійдіть у систему' });
+        return;
+      }
+
+      try {
+        const response = await apiService.getClientConsultations(token, clientId.value);
+        consultations.value = response.data;
+      } catch (error) {
+        console.error('Error fetching consultations:', error);
+        M.toast({ html: 'Помилка завантаження сесій' });
       }
     };
 
@@ -243,8 +287,16 @@ export default {
       }
     };
 
+    const formatDate = (date) => {
+      if (!date) return '';
+      const d = new Date(date);
+      return d.toLocaleDateString('uk-UA', { year: 'numeric', month: '2-digit', day: '2-digit' });
+    };
+
     // Додаємо слухача події для закриття випадаючого списку при кліку поза його межами
     onMounted(() => {
+      fetchClientInfo();
+      fetchClientConsultations();
       document.addEventListener('click', closeDropdown);
     });
 
@@ -266,7 +318,9 @@ export default {
       goToAddExpertRating,
       goToViewExpertRating,
       toggleDropdown,
-      isDropdownOpen
+      isDropdownOpen,
+      consultations,
+      formatDate
     };
   }
 };
