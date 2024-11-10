@@ -15,6 +15,7 @@
           <img src="@/assets/icons/more.png" alt="Menu" />
         </button>
         <div v-if="isDropdownOpen" class="dropdown-menu">
+          <button @click.prevent="">Назначити партнера</button>
           <button @click.prevent="goToAddCoupleCycle">Додати цикл пари</button>
           <button @click.prevent="goToViewCoupleCycle">Переглянути цикл пари</button>
           <button @click.prevent="goToAddDigest">Додати дайджест психотерапевтичних думок</button>

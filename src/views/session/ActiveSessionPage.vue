@@ -83,6 +83,7 @@ export default {
     const clientId = parseInt(route.query.clientId);
     const clientName = route.query.clientName;
     const clientTelegramId = route.query.TelegramId;
+    const PartnerTelegramId = route.query.PartnerTelegramId || null;
     const customFormId = route.query.customFormId;
     const customFormTitle = route.query.customFormTitle;
     const sessionNumber = route.query.sessionNumber;
@@ -166,6 +167,9 @@ export default {
           // Відправка повідомлення в телеграм
           try {
             await apiService.sendSessionEndNotification(clientTelegramId);
+            if (PartnerTelegramId) {
+              await apiService.sendSessionEndNotification(PartnerTelegramId);
+            }
             M.toast({ html: 'Повідомлення у телеграм успішно надіслано' });
           } catch (telegramError) {
             console.error('Error sending Telegram notification:', telegramError);
@@ -188,6 +192,7 @@ export default {
       clientId,
       clientName,
       clientTelegramId,
+      PartnerTelegramId,
       customFormId,
       customFormTitle,
       sessionNumber,

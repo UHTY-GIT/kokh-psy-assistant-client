@@ -125,18 +125,27 @@ export default {
 
     const startSession = (consultation) => {
       showModal.value = false;
+
+      // об'єкт з необхідними параметрами
+      const queryParams = {
+        clientId: consultation.client.id,
+        clientName: consultation.client.first_name,
+        TelegramId: consultation.client.telegram_id,
+        customFormId: consultation.custom_form.id,
+        customFormTitle: consultation.custom_form.title,
+        sessionNumber: consultation.number,
+        IDconsultation: consultation.id,
+        dateConsultation: consultation.consultation_date
+      };
+
+      // Якщо є партнер і його Telegram ID, додаємо до параметрів
+      if (consultation.partner && consultation.partner.telegram_id) {
+        queryParams.PartnerTelegramId = consultation.partner.telegram_id;
+      }
+
       router.push({
         name: 'ActiveSession',
-        query: {
-          clientId: consultation.client.id,
-          clientName: consultation.client.first_name,
-          TelegramId: consultation.client.telegram_id,
-          customFormId: consultation.custom_form.id,
-          customFormTitle: consultation.custom_form.title,
-          sessionNumber: consultation.number,
-          IDconsultation: consultation.id,
-          dateConsultation: consultation.consultation_date
-        }
+        query: queryParams
       });
     };
 
