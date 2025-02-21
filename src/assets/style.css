@@ -1949,6 +1949,7 @@ button:focus {
 
 .group-button-all-client {
   display: flex;
+  gap: 10px;
 }
 .group-button-all-client .btn-archive {
   display: flex;
@@ -1957,7 +1958,6 @@ button:focus {
   font-weight: 700;
   font-size: 17px;
   padding: 10px 10px;
-  margin: 0 0 0 10px;
   text-align: center;
   color: #FFFFFF;
   background: #DAB189 !important;
@@ -1981,6 +1981,38 @@ button:focus {
   box-shadow: 0px 2px 0px #BA9571 !important;
 }
 .group-button-all-client .btn-archive img {
+  width: 22px;
+}
+.group-button-all-client .btn-statistic {
+  display: flex;
+  font-family: "Nunito";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 17px;
+  padding: 10px 10px;
+  text-align: center;
+  color: #FFFFFF;
+  background: #DAB189 !important;
+  box-shadow: 0px 4px 0px #BA9571 !important;
+  border-radius: 10px;
+  border: none;
+  transition: 0.3s;
+  height: auto;
+  line-height: normal;
+  align-items: center;
+  justify-content: center;
+}
+.group-button-all-client .btn-statistic:hover {
+  background: #DAB189;
+}
+.group-button-all-client .btn-statistic:active {
+  -webkit-transform: translateY(5px);
+  -ms-transform: translateY(5px);
+  transform: translateY(5px);
+  -webkit-box-shadow: 0px 2px 0px #BA9571;
+  box-shadow: 0px 2px 0px #BA9571 !important;
+}
+.group-button-all-client .btn-statistic img {
   width: 22px;
 }
 
@@ -2069,6 +2101,99 @@ button:focus {
   width: 20px;
   height: 20px;
   margin: 0 0 0 10px;
+}
+
+/*
+Statistic styles
+*/
+.statisctic-section {
+  margin: 0 30px;
+}
+
+.statistic-dropdown-container {
+  margin: 20px 0;
+}
+.statistic-dropdown-container .dropdown-toggle {
+  background-color: #72a8ba;
+  border: none;
+  width: 100%;
+  padding: 17px;
+  display: flex;
+  justify-content: space-between;
+  border-radius: 16px;
+  align-items: center;
+}
+.statistic-dropdown-container .dropdown-toggle .dropdown-text {
+  font-family: "Nunito";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 20px;
+  color: #fff;
+}
+.statistic-dropdown-container .dropdown-toggle .dropdown-icon {
+  width: 20px;
+}
+.statistic-dropdown-container ul {
+  margin: 0;
+}
+.statistic-dropdown-container ul li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin: 20px 0 20px 0;
+  color: #494B55;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 22px;
+}
+.statistic-dropdown-container ul li img {
+  width: 20px;
+}
+.statistic-dropdown-container ul li p {
+  margin: 0;
+  color: #494B55;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 22px;
+}
+
+/* Анімація для плавного відкриття/закриття */
+.slide-fade-enter-active, .slide-fade-leave-active {
+  transition: all 0.3s ease;
+}
+
+.slide-fade-enter-from, .slide-fade-leave-to {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+}
+
+.slide-fade-enter-to, .slide-fade-leave-from {
+  height: auto;
+  opacity: 1;
+}
+
+/* Анімація обертання іконки */
+.dropdown-icon {
+  transition: transform 0.3s ease;
+}
+
+.dropdown-icon.rotated {
+  transform: rotate(45deg);
+}
+
+.graphs p {
+  color: #494B55;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 22px;
+}
+
+.bar-graphs h5 {
+  color: #494B55;
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 24px;
 }
 
 /*# sourceMappingURL=style.css.map */

@@ -2,6 +2,7 @@
 import axios from 'axios';
 
 const BASE_URL = 'https://assistant.psy-kokh.online';
+//const BASE_URL = 'https://development-assistant.psy-kokh.online';
 const BASE_URL_TELEGRAM = 'https://psykokhbot.herokuapp.com';
 
 const apiService = {
@@ -519,6 +520,45 @@ const apiService = {
         const response = await axios.get(`${BASE_URL}/api/v1/clients/${clientId}/consultations`, config);
         return response.data;
     },
+
+    // Функція для отримання статистики з первинного опитування
+    getPrimaryPollStatistics: async (token) => {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                'authtoken': token,
+            },
+        };
+
+        const response = await axios.get(`${BASE_URL}/api/v1/statistics/primary_polls`, config);
+        return response.data;
+    },
+
+    // Функція для отримання статистики з консультацій (Патерн самозахисту)
+    getConsultationStatistics: async (token) => {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                'authtoken': token,
+            },
+        };
+
+        const response = await axios.get(`${BASE_URL}/api/v1/statistics/consultations`, config);
+        return response.data;
+    },
+
+    // Функція для отримання даних для графіків статистики клієнтів
+    getClientPortrait: async (token) => {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                'authtoken': token,
+            },
+        };
+
+        const response = await axios.get(`${BASE_URL}/api/v1/graphics/client_portrait`, config);
+        return response.data;
+    }
 };
 
 export default apiService;

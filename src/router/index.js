@@ -151,6 +151,12 @@ const routes = [
     component: () => import('../views/all-clients/AllClientsArchivePage.vue'),
   },
   {
+    path: '/statistic-client',
+    name: 'AllStatisticPage',
+    meta: { layout: 'main', requiresAuth: true },
+    component: () => import('../views/statistic/ClientStatisticPage.vue'),
+  },
+  {
     path: '/:pathMatch(.*)*',
     redirect: '/'
   }

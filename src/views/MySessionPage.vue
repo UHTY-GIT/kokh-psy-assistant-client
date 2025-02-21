@@ -17,7 +17,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr v-for="consultation in consultations" :key="consultation.id">
+        <tr v-for="consultation in paginatedConsultations" :key="consultation.id">
           <td>{{ consultation.number }}</td>
           <td>{{ formatTime(consultation.consultation_date) }}</td>
           <td>{{ formatDate(consultation.consultation_date) }}</td>
@@ -52,11 +52,11 @@
 
     <div class="client-footer">
       <div class="pagination-info">
-        Сторінка 1 з 10
+        Сторінка {{ currentPage }} з {{ totalPages }}
       </div>
       <div class="pagination-controls">
-        <button class="btn-pagination before">назад</button>
-        <button class="btn-pagination after">далі</button>
+        <button class="btn-pagination before" @click="changePage(-1)" :disabled="currentPage === 1">назад</button>
+        <button class="btn-pagination after" @click="changePage(1)" :disabled="currentPage === totalPages">далі</button>
       </div>
     </div>
   </section>
@@ -72,7 +72,7 @@
 </template>
 
 <script>
-import { ref, onMounted } from 'vue';
+import {ref, onMounted, computed} from 'vue';
 import apiService from "@/services/apiService";
 import { useRouter } from 'vue-router';
 import M from "materialize-css";
@@ -88,6 +88,11 @@ export default {
     const showModal = ref(false);
     const selectedConsultation = ref(null);
     const router = useRouter();
+
+    // Пагінація
+    const currentPage = ref(1);
+    const itemsPerPage = 10; // Кількість сесій на сторінку
+    const totalPages = computed(() => Math.ceil(consultations.value.length / itemsPerPage));
 
     const fetchConsultations = async () => {
       try {
@@ -204,6 +209,19 @@ export default {
       }
     };
 
+    //Пагінація
+    const paginatedConsultations = computed(() => {
+      const start = (currentPage.value - 1) * itemsPerPage;
+      const end = start + itemsPerPage;
+      return consultations.value.slice(start, end);
+    });
+
+    const changePage = (step) => {
+      if (currentPage.value + step >= 1 && currentPage.value + step <= totalPages.value) {
+        currentPage.value += step;
+      }
+    };
+
     onMounted(fetchConsultations);
 
     return {
@@ -217,7 +235,11 @@ export default {
       selectedConsultation,
       getStatusIcon,
       getStatusTooltip,
-      deleteClientSession
+      deleteClientSession,
+      currentPage,
+      totalPages,
+      changePage,
+      paginatedConsultations
     };
   }
 }

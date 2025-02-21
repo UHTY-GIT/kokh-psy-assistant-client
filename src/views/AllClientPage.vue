@@ -9,6 +9,9 @@
         <button class="btn-refresh">
           <img src="@/assets/icons/refresh.svg" alt="Оновити">
         </button>
+        <button class="btn-statistic" @click="OpenStatistic">
+          <img src="@/assets/icons/chart-histogram.png" alt="Статистика">
+        </button>
         <button class="btn-archive" @click="OpenArchive">
           <img src="@/assets/icons/archive-view.png" alt="Архів клієнтів">
         </button>
@@ -29,7 +32,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr v-for="client in clients" :key="client.telegram_id">
+        <tr v-for="client in paginatedClients" :key="client.telegram_id">
 <!--          Якщо змінити ключ на client.id тоді зміниться порядок клієнтів-->
           <td>{{ client.name }}</td>
           <td>{{ client.phone }}</td>
@@ -57,11 +60,11 @@
 
     <div class="client-footer">
       <div class="pagination-info">
-        Сторінка 1 з 10
+        Сторінка {{ currentPage }} з {{ totalPages }}
       </div>
       <div class="pagination-controls">
-        <button class="btn-pagination before">назад</button>
-        <button class="btn-pagination after">далі</button>
+        <button class="btn-pagination before" @click="changePage(-1)" :disabled="currentPage === 1">назад</button>
+        <button class="btn-pagination after" @click="changePage(1)" :disabled="currentPage === totalPages">далі</button>
       </div>
     </div>
   </section>
@@ -80,7 +83,7 @@
 <script>
 import apiService from '@/services/apiService';
 import M from 'materialize-css';
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import ModalTemplates from "@/components/modal/ModalTemplates.vue";
 import {useRouter} from "vue-router";
 export default {
@@ -97,6 +100,11 @@ export default {
     const clientWasAgreedConsent = ref(false);
     const clientPrimaryPollComplete = ref(false);
     const router = useRouter();
+
+    // Пагінація
+    const currentPage = ref(1);
+    const itemsPerPage = 10; // Кількість клієнтів на сторінку
+    const totalPages = computed(() => Math.ceil(clients.value.length / itemsPerPage));
 
     const fetchClients = async () => {
       try {
@@ -151,6 +159,10 @@ export default {
       router.push({name: 'AllClientsArchivePage'})
     };
 
+    const OpenStatistic = () => {
+      router.push({name: 'AllStatisticPage'})
+    };
+
     const AddToArchive = async (clientId) => {
       try {
         const token = localStorage.getItem('token');
@@ -170,6 +182,20 @@ export default {
       }
     }
 
+
+    //Пагінація сторінок
+    const paginatedClients = computed(() => {
+      const start = (currentPage.value - 1) * itemsPerPage;
+      const end = start + itemsPerPage;
+      return clients.value.slice(start, end);
+    });
+
+    const changePage = (step) => {
+      if (currentPage.value + step >= 1 && currentPage.value + step <= totalPages.value) {
+        currentPage.value += step;
+      }
+    };
+
     // Перенесіть логіку з mounted сюди, якщо потрібно запустити щось при створенні компонента
     fetchClients();
 
@@ -184,7 +210,12 @@ export default {
       clientPrimaryPollComplete,
       viewClientInfo,
       OpenArchive,
-      AddToArchive
+      AddToArchive,
+      currentPage,
+      totalPages,
+      changePage,
+      paginatedClients,
+      OpenStatistic
     }
   }
 };

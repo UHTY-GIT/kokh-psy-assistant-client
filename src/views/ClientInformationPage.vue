@@ -15,7 +15,7 @@
           <img src="@/assets/icons/more.png" alt="Menu" />
         </button>
         <div v-if="isDropdownOpen" class="dropdown-menu">
-          <button @click.prevent="">Назначити партнера</button>
+          <button @click.prevent="openAppointPartnerModal">Назначити партнера</button>
           <button @click.prevent="goToAddCoupleCycle">Додати цикл пари</button>
           <button @click.prevent="goToViewCoupleCycle">Переглянути цикл пари</button>
           <button @click.prevent="goToAddDigest">Додати дайджест психотерапевтичних думок</button>
@@ -131,12 +131,22 @@
                 <p>Партнер</p>
               </div>
               <div class="type-of-answers">
-                <p class="link-in-page">
+                <p v-if="partnerName" class="link-in-page">
                   <router-link :to="{ name: 'ClientInformation', params: { id: client.partner_id } }">
-                    {{ client.partner_id }}
+                    {{ partnerName }}
                     <img src="@/assets/icons/share.svg" alt="icon">
                   </router-link>
                 </p>
+              </div>
+            </div>
+          </div>
+          <div class="block_info_client" v-if="client.number_of_consultation">
+            <div class="text-template-for-view">
+              <div class="type-for-view">
+                <p>Залишок консультацій</p>
+              </div>
+              <div class="type-of-answers">
+                <p>{{ client.number_of_consultation }}</p>
               </div>
             </div>
           </div>
@@ -170,6 +180,12 @@
       </div>
     </div>
   </section>
+  <ModalAppointPartner
+      v-if="showAppointPartnerModal"
+      :showModal="showAppointPartnerModal"
+      :clientId="client.id"
+      @close="closeAppointPartnerModal"
+  />
 </template>
 
 <script>
@@ -177,9 +193,13 @@ import { ref, onMounted, watch, onBeforeUnmount } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import apiService from '@/services/apiService';
 import M from 'materialize-css';
+import ModalAppointPartner from "@/components/modal/ModalAppointPartner.vue";
 
 export default {
   name: 'ClientInformation',
+  components: {
+    ModalAppointPartner
+  },
   setup() {
     const route = useRoute();
     const client = ref({});
@@ -187,6 +207,8 @@ export default {
     const router = useRouter();
     const isDropdownOpen = ref(false);
     const consultations = ref([]);
+    const showAppointPartnerModal = ref(false);
+    const partnerName = ref("");
 
     const fetchClientInfo = async () => {
       const token = localStorage.getItem('token');
@@ -199,8 +221,26 @@ export default {
       try {
         const response = await apiService.getClientById(token, clientId.value);
         client.value = response.data;
+
+        // Якщо у клієнта є partner_id, викликаємо функцію отримання імені партнера
+        if (client.value.partner_id) {
+          fetchPartnerName(client.value.partner_id);
+        }
       } catch (error) {
         console.error('Error fetching client info:', error);
+      }
+    };
+
+    // Отримати ім'я партнера за його ID
+    const fetchPartnerName = async (partnerId) => {
+      const token = localStorage.getItem('token');
+      if (!token) return;
+
+      try {
+        const response = await apiService.getClientById(token, partnerId);
+        partnerName.value = response.data.name;
+      } catch (error) {
+        console.error("Error fetching partner name:", error);
       }
     };
 
@@ -252,6 +292,13 @@ export default {
         default:
           return type;
       }
+    };
+
+    const openAppointPartnerModal = () => {
+      showAppointPartnerModal.value = true;
+    };
+    const closeAppointPartnerModal = () => {
+      showAppointPartnerModal.value = false;
     };
 
     const goToAddCoupleCycle = () => {
@@ -321,7 +368,11 @@ export default {
       toggleDropdown,
       isDropdownOpen,
       consultations,
-      formatDate
+      formatDate,
+      openAppointPartnerModal,
+      closeAppointPartnerModal,
+      showAppointPartnerModal,
+      partnerName,
     };
   }
 };
