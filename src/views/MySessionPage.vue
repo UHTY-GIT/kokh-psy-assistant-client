@@ -23,13 +23,25 @@
           <td>{{ formatDate(consultation.consultation_date) }}</td>
           <td>{{ consultation.client.first_name }}</td>
           <td class="all-butt-management">
-            <button class="btn-action" data-tooltip="Статус сесії">
-              <img src="@/assets/icons/status.svg" alt="Статус">
+            <button class="btn-action" :data-tooltip="getStatusTooltip(consultation.status)">
+              <img :src="getStatusIcon(consultation.status)" alt="Статус">
             </button>
             <button class="btn-action" data-tooltip="Переглянути дані сесії" @click="openViewSession(consultation.id)">
               <img src="@/assets/icons/visible-client.svg" alt="Переглянути">
             </button>
-            <button class="btn-action" data-tooltip="Перейти до сесії" @click="openModal(consultation)">
+            <button
+                class="btn-action"
+                data-tooltip="Видалити сесію"
+                @click="deleteClientSession(consultation.id)"
+            >
+              <img src="@/assets/icons/trash-client.svg" alt="Видалити сесію">
+            </button>
+            <button
+                class="btn-action"
+                data-tooltip="Перейти до сесії"
+                @click="openModal(consultation)"
+                :disabled="consultation.status === 'done'"
+            >
               <img src="@/assets/icons/share.svg" alt="Почати сесію">
             </button>
           </td>
@@ -113,18 +125,27 @@ export default {
 
     const startSession = (consultation) => {
       showModal.value = false;
+
+      // об'єкт з необхідними параметрами
+      const queryParams = {
+        clientId: consultation.client.id,
+        clientName: consultation.client.first_name,
+        TelegramId: consultation.client.telegram_id,
+        customFormId: consultation.custom_form.id,
+        customFormTitle: consultation.custom_form.title,
+        sessionNumber: consultation.number,
+        IDconsultation: consultation.id,
+        dateConsultation: consultation.consultation_date
+      };
+
+      // Якщо є партнер і його Telegram ID, додаємо до параметрів
+      if (consultation.partner && consultation.partner.telegram_id) {
+        queryParams.PartnerTelegramId = consultation.partner.telegram_id;
+      }
+
       router.push({
         name: 'ActiveSession',
-        query: {
-          clientId: consultation.client.id,
-          clientName: consultation.client.first_name,
-          TelegramId: consultation.client.telegram_id,
-          customFormId: consultation.custom_form.id,
-          customFormTitle: consultation.custom_form.title,
-          sessionNumber: consultation.number,
-          IDconsultation: consultation.id,
-          dateConsultation: consultation.consultation_date
-        }
+        query: queryParams
       });
     };
 
@@ -133,6 +154,54 @@ export default {
         name: 'ViewOneSession',
         params: { id }
       });
+    };
+
+    const deleteClientSession = async (id) => {
+      try {
+        const token = localStorage.getItem('token');
+        if (!token) {
+          M.toast({html: 'Будь ласка, увійдіть у систему'});
+          return;
+        }
+        const response = await apiService.deleteClientConsultation(token, id);
+        if (response.data === true) {
+          M.toast({html: 'Сесію успішно видалено'});
+          fetchConsultations(); // Оновлюємо список сесій
+        } else {
+          M.toast({html: 'Видалення не вдалося. Будь ласка, спробуйте знову'});
+        }
+      } catch (error) {
+        M.toast({html: 'Не вдалося видалити сесію'});
+        console.error('Error deleting session:', error);
+      }
+    }
+
+    // Функція для зміни іконки в залежності від статусу сесії
+    const getStatusIcon = (status) => {
+      switch (status) {
+        case "done":
+          return require('@/assets/icons/status-green.svg');
+        case "waiting_for_start":
+          return require('@/assets/icons/status.svg');
+        case "start_now":
+          return require('@/assets/icons/status-yellow.svg');
+        default:
+          return require('@/assets/icons/status.svg'); // Стандартна іконка за замовчуванням
+      }
+    };
+
+    // Функція для динамічного тексту data-tooltip
+    const getStatusTooltip = (status) => {
+      switch (status) {
+        case "done":
+          return "Статус - завершена";
+        case "waiting_for_start":
+          return "Статус - очікує початку";
+        case "start_now":
+          return "Статус - розпочата";
+        default:
+          return "Статус - очікує початку";
+      }
     };
 
     onMounted(fetchConsultations);
@@ -145,7 +214,10 @@ export default {
       startSession,
       openViewSession,
       showModal,
-      selectedConsultation
+      selectedConsultation,
+      getStatusIcon,
+      getStatusTooltip,
+      deleteClientSession
     };
   }
 }

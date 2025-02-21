@@ -66,7 +66,7 @@ const routes = [
     path: '/active-session',
     name: 'ActiveSession',
     meta: { layout: 'main', requiresAuth: true },
-    component: () => import('../views/ActiveSessionPage.vue')
+    component: () => import('../views/session/ActiveSessionPage.vue')
   },
   {
     path: '/view-client-info/:id',
@@ -86,14 +86,69 @@ const routes = [
     path: '/view-one-session/:id',
     name: 'ViewOneSession',
     meta: { layout: 'main', requiresAuth: true },
-    component: () => import('../views/OneSessionPage.vue'),
+    component: () => import('../views/session/OneSessionPage.vue'),
     props: true,
   },
   {
-    path: '/couple-cycle/:id',
+    path: '/edit-one-session/:id',
+    name: 'EditOneSession',
+    meta: { layout: 'main', requiresAuth: true },
+    component: () => import('../views/session/EditOneSessionPage.vue'),
+    props: true,
+  },
+  {
+    path: '/create-couple-cycle/:id',
     name: 'CoupleCycle',
     meta: { layout: 'main', requiresAuth: true },
-    component: () => import('../views/CoupleCyclePage.vue'),
+    component: () => import('../views/client/AddCoupleCycle.vue'),
+  },
+  {
+    path: '/view-couple-cycle/:id',
+    name: 'ViewCoupleCycle',
+    meta: { layout: 'main', requiresAuth: true },
+    component: () => import('../views/client/ViewCoupleCycle.vue'),
+  },
+  {
+    path: '/view-primary-poll/:id',
+    name: 'ViewPrimaryPoll',
+    meta: { layout: 'main', requiresAuth: true },
+    component: () => import('../views/client/ViewPrimaryPollClient.vue'),
+  },
+  {
+    path: '/view-information-consent/:id',
+    name: 'ViewInformationConsent',
+    meta: { layout: 'main', requiresAuth: true },
+    component: () => import('../views/client/ViewInformationConsentClient.vue'),
+  },
+  {
+    path: '/add-digest-psy-mind/:id',
+    name: 'AddDigestPsyMind',
+    meta: { layout: 'main', requiresAuth: true },
+    component: () => import('../views/client/AddDigestPsyMind.vue'),
+  },
+  {
+    path: '/view-digest-psy-mind/:id',
+    name: 'ViewDigestPsyMind',
+    meta: { layout: 'main', requiresAuth: true },
+    component: () => import('../views/client/ViewDigestPsyMind.vue'),
+  },
+  {
+    path: '/add-expert-rating/:id',
+    name: 'AddExpertRating',
+    meta: { layout: 'main', requiresAuth: true },
+    component: () => import('../views/client/AddExpertRating.vue'),
+  },
+  {
+    path: '/view-expert-rating/:id',
+    name: 'ViewExpertRating',
+    meta: { layout: 'main', requiresAuth: true },
+    component: () => import('../views/client/ViewExpertRating.vue'),
+  },
+  {
+    path: '/view-all-archive-client',
+    name: 'AllClientsArchivePage',
+    meta: { layout: 'main', requiresAuth: true },
+    component: () => import('../views/all-clients/AllClientsArchivePage.vue'),
   },
   {
     path: '/:pathMatch(.*)*',

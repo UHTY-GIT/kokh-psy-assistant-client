@@ -154,14 +154,14 @@
               Оплата послуг
             </span>
             <p>
-              Психолог надає послуги індивідуального консультування  вартістю  <b>4200 грн за одну  консультацію індивідуального консультування онлайн при короткостроковому консультуванні (до 12 онлайн- зустрічей)</b>
+              Психолог надає послуги індивідуального консультування  вартістю  <b>5000 грн за одну  консультацію індивідуального консультування онлайн при короткостроковому консультуванні (до 12 онлайн- зустрічей)</b>
             </p>
             <p>
               Якщо психолог і клієнт узгоджують пролонговану у часі роботу <b>(формат терапевтичного альянсу на 20 зустрічей)</b>, та підписують інформовану
               договірну згоду на <b>довгострокове консультування</b>  - вартість послуги індивідуального консультування
               становить:
               <br>
-              При терапевтичному альянсі <b>20 консультації - 3300 грн за одну консультацію</b> <br>
+              При терапевтичному альянсі <b>20 консультації - 4100 грн за одну консультацію</b> <br>
               Для клієнтів, які проживають в інших країнах відповідно: <br>
               Психолог надає послуги індивідуального консультування  вартістю  110€/110$ <b>за одну консультацію індивідуального консультування онлайн.</b>
               <br>
@@ -234,12 +234,19 @@
         </div>
 
         <div class="container-for-label-and-input" v-for="(field, index) in formFields" :key="index">
-
-          <!-- Для не-boolean типів поля -->
+          <!-- Для не-boolean та select_v2 типів поля -->
           <div v-if="field.field_type !== 'boolean'" class="input-field-text">
             <div class="container-input_froms_user">
               <label :for="`field-${index}`">{{ field.field_name }}</label>
-              <input :id="`field-${index}`" type="text" v-model="field.value" required placeholder="Ваша відповідь"/>
+
+              <!-- Інтеграція поля select_v2 -->
+              <select v-if="field.field_type === 'select_v2'" :id="`field-${index}`" v-model="field.value">
+                <option disabled value="">Оберіть варіант</option>
+                <option v-for="variant in field.variants" :key="variant">{{ variant }}</option>
+              </select>
+
+              <!-- Поле для введення тексту -->
+              <input v-else :id="`field-${index}`" type="text" v-model="field.value" required placeholder="Ваша відповідь"/>
             </div>
           </div>
 
@@ -248,7 +255,6 @@
             <div class="container-input center_group">
               <div class="checkbox-group width-input-1200">
                 <label class="custom-checkbox" :for="`field-${index}`">
-<!--                  <input :id="`field-${index}`" type="checkbox" v-model="field.value"  required>-->
                   <input :id="`field-${index}`" type="checkbox" :checked="field.value" @change="checkboxChanged(field, $event)" required>
                   <span class="checkmark">
                     <svg class="svg-checkmark" xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 35 35" fill="none">
@@ -260,7 +266,6 @@
               </div>
             </div>
           </div>
-
         </div>
         <div class="container-global-form-edit width-container_for_butt">
           <button
@@ -588,11 +593,19 @@
 
         <div class="container-for-label-and-input" v-for="(field, index) in formFields" :key="index">
 
-          <!-- Для не-boolean типів поля -->
+          <!-- Для не-boolean та select_v2 типів поля -->
           <div v-if="field.field_type !== 'boolean'" class="input-field-text">
             <div class="container-input_froms_user">
               <label :for="`field-${index}`">{{ field.field_name }}</label>
-              <input :id="`field-${index}`" type="text" v-model="field.value" required placeholder="Ваша відповідь"/>
+
+              <!-- Інтеграція поля select_v2 -->
+              <select v-if="field.field_type === 'select_v2'" :id="`field-${index}`" v-model="field.value">
+                <option disabled value="">Оберіть варіант</option>
+                <option v-for="variant in field.variants" :key="variant">{{ variant }}</option>
+              </select>
+
+              <!-- Поле для введення тексту -->
+              <input v-else :id="`field-${index}`" type="text" v-model="field.value" required placeholder="Ваша відповідь"/>
             </div>
           </div>
 
@@ -642,12 +655,6 @@
       <form v-if="formFields.length > 0" @submit.prevent="submitForm">
 
         <div class="container-text-for-form">
-<!--          <div class="title_n_text">-->
-<!--            <b>Інформована згода психологічного консультування</b>-->
-<!--            <p>-->
-<!--              Цей документ інформує людину, що шукає допомоги у вирішенні психологічних або життєвих труднощів, іменована надалі як «Клієнт / ка», про особливості психологічного консультування та умови надання послуг.-->
-<!--            </p>-->
-<!--          </div>-->
           <div class="content_user_form">
             <span>Доброго дня, шановний клієнт.</span>
             <p>
@@ -664,11 +671,19 @@
 
         <div class="container-for-label-and-input" v-for="(field, index) in formFields" :key="index">
 
-          <!-- Для не-boolean типів поля -->
+          <!-- Для не-boolean та select_v2 типів поля -->
           <div v-if="field.field_type !== 'boolean'" class="input-field-text">
             <div class="container-input_froms_user">
               <label :for="`field-${index}`">{{ field.field_name }}</label>
-              <input :id="`field-${index}`" type="text" v-model="field.value" placeholder="Ваша відповідь"/>
+
+              <!-- Інтеграція поля select_v2 -->
+              <select v-if="field.field_type === 'select_v2'" :id="`field-${index}`" v-model="field.value">
+                <option disabled value="">Оберіть варіант</option>
+                <option v-for="variant in field.variants" :key="variant">{{ variant }}</option>
+              </select>
+
+              <!-- Поле для введення тексту -->
+              <input v-else :id="`field-${index}`" type="text" v-model="field.value" required placeholder="Ваша відповідь"/>
             </div>
           </div>
 
@@ -717,12 +732,6 @@
       <form v-if="formFields.length > 0" @submit.prevent="submitForm">
 
         <div class="container-text-for-form">
-          <!--          <div class="title_n_text">-->
-          <!--            <b>Інформована згода психологічного консультування</b>-->
-          <!--            <p>-->
-          <!--              Цей документ інформує людину, що шукає допомоги у вирішенні психологічних або життєвих труднощів, іменована надалі як «Клієнт / ка», про особливості психологічного консультування та умови надання послуг.-->
-          <!--            </p>-->
-          <!--          </div>-->
           <div class="content_user_form">
             <span>Доброго дня, шановний клієнт.</span>
             <p>
@@ -743,11 +752,19 @@
 
         <div class="container-for-label-and-input" v-for="(field, index) in formFields" :key="index">
 
-          <!-- Для не-boolean типів поля -->
+          <!-- Для не-boolean та select_v2 типів поля -->
           <div v-if="field.field_type !== 'boolean'" class="input-field-text">
             <div class="container-input_froms_user">
               <label :for="`field-${index}`">{{ field.field_name }}</label>
-              <input :id="`field-${index}`" type="text" v-model="field.value" placeholder="Ваша відповідь"/>
+
+              <!-- Інтеграція поля select_v2 -->
+              <select v-if="field.field_type === 'select_v2'" :id="`field-${index}`" v-model="field.value">
+                <option disabled value="">Оберіть варіант</option>
+                <option v-for="variant in field.variants" :key="variant">{{ variant }}</option>
+              </select>
+
+              <!-- Поле для введення тексту -->
+              <input v-else :id="`field-${index}`" type="text" v-model="field.value" required placeholder="Ваша відповідь"/>
             </div>
           </div>
 

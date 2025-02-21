@@ -48,7 +48,7 @@
             </div>
           </div>
           <div class="modal-btn">
-            <button class="btn-send-templates" @click="sendEvent">Надіслати</button>
+            <button class="btn-send-templates" @click="sendEvent">Створити</button>
           </div>
         </div>
       </div>
@@ -127,19 +127,18 @@ export default {
             eventData.date
         );
 
-        // if (response.data.success) {
-        //   // console.log('Event created successfully', response.data);
-        //   M.toast({ html: 'Подія успішно створена!' });
-        //   closeModal();
-        // }
         if (response.data) {
           M.toast({ html: 'Подія успішно створена!' });
           closeModal();
           emit('close');
         }
       } catch (error) {
-        //console.error('Error sending event:', error);
-        M.toast({ html: 'Помилка при створенні події' });
+        if (error.response && error.response.status === 409) {
+          const errorMessage = 'Кількість сесій у клієнта вичерпана' || error.response.data.error[0].message;
+          M.toast({ html: errorMessage });
+        } else {
+          M.toast({ html: 'Помилка при створенні події' });
+        }
       }
     };
 

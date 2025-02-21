@@ -5,9 +5,14 @@
       <button class="btn-add-client">
         Додати клієнта
       </button>
-      <button class="btn-refresh">
-        <img src="@/assets/icons/refresh.svg" alt="Оновити">
-      </button>
+      <div class="group-button-all-client">
+        <button class="btn-refresh">
+          <img src="@/assets/icons/refresh.svg" alt="Оновити">
+        </button>
+        <button class="btn-archive" @click="OpenArchive">
+          <img src="@/assets/icons/archive-view.png" alt="Архів клієнтів">
+        </button>
+      </div>
     </div>
     <div class="search">
       <input type="text" class="search-input" placeholder="Пошук">
@@ -40,8 +45,8 @@
             <button class="btn-action" data-tooltip="Редагувати">
               <img src="@/assets/icons/edit-client.svg" alt="Редагувати">
             </button>
-            <button class="btn-action" data-tooltip="Видалити">
-              <img src="@/assets/icons/trash-client.svg" alt="Видалити">
+            <button class="btn-action" data-tooltip="Архівувати" @click="AddToArchive(client.id)">
+              <img src="@/assets/icons/archive-personal.png" alt="Архівувати">
             </button>
           </td>
 
@@ -142,6 +147,29 @@ export default {
       router.push({ name: 'ClientInformation', params: { id: clientId } });
     };
 
+    const OpenArchive = () => {
+      router.push({name: 'AllClientsArchivePage'})
+    };
+
+    const AddToArchive = async (clientId) => {
+      try {
+        const token = localStorage.getItem('token');
+        if (!token) {
+          M.toast({ html: 'Будь ласка, увійдіть у систему' });
+          router.push({ name: 'login' });
+          return;
+        }
+
+        await apiService.AddArchiveClient(token, clientId);
+        M.toast({ html: 'Клієнта успішно архівовано' });
+        fetchClients();  // Оновлення списку після архівації
+
+      } catch (error) {
+        console.error('Error archiving client:', error);
+        M.toast({ html: 'Помилка при архівації клієнта' });
+      }
+    }
+
     // Перенесіть логіку з mounted сюди, якщо потрібно запустити щось при створенні компонента
     fetchClients();
 
@@ -154,7 +182,9 @@ export default {
       selectedTelegramClientId,
       clientWasAgreedConsent,
       clientPrimaryPollComplete,
-      viewClientInfo
+      viewClientInfo,
+      OpenArchive,
+      AddToArchive
     }
   }
 };
