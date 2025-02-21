@@ -886,6 +886,11 @@ Profile styles
   color: #494B55;
   margin: 0;
 }
+@media (max-width: 1200px) {
+  .profile_tittle p {
+    font-size: 20px;
+  }
+}
 .profile_tittle button {
   display: flex;
   font-family: "Nunito";
@@ -1658,6 +1663,13 @@ button:focus {
   align-items: stretch;
   max-width: 1200px;
 }
+@media (max-width: 1300px) {
+  .template-container-for-view .text-template-for-view {
+    display: flex;
+    align-items: stretch;
+    flex-direction: column;
+  }
+}
 .template-container-for-view .text-template-for-view .type-for-view p {
   color: #FFF;
   font-family: Nunito;
@@ -1703,6 +1715,11 @@ button:focus {
 }
 .template-container-for-view .text-template-for-view .type-of-answers p[type=file] {
   display: none;
+}
+@media (max-width: 1300px) {
+  .template-container-for-view .text-template-for-view .type-of-answers p {
+    margin: 15px 0 0 0;
+  }
 }
 
 .block_info_client {
@@ -1776,6 +1793,9 @@ button:focus {
 }
 .Block_client .name-update-form .forms-name-add .container-input select {
   max-width: 530px;
+}
+.Block_client .statistic-dropdown-container {
+  margin: 20px 20px 0 0;
 }
 
 .block_button_client_page {
@@ -2187,6 +2207,21 @@ Statistic styles
   font-size: 20px;
   font-weight: 600;
   line-height: 22px;
+}
+@media (max-width: 1200px) {
+  .graphs {
+    width: 800px;
+  }
+}
+@media (max-width: 1100px) {
+  .graphs {
+    width: 750px;
+  }
+}
+@media (max-width: 1000px) {
+  .graphs {
+    width: 700px;
+  }
 }
 
 .bar-graphs h5 {

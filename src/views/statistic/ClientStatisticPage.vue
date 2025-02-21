@@ -16,19 +16,6 @@
       />
       <p v-else>Даних для відображення немає</p>
     </div>
-<!--    <div class="graphs">-->
-<!--      &lt;!&ndash; Індивідуальні консультації &ndash;&gt;-->
-<!--      <div class="graphs-individual_therapy">-->
-<!--        <LineChartComponent v-if="individualChartData.length" :chartData="individualChartData" chartTitle="Індивідуальні консультації" />-->
-<!--        <p v-else>Даних для відображення немає</p>-->
-<!--      </div>-->
-
-<!--      &lt;!&ndash; Парні консультації &ndash;&gt;-->
-<!--      <div class="graphs-couple_therapy">-->
-<!--        <LineChartComponent v-if="coupleChartData.length" :chartData="coupleChartData" chartTitle="Парні консультації" />-->
-<!--        <p v-else>Даних для відображення немає</p>-->
-<!--      </div>-->
-<!--    </div>-->
 
     <!-- Причина звернення до психолога -->
     <div class="statistic-dropdown-container">
@@ -59,34 +46,6 @@
       </transition>
     </div>
 
-    <!-- Патерн самозахисту -->
-    <div class="statistic-dropdown-container">
-      <button class="dropdown-toggle" @click="toggleDropdown('consultation')">
-        <span class="dropdown-text">Патерн самозахисту</span>
-        <img
-            src="@/assets/icons/plus.png"
-            alt="Іконка"
-            class="dropdown-icon"
-            :class="{ rotated: isConsultationOpen }"
-        />
-      </button>
-
-      <transition name="slide-fade">
-        <ul v-show="isConsultationOpen" class="dropdown-menu-statistic">
-          <li v-if="consultationData.length === 0 && !isConsultationLoading">
-            Даних для відображення немає
-          </li>
-          <li v-if="isConsultationLoading">Завантаження...</li>
-          <li
-              v-for="(item, index) in consultationData"
-              :key="'consult-' + index"
-          >
-            <img src="@/assets/icons/chat-bubble.png" alt="Icon" class="dropdown-item-icon" />
-            <p>{{ item }}</p>
-          </li>
-        </ul>
-      </transition>
-    </div>
   </section>
 </template>
 
@@ -185,13 +144,13 @@ export default {
           isPrimaryPollLoading.value = true;
           const response = await apiService.getPrimaryPollStatistics(token);
           primaryPollData.value = response.data.length
-              ? response.data.flatMap(item => item.split(','))
+              ? response.data.map(item => item.trim()).filter(item => item !== '')
               : [];
         } else if (type === 'consultation') {
           isConsultationLoading.value = true;
           const response = await apiService.getConsultationStatistics(token);
           consultationData.value = response.data.length
-              ? response.data.flatMap(item => item.split(','))
+              ? response.data.map(item => item.trim()).filter(item => item !== '')
               : [];
         }
       } catch (error) {

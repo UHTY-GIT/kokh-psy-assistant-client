@@ -15,13 +15,21 @@
           <img src="@/assets/icons/more.png" alt="Menu" />
         </button>
         <div v-if="isDropdownOpen" class="dropdown-menu">
-          <button @click.prevent="openAppointPartnerModal">Назначити партнера</button>
-          <button @click.prevent="goToAddCoupleCycle">Додати цикл пари</button>
-          <button @click.prevent="goToViewCoupleCycle">Переглянути цикл пари</button>
-          <button @click.prevent="goToAddDigest">Додати дайджест психотерапевтичних думок</button>
-          <button @click.prevent="goToViewDigest">Переглянути дайджест психотерапевтичних думок</button>
-          <button @click.prevent="goToAddExpertRating">Додати оцінку експерта</button>
-          <button @click.prevent="goToViewExpertRating">Переглянути оцінку експерта</button>
+          <!-- Кнопки для роботи з парними консультаціями -->
+          <div v-if="client.origin_type !== 'individual'">
+            <button @click.prevent="openAppointPartnerModal">Назначити партнера</button>
+            <button @click.prevent="goToAddCoupleCycle">Додати цикл пари</button>
+            <button @click.prevent="goToViewCoupleCycle">Переглянути цикл пари</button>
+          </div>
+
+          <!-- Кнопки, доступні для всіх клієнтів -->
+          <div>
+            <button @click.prevent="goToAddDigest">Додати дайджест психотерапевтичних думок</button>
+            <button @click.prevent="goToViewDigest">Переглянути дайджест психотерапевтичних думок</button>
+            <button @click.prevent="goToAddExpertRating">Додати оцінку експерта</button>
+            <button @click.prevent="goToViewExpertRating">Переглянути оцінку експерта</button>
+          </div>
+
         </div>
       </div>
     </div>
@@ -143,14 +151,73 @@
           <div class="block_info_client" v-if="client.number_of_consultation">
             <div class="text-template-for-view">
               <div class="type-for-view">
-                <p>Залишок консультацій</p>
+                <p>Загальна к-ть консультацій</p>
               </div>
               <div class="type-of-answers">
                 <p>{{ client.number_of_consultation }}</p>
               </div>
             </div>
           </div>
+          <div class="block_info_client" v-if="client.remaining_consultation_count">
+            <div class="text-template-for-view">
+              <div class="type-for-view">
+                <p>Залишок консультацій</p>
+              </div>
+              <div class="type-of-answers">
+                <p>{{ client.remaining_consultation_count }}</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Причина звернення до психолога -->
+          <div class="statistic-dropdown-container">
+            <button class="dropdown-toggle" @click="toggleDropdown('primaryPoll')">
+              <span class="dropdown-text">Причина звернення до психолога</span>
+              <img
+                  src="@/assets/icons/plus.png"
+                  alt="Іконка"
+                  class="dropdown-icon"
+                  :class="{ rotated: isPrimaryPollOpen }"
+              />
+            </button>
+
+            <transition name="slide-fade">
+              <ul v-show="isPrimaryPollOpen" class="dropdown-menu-statistic">
+                <li v-if="!primaryPollData || primaryPollData.length === 0">Даних для відображення немає</li>
+                <li v-if="isPrimaryPollLoading">Завантаження...</li>
+                <li v-for="(item, index) in primaryPollData" :key="'primary-' + index">
+                  <img src="@/assets/icons/chat-bubble.png" alt="Icon" class="dropdown-item-icon" />
+                  <p>{{ item }}</p>
+                </li>
+              </ul>
+            </transition>
+          </div>
+
+          <!-- Патерн самозахисту -->
+          <div class="statistic-dropdown-container">
+            <button class="dropdown-toggle" @click="toggleDropdown('consultation')">
+              <span class="dropdown-text">Патерн самозахисту</span>
+              <img
+                  src="@/assets/icons/plus.png"
+                  alt="Іконка"
+                  class="dropdown-icon"
+                  :class="{ rotated: isConsultationOpen }"
+              />
+            </button>
+
+            <transition name="slide-fade">
+              <ul v-show="isConsultationOpen" class="dropdown-menu-statistic">
+                <li v-if="!consultationData || consultationData.length === 0">Даних для відображення немає</li>
+                <li v-if="isConsultationLoading">Завантаження...</li>
+                <li v-for="(item, index) in consultationData" :key="'consult-' + index">
+                  <img src="@/assets/icons/chat-bubble.png" alt="Icon" class="dropdown-item-icon" />
+                  <p>{{ item }}</p>
+                </li>
+              </ul>
+            </transition>
+          </div>
         </div>
+
         <div class="titte_field">
           <p>
             Сесії клієнта
@@ -165,7 +232,7 @@
               <div>
                 <p>
                   <span>№{{ consultation.number }}</span>
-                  <span>{{ consultation.title }}</span>
+                  <span>{{ truncateText(consultation.title, 18) }}</span>
                 </p>
               </div>
               <div>
@@ -210,6 +277,14 @@ export default {
     const showAppointPartnerModal = ref(false);
     const partnerName = ref("");
 
+    const primaryPollData = ref([]);
+    const consultationData = ref([]);
+    const isPrimaryPollOpen = ref(false);
+    const isConsultationOpen = ref(false);
+    const isCustomDropdown1Open = ref(false);
+    const isCustomDropdown2Open = ref(false);
+
+
     const fetchClientInfo = async () => {
       const token = localStorage.getItem('token');
       if (!token) {
@@ -221,6 +296,21 @@ export default {
       try {
         const response = await apiService.getClientById(token, clientId.value);
         client.value = response.data;
+
+        // Обробка statistics
+        if (response.data.statistics) {
+          const { primary_poll = [], consultation = [] } = response.data.statistics;
+
+          // Заповнюємо дані для Причини звернення
+          primaryPollData.value = Array.isArray(primary_poll)
+              ? primary_poll.map(item => item.trim()).filter(item => item !== '')
+              : [];
+
+          // Заповнюємо дані для Патерн самозахисту
+          consultationData.value = Array.isArray(consultation)
+              ? consultation.map(item => item.trim()).filter(item => item !== '')
+              : [];
+        }
 
         // Якщо у клієнта є partner_id, викликаємо функцію отримання імені партнера
         if (client.value.partner_id) {
@@ -325,9 +415,9 @@ export default {
       router.push({ name: 'ViewExpertRating', params: { id: clientId.value } });
     };
 
-    const toggleDropdown = () => {
-      isDropdownOpen.value = !isDropdownOpen.value;
-    };
+    // const toggleDropdown = () => {
+    //   isDropdownOpen.value = !isDropdownOpen.value;
+    // };
 
     const closeDropdown = (event) => {
       if (!event.target.closest('.dropdown')) {
@@ -353,6 +443,27 @@ export default {
       document.removeEventListener('click', closeDropdown);
     });
 
+    // Додає крапки якшо багато символів у назві
+    const truncateText = (text, maxLength) => {
+      if (!text) return '';
+      return text.length > maxLength ? text.slice(0, maxLength) + '...' : text;
+    };
+
+    const toggleDropdown = (type) => {
+      if (type === 'primaryPoll') {
+        isPrimaryPollOpen.value = !isPrimaryPollOpen.value;
+      } else if (type === 'consultation') {
+        isConsultationOpen.value = !isConsultationOpen.value;
+      } else if (type === 'customDropdown1') {
+        isCustomDropdown1Open.value = !isCustomDropdown1Open.value;
+      } else if (type === 'customDropdown2') {
+        isCustomDropdown2Open.value = !isCustomDropdown2Open.value;
+      }
+      isDropdownOpen.value = !isDropdownOpen.value;
+    };
+
+
+
     onMounted(fetchClientInfo);
 
     return {
@@ -373,6 +484,14 @@ export default {
       closeAppointPartnerModal,
       showAppointPartnerModal,
       partnerName,
+      truncateText,
+      isPrimaryPollOpen,
+      isConsultationOpen,
+      isCustomDropdown1Open,
+      isCustomDropdown2Open,
+      fetchClientInfo,
+      primaryPollData,
+      consultationData
     };
   }
 };
