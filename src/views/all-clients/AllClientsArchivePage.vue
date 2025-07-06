@@ -24,7 +24,7 @@
           </tr>
           </thead>
           <tbody>
-          <tr v-for="client in ArchiveClients" :key="client.telegram_id">
+          <tr v-for="client in paginatedClients" :key="client.telegram_id">
             <!--          Якщо змінити ключ на client.id тоді зміниться порядок клієнтів-->
             <td>{{ client.first_name }}</td>
             <td>{{ client.phone }}</td>
@@ -46,11 +46,11 @@
 
       <div class="client-footer">
         <div class="pagination-info">
-          Сторінка 1 з 10
+          Сторінка {{ currentPage }} з {{ totalPages }}
         </div>
         <div class="pagination-controls">
-          <button class="btn-pagination before">назад</button>
-          <button class="btn-pagination after">далі</button>
+          <button class="btn-pagination before" @click="changePage(-1)" :disabled="currentPage === 1">назад</button>
+          <button class="btn-pagination after" @click="changePage(1)" :disabled="currentPage === totalPages">далі</button>
         </div>
       </div>
     </div>
@@ -59,7 +59,7 @@
 <script>
 import apiService from "@/services/apiService";
 import M from "materialize-css";
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed } from "vue";
 import { useRouter } from "vue-router";
 
 export default {
@@ -67,6 +67,11 @@ export default {
   setup() {
     const ArchiveClients = ref([]);
     const router = useRouter();
+
+    // Пагінація
+    const currentPage = ref(1);
+    const itemsPerPage = 10; // Кількість клієнтів на сторінку
+    const totalPages = computed(() => Math.ceil(ArchiveClients.value.length / itemsPerPage));
 
     const fetchArchiveClients = async () => {
       try {
@@ -107,12 +112,28 @@ export default {
       }
     }
 
+    const paginatedClients = computed(() => {
+      const start = (currentPage.value - 1) * itemsPerPage;
+      const end = start + itemsPerPage;
+      return ArchiveClients.value.slice(start, end);
+    });
+
+    const changePage = (step) => {
+      if (currentPage.value + step >= 1 && currentPage.value + step <= totalPages.value) {
+        currentPage.value += step;
+      }
+    };
+
     onMounted(fetchArchiveClients); // Виклик fetchArchiveClients при завантаженні сторінки
 
     return {
       ArchiveClients,
       viewClientInfo,
-      RemoveFromTheArchive
+      RemoveFromTheArchive,
+      paginatedClients,
+      currentPage,
+      totalPages,
+      changePage,
     };
   }
 }

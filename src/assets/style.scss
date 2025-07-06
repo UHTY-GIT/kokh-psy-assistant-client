@@ -815,6 +815,10 @@ Profile styles
     font-size: 26px;
     color: $main-text-color;
     margin: 0;
+
+    @media (max-width: 1200px) {
+      font-size: 20px;
+    }
   }
 
   button {
@@ -1627,6 +1631,13 @@ button:focus {
     align-items: stretch;
     max-width: 1200px;
 
+    // ✅ Адаптація для екранів менше 1300px
+    @media (max-width: 1300px) {
+        display: flex;
+        align-items: stretch;
+        flex-direction: column;
+    }
+
     .type-for-view {
 
       p {
@@ -1677,6 +1688,11 @@ button:focus {
         }
         &[type="file"] {
           display: none;
+        }
+
+
+        @media (max-width: 1300px) {
+          margin: 15px 0 0 0;
         }
       }
 
@@ -1775,6 +1791,10 @@ button:focus {
         }
       }
     }
+  }
+
+  .statistic-dropdown-container {
+    margin: 20px 20px 0 0;
   }
 }
 .block_button_client_page {
@@ -1977,6 +1997,7 @@ button:focus {
 
 .group-button-all-client {
   display: flex;
+  gap: 10px;
 
   .btn-archive {
     display: flex;
@@ -1985,7 +2006,45 @@ button:focus {
     font-weight: 700;
     font-size: 17px;
     padding: 10px 10px;
-    margin: 0 0 0 10px;
+    //margin: 0 0 0 10px;
+    text-align: center;
+    color: #FFFFFF;
+    background: #DAB189 !important;
+    box-shadow: 0px 4px 0px #BA9571 !important;
+    border-radius: 10px;
+    border: none;
+    transition: 0.3s;
+    height: auto;
+    line-height: normal;
+    align-items: center;
+    justify-content: center;
+
+
+    &:hover {
+      background: #DAB189;
+
+    }
+
+    &:active {
+      -webkit-transform: translateY(5px);
+      -ms-transform: translateY(5px);
+      transform: translateY(5px);
+      -webkit-box-shadow: 0px 2px 0px #BA9571;
+      box-shadow: 0px 2px 0px #BA9571 !important;
+    }
+
+    img {
+      width: 22px;
+    }
+  }
+
+  .btn-statistic {
+    display: flex;
+    font-family: "Nunito";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 17px;
+    padding: 10px 10px;
     text-align: center;
     color: #FFFFFF;
     background: #DAB189 !important;
@@ -2118,3 +2177,112 @@ button:focus {
   }
 }
 
+/*
+Statistic styles
+*/
+.statisctic-section {
+  margin: 0 30px;
+}
+.statistic-dropdown-container {
+  margin: 20px 0;
+
+
+  .dropdown-toggle {
+      background-color: #72a8ba;
+      border: none;
+      width: 100%;
+      padding: 17px;
+      display: flex;
+      justify-content: space-between;
+      border-radius: 16px;
+      align-items: center;
+
+    .dropdown-text {
+      font-family: "Nunito";
+      font-style: normal;
+      font-weight: 700;
+      font-size: 20px;
+      color: #fff;
+    }
+
+    .dropdown-icon {
+      width: 20px;
+    }
+  }
+
+  ul {
+    margin: 0;
+
+    li{
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin: 20px 0 20px 0;
+      color: #494B55;
+      font-size: 16px;
+      font-weight: 600;
+      line-height: 22px;
+
+      img {
+        width: 20px;
+      }
+      p {
+        margin: 0;
+        color: #494B55;
+        font-size: 20px;
+        font-weight: 600;
+        line-height: 22px;
+      }
+    }
+  }
+}
+
+/* Анімація для плавного відкриття/закриття */
+.slide-fade-enter-active, .slide-fade-leave-active {
+  transition: all 0.3s ease;
+}
+
+.slide-fade-enter-from, .slide-fade-leave-to {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+}
+
+.slide-fade-enter-to, .slide-fade-leave-from {
+  height: auto;
+  opacity: 1;
+}
+/* Анімація обертання іконки */
+.dropdown-icon {
+  transition: transform 0.3s ease;
+}
+
+.dropdown-icon.rotated {
+  transform: rotate(45deg);
+}
+
+.graphs {
+  p {
+    color: #494B55;
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 22px;
+  }
+  @media (max-width: 1200px) {
+    width: 800px;
+  }
+  @media (max-width: 1100px) {
+    width: 750px;
+  }
+  @media (max-width: 1000px) {
+    width: 700px;
+  }
+}
+.bar-graphs {
+  h5 {
+    color: #494B55;
+    font-size: 22px;
+    font-weight: 600;
+    line-height: 24px;
+  }
+}

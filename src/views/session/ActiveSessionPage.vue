@@ -12,9 +12,9 @@
   </div>
   <div class="block_active_session">
     <form @submit.prevent="openModal">
-      <div v-for="(fields, title) in categorizedFields" :key="title">
+      <div v-for="(fields, category) in categorizedFields" :key="category">
         <div class="titte_field">
-          <p>{{ title }}</p>
+          <p>{{ category || "Без категорії" }}</p>
         </div>
         <div class="block_input_field">
           <div v-for="field in fields" :key="field.id" class="forms-name-add active_session_fields">
@@ -103,7 +103,7 @@ export default {
           id: item.id,
           field_name: item.field_name,
           field_type: item.field_type,
-          title: item.title,
+          category: item.form_item_category_title || "Без категорії",
           variants: item.variants || [],
           value: ''
         }));
@@ -114,10 +114,10 @@ export default {
 
     const categorizedFields = computed(() => {
       return formData.value.fields.reduce((acc, field) => {
-        if (!acc[field.title]) {
-          acc[field.title] = [];
+        if (!acc[field.category]) {
+          acc[field.category] = [];
         }
-        acc[field.title].push(field);
+        acc[field.category].push(field);
         return acc;
       }, {});
     });
@@ -145,7 +145,7 @@ export default {
       }
 
       try {
-        // Now prepare the answers for submission
+        // Підготовка відповідей для відправки
         const answers = formData.value.fields.map(field => ({
           form_item_id: field.id,
           text_answer: field.value,
@@ -157,7 +157,6 @@ export default {
           answerable_type: "Consultation",
           answers_data: answers,
         };
-
 
         const response = await apiService.submitSessionAnswers(payload, token);
         if (response) {
@@ -184,7 +183,6 @@ export default {
       }
     };
 
-
     onMounted(fetchFormData);
 
     return {
@@ -206,3 +204,4 @@ export default {
   }
 }
 </script>
+

@@ -8,9 +8,9 @@
     <hr class="hr_profile">
     <div class="block_active_session">
       <form @submit.prevent="openModal">
-        <div v-for="(fields, title) in categorizedFields" :key="title">
+        <div v-for="(fields, categoryTitle) in categorizedFields" :key="categoryTitle">
           <div class="titte_field">
-            <p>{{ title || "Без категорії" }}</p>
+            <p>{{ categoryTitle || "Без категорії" }}</p>
           </div>
           <div class="block_input_field">
             <div v-for="field in fields" :key="field.id" class="forms-name-add active_session_fields">
@@ -101,11 +101,11 @@ export default {
         // Мапінг полів для редагування
         formData.value.fields = data.answers.map(item => ({
           id: item.id,
-          field_name: item.form_item_field_name,
+          field_name: item.form_item.field_name,
           text_answer: item.text_answer,
-          field_type: item.field_type || "text",
-          variants: item.variants || [],
-          category: item.form_item_category_title || "Без категорії"
+          field_type: item.form_item.field_type || "text",
+          variants: item.form_item.variants || [],
+          category: item.form_item.form_item_category_title || "Без категорії"
         }));
       } catch (error) {
         console.error("Error fetching session data:", error);
@@ -185,3 +185,4 @@ export default {
   }
 };
 </script>
+

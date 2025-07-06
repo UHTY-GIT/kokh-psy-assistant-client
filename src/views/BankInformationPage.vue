@@ -24,7 +24,7 @@
           </tr>
           </thead>
           <tbody>
-          <tr v-for="form in allforms" :key="form.id">
+          <tr v-for="form in paginatedForms" :key="form.id">
             <td>{{ form.title }}</td>
             <td class="all-butt-management">
               <button class="btn-action" data-tooltip="Переглянути шаблон" @click="viewTemplate(form.id)">
@@ -43,11 +43,11 @@
       </div>
       <div class="client-footer">
         <div class="pagination-info">
-          Сторінка 1 з 10
+          Сторінка {{ currentPage }} з {{ totalPages }}
         </div>
         <div class="pagination-controls">
-          <button class="btn-pagination before">назад</button>
-          <button class="btn-pagination after">далі</button>
+          <button class="btn-pagination before" @click="changePage(-1)" :disabled="currentPage === 1">назад</button>
+          <button class="btn-pagination after" @click="changePage(1)" :disabled="currentPage === totalPages">далі</button>
         </div>
       </div>
     </div>
@@ -55,7 +55,7 @@
 </template>
 
 <script>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, computed } from 'vue';
 import { useRouter } from 'vue-router';
 import apiService from '@/services/apiService';
 import M from "materialize-css";
@@ -65,6 +65,11 @@ export default {
   setup() {
     const router = useRouter();
     const allforms = ref([]);
+
+    // Пагінація
+    const currentPage = ref(1);
+    const itemsPerPage = 10; // Кількість шаблонів на сторінку
+    const totalPages = computed(() => Math.ceil(allforms.value.length / itemsPerPage));
 
     const fetchAllForms = async () => {
       try {
@@ -89,6 +94,18 @@ export default {
       router.push({ name: 'ViewsTemplatesBankInformationPage', params: { id: templateId } });
     };
 
+    const paginatedForms = computed(() => {
+      const start = (currentPage.value - 1) * itemsPerPage;
+      const end = start + itemsPerPage;
+      return allforms.value.slice(start, end);
+    });
+
+    const changePage = (step) => {
+      if (currentPage.value + step >= 1 && currentPage.value + step <= totalPages.value) {
+        currentPage.value += step;
+      }
+    };
+
     onMounted(() => {
       fetchAllForms();
     });
@@ -97,7 +114,11 @@ export default {
       allforms,
       goToAddTemplate,
       fetchAllForms,
-      viewTemplate
+      viewTemplate,
+      paginatedForms,
+      currentPage,
+      totalPages,
+      changePage
     };
   }
 };

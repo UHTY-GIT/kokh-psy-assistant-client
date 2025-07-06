@@ -22,10 +22,10 @@
         <div class="titte_field">
           <p>{{ categoryTitle }}</p>
         </div>
-        <div v-for="field in fields" :key="field.form_item_field_name" class="template-container-for-view">
+        <div v-for="field in fields" :key="field.id" class="template-container-for-view">
           <div class="text-template-for-view">
             <div class="type-for-view">
-              <p>{{ field.form_item_field_name }}</p>
+              <p>{{ field.form_item.field_name }}</p>
             </div>
             <div class="type-of-answers">
               <p>
@@ -83,10 +83,11 @@ export default {
 
     const categorizedFields = computed(() => {
       return formItems.value.reduce((acc, item) => {
-        if (!acc[item.form_item_category_title]) {
-          acc[item.form_item_category_title] = [];
+        const category = item.form_item.form_item_category_title || "Без категорії";
+        if (!acc[category]) {
+          acc[category] = [];
         }
-        acc[item.form_item_category_title].push(item);
+        acc[category].push(item);
         return acc;
       }, {});
     });
@@ -117,11 +118,12 @@ export default {
       categorizedFields,
       numberConsultation,
       formattedDate,
-      openEditSession
+      openEditSession,
     };
   },
 };
 </script>
+
 
 <style>
 .block_active_session .titte_field p {
