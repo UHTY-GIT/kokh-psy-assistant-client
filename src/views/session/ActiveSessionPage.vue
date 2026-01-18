@@ -1,3 +1,4 @@
+<!-- src/views/session/ActiveSessionPage.vue -->
 <template>
   <div>
     <div class="profile_tittle">
@@ -12,31 +13,57 @@
   </div>
   <div class="block_active_session">
     <form @submit.prevent="openModal">
-      <div v-for="(fields, category) in categorizedFields" :key="category">
+      <div v-for="(subGroups, category) in categorizedFields" :key="category">
         <div class="titte_field">
-          <p>{{ category || "Без категорії" }}</p>
+          <p>{{ category }}</p>
         </div>
-        <div class="block_input_field">
-          <div v-for="field in fields" :key="field.id" class="forms-name-add active_session_fields">
-            <div class="container-input">
-              <label :for="field.field_name">{{ field.field_name }}</label>
-              <textarea
-                  v-if="field.field_type === 'text'"
-                  :id="field.field_name"
-                  v-model="field.value"
-                  :placeholder="'Введіть ' + field.field_name"
-              ></textarea>
-              <input
-                  v-else-if="field.field_type === 'string'"
-                  type="text"
-                  :id="field.field_name"
-                  v-model="field.value"
-                  :placeholder="'Введіть ' + field.field_name"
-              >
-              <select v-else-if="field.field_type === 'select_v2'" :id="field.field_name" v-model="field.value">
-                <option disabled value="">Оберіть варіант</option>
-                <option v-for="variant in field.variants" :key="variant">{{ variant }}</option>
-              </select>
+        
+        <div v-for="(fields, subCategory) in subGroups" :key="subCategory">
+          <div v-if="subCategory !== 'default'" class="sub-category-title">
+             <p>{{ subCategory }}</p>
+          </div>
+          
+          <div class="block_input_field">
+            <div v-for="field in fields" :key="field.id" class="forms-name-add active_session_fields">
+              <div class="container-input">
+
+                  <div class="container-label">
+                    <div class="type-for-view">
+                      <label :for="field.field_name" style="margin-bottom: 0;">{{ field.field_name }}</label>
+
+                      <div v-if="field.help_text" class="help-icon-wrapper">
+                        <img src="@/assets/icons/circle_help.svg" alt="Info" class="help-icon">
+                        <div class="help-tooltip">
+                          {{ field.help_text }}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+
+                <textarea
+                      v-if="field.field_type === 'text'"
+                      :id="field.field_name"
+                      v-model="field.value"
+                      :placeholder="'Введіть ' + field.field_name"
+                  >
+                </textarea>
+                <input
+                    v-else-if="field.field_type === 'string'"
+                    type="text"
+                    :id="field.field_name"
+                    v-model="field.value"
+                    :placeholder="'Введіть ' + field.field_name"
+                >
+                <select v-else-if="field.field_type === 'select_v2'" :id="field.field_name" v-model="field.value">
+                  <option disabled value="">Оберіть варіант</option>
+                  <option v-for="variant in field.variants" :key="variant">{{ variant }}</option>
+                </select>
+                <select v-else-if="field.field_type === 'range'" :id="field.field_name" v-model="field.value">
+                  <option disabled value="">Оберіть оцінку</option>
+                  <option v-for="variant in field.variants" :key="variant" :value="variant">{{ variant }}</option>
+                </select>
+              </div>
             </div>
           </div>
         </div>
@@ -99,14 +126,34 @@ export default {
           return;
         }
         const response = await apiService.getCustomFormById(customFormId);
-        formData.value.fields = response.data.data.form_items.map(item => ({
-          id: item.id,
-          field_name: item.field_name,
-          field_type: item.field_type,
-          category: item.form_item_category_title || "Без категорії",
-          variants: item.variants || [],
-          value: ''
-        }));
+        formData.value.fields = response.data.data.form_items.map(item => {
+          let variants = item.variants || [];
+          
+          if (item.field_type === 'range' && typeof item.variants === 'string') {
+              const parts = item.variants.split('-');
+              if (parts.length === 2) {
+                  const min = parseInt(parts[0]);
+                  const max = parseInt(parts[1]);
+                  if (!isNaN(min) && !isNaN(max)) {
+                      variants = [];
+                      for (let i = min; i <= max; i++) {
+                          variants.push(i);
+                      }
+                  }
+              }
+          }
+          
+          return {
+            id: item.id,
+            field_name: item.field_name,
+            field_type: item.field_type,
+            help_text: item.help_text,
+            category: item.form_item_main_category_title || "Без категорії",
+            sub_category: item.form_item_child_category_title || "default",
+            variants: variants,
+            value: ''
+          };
+        });
       } catch (error) {
         console.error('Error fetching form data:', error);
       }
@@ -114,10 +161,16 @@ export default {
 
     const categorizedFields = computed(() => {
       return formData.value.fields.reduce((acc, field) => {
-        if (!acc[field.category]) {
-          acc[field.category] = [];
+        const mainCat = field.category;
+        const subCat = field.sub_category;
+        
+        if (!acc[mainCat]) {
+          acc[mainCat] = {};
         }
-        acc[field.category].push(field);
+        if (!acc[mainCat][subCat]) {
+          acc[mainCat][subCat] = [];
+        }
+        acc[mainCat][subCat].push(field);
         return acc;
       }, {});
     });

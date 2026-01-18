@@ -9,8 +9,10 @@
       <form class="day-update-form" @submit.prevent="submitDaysProfile">
         <!-- Чекбокси для днів роботи -->
         <div class="checkbox-field">
-          <div class="container-input">
-            <label>Робочі дні</label>
+          <div class="container-input user-profile">
+            <div class="type-for-view">
+              <label>Робочі дні</label>
+            </div>
             <div class="checkbox-group">
               <label class="custom-checkbox">
                 <input

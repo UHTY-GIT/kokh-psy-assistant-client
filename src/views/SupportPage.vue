@@ -8,7 +8,12 @@
         <img src="@/assets/icons/refresh.svg" alt="Оновити">
       </button>
     </div>
-    <div class="client-list">
+
+    <div v-if="isLoading" class="loader-wrapper">
+      <Loader />
+    </div>
+
+    <div v-else class="client-list">
       <table class="table">
         <thead>
         <tr>
@@ -53,7 +58,7 @@
       </table>
     </div>
 
-    <div class="client-footer">
+    <div v-if="!isLoading" class="client-footer">
       <div class="pagination-info">
         Сторінка 1 з 10
       </div>
@@ -65,4 +70,43 @@
   </section>
 </template>
 <script>
+import Loader from "@/components/app/Loader.vue";
+import { ref, onMounted } from 'vue';
+
+export default {
+  name: "SupportPage",
+  components: {
+    Loader
+  },
+  setup() {
+    const isLoading = ref(false);
+
+    // Mock fetch or placeholder for when logic is added
+    const fetchData = async () => {
+      isLoading.value = true;
+      try {
+        // Simulate API call
+        await new Promise(resolve => setTimeout(resolve, 500));
+      } finally {
+        isLoading.value = false;
+      }
+    };
+
+    onMounted(() => {
+      fetchData();
+    });
+
+    return {
+      isLoading
+    };
+  }
+}
 </script>
+
+<style scoped>
+.loader-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: 50px;
+}
+</style>

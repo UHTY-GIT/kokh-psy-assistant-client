@@ -9,15 +9,19 @@
     <div>
       <form class="password-update-form" @submit.prevent="submitUserPassword">
         <div class="input-field-text">
-          <div class="container-input">
-            <label for="old-password">Старий пароль</label>
-            <input
-                id="old-password"
-                :type="isOldPasswordVisible ? 'text' : 'password'"
-                v-model.trim="password"
-                placeholder="Введіть старий пароль"
-            >
-            <i class="change-password user-page-password" :class="OldPasswordIconClass" @click="OldTogglePassword"></i>
+          <div class="container-input user-profile">
+            <div class="type-for-view">
+              <label for="old-password">Старий пароль</label>
+            </div>
+            <div class="user-password-input">
+              <input
+                  id="old-password"
+                  :type="isOldPasswordVisible ? 'text' : 'password'"
+                  v-model.trim="password"
+                  placeholder="Введіть старий пароль"
+              >
+              <i class="change-password user-page-password" :class="OldPasswordIconClass" @click="OldTogglePassword"></i>
+            </div>
           </div>
           <span
               class="validate-error"
@@ -26,15 +30,19 @@
         </div>
 
         <div class="input-field-text">
-          <div class="container-input">
-            <label for="new-password">Новий пароль</label>
-            <input
-                id="new-password"
-                :type="isNewPasswordVisible ? 'text' : 'password'"
-                v-model.trim="newPassword"
-                placeholder="Введіть новий пароль"
-            >
-            <i class="change-password user-page-password" :class="NewPasswordIconClass" @click="NewTogglePassword"></i>
+          <div class="container-input user-profile">
+            <div class="type-for-view">
+              <label for="new-password">Новий пароль</label>
+            </div>
+            <div class="user-password-input">
+              <input
+                  id="new-password"
+                  :type="isNewPasswordVisible ? 'text' : 'password'"
+                  v-model.trim="newPassword"
+                  placeholder="Введіть новий пароль"
+              >
+              <i class="change-password user-page-password" :class="NewPasswordIconClass" @click="NewTogglePassword"></i>
+            </div>
           </div>
           <span
               class="validate-error"
@@ -47,15 +55,19 @@
         </div>
 
         <div class="input-field-text">
-          <div class="container-input">
-            <label for="confirm-new-password">Підтвердіть новий пароль</label>
-            <input
-                id="confirm-new-password"
-                :type="isNewPasswordVisible ? 'text' : 'password'"
-                v-model.trim="confirmNewPassword"
-                placeholder="Підтвердіть новий пароль"
-            >
-            <i class="change-password user-page-password" :class="NewPasswordIconClass" @click="NewTogglePassword"></i>
+          <div class="container-input user-profile">
+            <div class="type-for-view">
+              <label for="confirm-new-password">Підтвердіть новий пароль</label>
+            </div>
+            <div class="user-password-input">
+              <input
+                  id="confirm-new-password"
+                  :type="isNewPasswordVisible ? 'text' : 'password'"
+                  v-model.trim="confirmNewPassword"
+                  placeholder="Підтвердіть новий пароль"
+              >
+              <i class="change-password user-page-password" :class="NewPasswordIconClass" @click="NewTogglePassword"></i>
+            </div>
           </div>
           <span
               class="validate-error"

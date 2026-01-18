@@ -9,45 +9,52 @@
         <img src="@/assets/icons/refresh.svg" alt="Оновити">
       </button>
     </div>
-    <div v-if="allforms.length === 0" class="no-template-message">
-      <p>
-        Тут відображатимуться збережені шаблони.<br>
-        Додайте свій перший шаблон форми щоб побачити його тут.
-      </p>
+
+    <div v-if="isLoading" class="loader-wrapper">
+      <Loader />
     </div>
+
     <div v-else>
-      <div class="client-list">
-        <table class="table">
-          <thead>
-          <tr>
-            <th>Назва шаблону</th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr v-for="form in paginatedForms" :key="form.id">
-            <td>{{ form.title }}</td>
-            <td class="all-butt-management">
-              <button class="btn-action" data-tooltip="Переглянути шаблон" @click="viewTemplate(form.id)">
-                <img src="@/assets/icons/visible-client.svg" alt="Переглянути">
-              </button>
-              <button class="btn-action" data-tooltip="Редагувати">
-                <img src="@/assets/icons/edit-client.svg" alt="Редагувати">
-              </button>
-              <button class="btn-action" data-tooltip="Видалити">
-                <img src="@/assets/icons/trash-client.svg" alt="Видалити">
-              </button>
-            </td>
-          </tr>
-          </tbody>
-        </table>
+      <div v-if="allforms.length === 0" class="no-template-message">
+        <p>
+          Тут відображатимуться збережені шаблони.<br>
+          Додайте свій перший шаблон форми щоб побачити його тут.
+        </p>
       </div>
-      <div class="client-footer">
-        <div class="pagination-info">
-          Сторінка {{ currentPage }} з {{ totalPages }}
+      <div v-else>
+        <div class="client-list">
+          <table class="table">
+            <thead>
+            <tr>
+              <th>Назва шаблону</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr v-for="form in paginatedForms" :key="form.id">
+              <td>{{ form.title }}</td>
+              <td class="all-butt-management">
+                <button class="btn-action" data-tooltip="Переглянути шаблон" @click="viewTemplate(form.id)">
+                  <img src="@/assets/icons/visible-client.svg" alt="Переглянути">
+                </button>
+                <button class="btn-action" data-tooltip="Редагувати">
+                  <img src="@/assets/icons/edit-client.svg" alt="Редагувати">
+                </button>
+                <button class="btn-action" data-tooltip="Видалити">
+                  <img src="@/assets/icons/trash-client.svg" alt="Видалити">
+                </button>
+              </td>
+            </tr>
+            </tbody>
+          </table>
         </div>
-        <div class="pagination-controls">
-          <button class="btn-pagination before" @click="changePage(-1)" :disabled="currentPage === 1">назад</button>
-          <button class="btn-pagination after" @click="changePage(1)" :disabled="currentPage === totalPages">далі</button>
+        <div class="client-footer">
+          <div class="pagination-info">
+            Сторінка {{ currentPage }} з {{ totalPages }}
+          </div>
+          <div class="pagination-controls">
+            <button class="btn-pagination before" @click="changePage(-1)" :disabled="currentPage === 1">назад</button>
+            <button class="btn-pagination after" @click="changePage(1)" :disabled="currentPage === totalPages">далі</button>
+          </div>
         </div>
       </div>
     </div>
@@ -59,12 +66,17 @@ import { ref, onMounted, computed } from 'vue';
 import { useRouter } from 'vue-router';
 import apiService from '@/services/apiService';
 import M from "materialize-css";
+import Loader from "@/components/app/Loader.vue";
 
 export default {
   name: 'BankInformation',
+  components: {
+    Loader
+  },
   setup() {
     const router = useRouter();
     const allforms = ref([]);
+    const isLoading = ref(false);
 
     // Пагінація
     const currentPage = ref(1);
@@ -72,6 +84,7 @@ export default {
     const totalPages = computed(() => Math.ceil(allforms.value.length / itemsPerPage));
 
     const fetchAllForms = async () => {
+      isLoading.value = true;
       try {
         const token = localStorage.getItem('token'); // Отримання токена з локального сховища
         if (token) {
@@ -83,6 +96,8 @@ export default {
       } catch (error) {
         M.toast({ html: `Увійдіть у систему` });
         router.push({ name: 'login' });
+      } finally {
+        isLoading.value = false;
       }
     };
 
@@ -118,8 +133,17 @@ export default {
       paginatedForms,
       currentPage,
       totalPages,
-      changePage
+      changePage,
+      isLoading
     };
   }
 };
 </script>
+
+<style scoped>
+.loader-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: 50px;
+}
+</style>

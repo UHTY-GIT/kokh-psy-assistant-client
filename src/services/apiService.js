@@ -23,11 +23,18 @@ const apiService = {
         return response.data;
     },
 
-    //Функція для відображення всіх клієнтів
-    getClients: (token) => {
-        return axios.get(`${BASE_URL}/api/v1/clients`, {
-            headers: { 'authtoken': token }
-        });
+    //Функція для відображення всіх клієнтів (по типам, якщо не передавати тип, тоді всі відображаються, якщо передавати, тоді якийсь один)
+    getClients: async (token, params = {}) => {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                'authtoken': token,
+            },
+            params: params,
+        };
+
+        const response = await axios.get(`${BASE_URL}/api/v1/clients`, config);
+        return response.data;
     },
 
     //Функція для шаблонів
@@ -76,9 +83,10 @@ const apiService = {
         const payload = {
             client_id: clientId,
             answerable_id: answerableId,
-            answerable_type: answerableType,
+            answerable_type: answerableType, //Consultation, PrimaryPoll, InformationConsent, CoupleCycle, CaseDescription
             answers_data: answers,
         };
+
 
         return axios.post(`${BASE_URL}/api/v1/answers`, payload, {
             headers: {
@@ -157,6 +165,18 @@ const apiService = {
     // Функція для надсилання на телеграм бота конфігу з позначкою що сесія успішно завершена
     sendSessionEndNotification: async (clientTelegramId) => {
         const response = await axios.post(`${BASE_URL_TELEGRAM}/session_end`, {
+            client_id: clientTelegramId,
+        }, {
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        });
+        return response.data;
+    },
+
+    // Функція для сповіщення бота про необхідність заповнити опис кейсу
+    notifyCaseFill: async (clientTelegramId) => {
+        const response = await axios.post(`${BASE_URL_TELEGRAM}/notify_case_fill`, {
             client_id: clientTelegramId,
         }, {
             headers: {
@@ -462,6 +482,24 @@ const apiService = {
         return response.data;
     },
 
+    // Функція для створення опису кейсу (для супервізії)
+    createCaseDescription: async (token, title, clientId, psychologistId, customFormId) => {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                'authtoken': token,
+            },
+        };
+        const payload = {
+            title: title,
+            client_id: clientId,
+            psychologist_id: psychologistId,
+            custom_form_id: customFormId
+        };
+        const response = await axios.post(`${BASE_URL}/api/v1/case_descriptions`, payload, config);
+        return response.data;
+    },
+
 
     // Функція для отримання даних дайджеста психотерапевтичних думок
     getDigestPsyMind: async (token, clientId) => {
@@ -557,6 +595,34 @@ const apiService = {
         };
 
         const response = await axios.get(`${BASE_URL}/api/v1/graphics/client_portrait`, config);
+        return response.data;
+    },
+
+    // Функція для отримання навичок EFCT (Mock)
+    getEfctSkills: async (token, clientId) => {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                'authtoken': token,
+            }
+        };
+
+        const response = await axios.get(`${BASE_URL}/api/v1/clients/${clientId}/efct_skills`, config);
+        return response.data;
+    },
+
+    // Функція для отримання опису кейсу
+    getCaseDescription: async (token, clientId) => {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                'authtoken': token,
+            },
+            params: {
+                client_id: clientId,
+            },
+        };
+        const response = await axios.get(`${BASE_URL}/api/v1/case_descriptions`, config);
         return response.data;
     }
 };

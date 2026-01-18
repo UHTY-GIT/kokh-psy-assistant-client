@@ -1,7 +1,7 @@
 <!-- src/components/modal/ModalNotesDelete.vue -->
 <template>
-  <div :class="{ 'modal-window': true, 'is-active': showModal }">
-    <div class="modal-content">
+  <div :class="{ 'modal-window': true, 'is-active': showModal }" @click="closeModal">
+    <div class="modal-content" @click.stop>
       <div class="modal-close-butt">
         <img src="@/assets/icons/close-modal.svg" alt="close" @click="closeModal">
       </div>
@@ -72,7 +72,7 @@ export default {
 .modal-content-all p {
   font-family: "Nunito", sans-serif;
   font-style: normal;
-  font-weight: 700;
+  font-weight: 500;
   font-size: 20px;
   margin: 10px 0 20px;
   text-align: center;

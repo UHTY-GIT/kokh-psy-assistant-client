@@ -27,6 +27,12 @@ const routes = [
     component: () => import('../views/AllClientPage.vue')
   },
   {
+    path: '/supervisees',
+    name: 'supervisees',
+    meta: { layout: 'main', requiresAuth: true },
+    component: () => import('../views/supervisor/SuperviseesPage.vue')
+  },
+  {
     path: '/support',
     name: 'support',
     meta: { layout: 'main', requiresAuth: true },
@@ -143,6 +149,18 @@ const routes = [
     name: 'ViewExpertRating',
     meta: { layout: 'main', requiresAuth: true },
     component: () => import('../views/client/ViewExpertRating.vue'),
+  },
+  {
+    path: '/view-case-description/:id',
+    name: 'ViewCaseDescription',
+    meta: { layout: 'main', requiresAuth: true },
+    component: () => import('../views/client/ViewCaseDescription.vue'),
+  },
+  {
+    path: '/edit-case-description/:id',
+    name: 'EditCaseDescription',
+    meta: { layout: 'main', requiresAuth: true },
+    component: () => import('../views/client/EditCaseDescription.vue'),
   },
   {
     path: '/view-all-archive-client',

@@ -1,7 +1,7 @@
 <!--src/components/modal/ModalCalendar.vue-->
 <template>
-  <div :class="{ 'modal-window': true, 'is-active': showModal }">
-    <div class="modal-content">
+  <div :class="{ 'modal-window': true, 'is-active': showModal }" @click="closeModal">
+    <div class="modal-content" @click.stop>
       <div class="modal-close-butt">
         <img src="@/assets/icons/close-modal.svg" alt="close" @click="closeModal">
       </div>
@@ -14,7 +14,6 @@
                   id="name"
                   type="text"
                   v-model="name"
-
                   placeholder="Введіть бажану назву консультації"
               >
 <!--              :class="{ 'is-invalid': v$.nameConsultation.$dirty && v$.nameConsultation.required.$invalid }"-->
@@ -31,19 +30,19 @@
           </div>
           <div class="chosen-templates select-field">
             <div class="container-input">
-              <select v-model="selectedOriginType">
+              <select v-model="selectedOriginType" :disabled="!selectedClientId">
                 <option disabled value="">Будь ласка, виберіть тип консультації</option>
-                <option value="individual_consultation">Індивідуальна</option>
-                <option value="couple_classic_consultation">Парна класична</option>
-                <option value="couple_diagnostic_consultation">Парна діагностична</option>
+                <option v-for="type in availableConsultationTypes" :key="type.value" :value="type.value">
+                  {{ type.label }}
+                </option>
               </select>
             </div>
           </div>
           <div class="chosen-templates select-field">
             <div class="container-input">
-              <select v-model="selectedTemplateId">
+              <select v-model="selectedTemplateId" :disabled="!selectedOriginType">
                 <option disabled value="">Будь ласка, виберіть шаблон</option>
-                <option v-for="template in filteredTemplates" :value="template.id" :key="template.id">{{ template.title }}</option>
+                <option v-for="template in availableTemplates" :value="template.id" :key="template.id">{{ template.title }}</option>
               </select>
             </div>
           </div>
@@ -57,7 +56,7 @@
 </template>
 <script>
 import apiService from "@/services/apiService";
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed, watch } from "vue";
 import M from "materialize-css";
 
 export default {
@@ -74,16 +73,15 @@ export default {
     const selectedOriginType = ref(''); // Для вибору типу консультації
 
     const clients = ref([]); // Масив клієнтів
-    const filteredTemplates = ref([]); // Масив шаблонів
+    const allTemplates = ref([]); // Всі шаблони з сервера
 
     const fetchAllForms = async () => {
       try {
         const token = localStorage.getItem('token');
         const response = await apiService.getForms(token);
         if (response && response.data && response.data.data) {
-          filteredTemplates.value = response.data.data.filter(template =>
-              template.form_type === 'couple_classic_consultation' || template.form_type === 'individual_consultation'
-          );
+          // Зберігаємо ВСІ шаблони, фільтрація буде на льоту
+          allTemplates.value = response.data.data;
         }
       } catch (error) {
         M.toast({ html: 'Помилка завантаження шаблонів сесій' });
@@ -99,8 +97,76 @@ export default {
         M.toast({ html: 'Помилка завантаження клієнтів' });
       }
     };
+    
+    // Обчислюємо вибраного клієнта об'єктом
+    const selectedClient = computed(() => {
+      return clients.value.find(c => c.id === selectedClientId.value);
+    });
+
+    // 1. Фільтрація типів консультацій
+    const availableConsultationTypes = computed(() => {
+      if (!selectedClient.value) return [];
+      
+      const originType = selectedClient.value.origin_type;
+      const options = [];
+
+      if (originType === 'individual') {
+        options.push({ value: 'individual_consultation', label: 'Індивідуальна' });
+      } else if (originType === 'couple_classic') {
+        options.push({ value: 'couple_classic_consultation', label: 'Парна класична' });
+        options.push({ value: 'couple_diagnostic_consultation', label: 'Парна діагностична' });
+      } else if (originType === 'individual_supervision') {
+        options.push({ value: 'individual_supervision_consultation', label: 'Супервізія' });
+      }
+      
+
+      return options;
+    });
+
+    // 2. Фільтрація шаблонів (Templates)
+    const availableTemplates = computed(() => {
+        if (!selectedClient.value) return [];
+
+        const clientOrigin = selectedClient.value.origin_type;
+        let allowedFormTypes = [];
+
+        
+        if (selectedOriginType.value) {
+            allowedFormTypes.push(selectedOriginType.value);
+        } else {
+            if (clientOrigin === 'individual') {
+                allowedFormTypes = ['individual_consultation'];
+            } else if (clientOrigin === 'couple_classic') {
+                allowedFormTypes = ['couple_classic_consultation', 'couple_diagnostic_consultation'];
+            } else if (clientOrigin === 'individual_supervision') {
+                allowedFormTypes = ['individual_supervision_consultation'];
+            }
+        }
+
+        return allTemplates.value.filter(t => allowedFormTypes.includes(t.form_type));
+    });
+
+    // Скидання значень при зміні клієнта
+    watch(selectedClientId, () => {
+      selectedOriginType.value = '';
+      selectedTemplateId.value = '';
+    });
 
     const sendEvent = async () => {
+      // Валідація полів
+      if (!name.value || !selectedClientId.value || !selectedOriginType.value || !selectedTemplateId.value) {
+        M.toast({ html: 'Будь ласка, заповніть всі поля і виберіть всі значення' });
+        return;
+      }
+
+      // Нова логіка валідації для супервізантів
+      if (selectedClient.value && selectedClient.value.origin_type === 'individual_supervision') {
+          if (selectedClient.value.case_description_can_be_shown === false) {
+              M.toast({ html: 'Клієнту ще не надісланий опис кейсу' });
+              return; // Зупиняємо виконання, не надсилаємо запит
+          }
+      }
+
       try {
         const token = localStorage.getItem('token');
         if (!token) {
@@ -113,10 +179,8 @@ export default {
           client_id: selectedClientId.value,
           custom_form_id: selectedTemplateId.value,
           origin_type: selectedOriginType.value,
-          date: props.start // Assuming 'props.start' has the correct date string you mentioned
+          date: props.start
         };
-
-        //console.log("Event data being sent:", eventData);
 
         const response = await apiService.createEvent(
             token,
@@ -159,9 +223,8 @@ export default {
       selectedTemplateId,
       selectedOriginType,
       clients,
-      filteredTemplates,
-      fetchAllForms,
-      fetchAllClients,
+      availableConsultationTypes,
+      availableTemplates,
       sendEvent,
       closeModal
     };
@@ -215,5 +278,18 @@ export default {
   margin: 0;
   line-height: normal;
   max-width: none;
+  font-family: "Nunito";
+  font-style: normal;
+  font-size: 17px;
+  padding: 7px 15px;
+  border-radius: 10px;
+  border: 3px solid #494B55;
+  background-color: #494B55;
+  box-sizing: border-box;
+  color: #FFFFFF;
+  font-weight: 600;
+}
+.enter-name .container-input input:focus {
+  border-bottom: 3px solid #494B55 !important;
 }
 </style>

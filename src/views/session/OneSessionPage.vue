@@ -17,23 +17,38 @@
       </div>
       <hr class="hr_profile">
     </div>
-    <div v-for="(fields, categoryTitle) in categorizedFields" :key="categoryTitle">
+    <div v-for="(subGroups, categoryTitle) in categorizedFields" :key="categoryTitle">
       <div class="block_active_session">
         <div class="titte_field">
           <p>{{ categoryTitle }}</p>
         </div>
-        <div v-for="field in fields" :key="field.id" class="template-container-for-view">
-          <div class="text-template-for-view">
-            <div class="type-for-view">
-              <p>{{ field.form_item.field_name }}</p>
-            </div>
-            <div class="type-of-answers">
-              <p>
-                {{ field.text_answer }}
-              </p>
+        
+        <div v-for="(fields, subCategoryTitle) in subGroups" :key="subCategoryTitle">
+          <div v-if="subCategoryTitle !== 'default'" class="sub-category-title">
+             <p>{{ subCategoryTitle }}</p>
+          </div>
+          
+          <div v-for="field in fields" :key="field.id" class="template-container-for-view">
+            <div class="text-template-for-view">
+              <div class="type-for-view">
+                <p style="margin: 0;">{{ field.form_item.field_name }}</p>
+
+                <div v-if="field.form_item.help_text" class="help-icon-wrapper">
+                  <img src="@/assets/icons/circle_help.svg" alt="Info" class="help-icon">
+                  <div class="help-tooltip">
+                    {{ field.form_item.help_text }}
+                  </div>
+                </div>
+              </div>
+              <div class="type-of-answers">
+                <p>
+                  {{ field.text_answer || '—' }}
+                </p>
+              </div>
             </div>
           </div>
         </div>
+        
       </div>
     </div>
   </div>
@@ -83,11 +98,19 @@ export default {
 
     const categorizedFields = computed(() => {
       return formItems.value.reduce((acc, item) => {
-        const category = item.form_item.form_item_category_title || "Без категорії";
-        if (!acc[category]) {
-          acc[category] = [];
+        const mainCat = item.form_item.form_item_main_category_title || "Без категорії";
+        // Якщо підкатегорія порожня, використовуємо 'default' для групування
+        const childCat = item.form_item.form_item_child_category_title || "default";
+        
+        if (!acc[mainCat]) {
+          acc[mainCat] = {};
         }
-        acc[category].push(item);
+        
+        if (!acc[mainCat][childCat]) {
+          acc[mainCat][childCat] = [];
+        }
+        
+        acc[mainCat][childCat].push(item);
         return acc;
       }, {});
     });

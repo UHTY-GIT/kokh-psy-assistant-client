@@ -15,21 +15,31 @@
           <img src="@/assets/icons/more.png" alt="Menu" />
         </button>
         <div v-if="isDropdownOpen" class="dropdown-menu">
-          <!-- Кнопки для роботи з парними консультаціями -->
-          <div v-if="client.origin_type !== 'individual'">
-            <button @click.prevent="openAppointPartnerModal">Назначити партнера</button>
-            <button @click.prevent="goToAddCoupleCycle">Додати цикл пари</button>
-            <button @click.prevent="goToViewCoupleCycle">Переглянути цикл пари</button>
-          </div>
-
-          <!-- Кнопки, доступні для всіх клієнтів -->
+          <!-- Кнопки для роботи з парними консультаціями, не для супервізійної -->
+          <template v-if="client.origin_type !== 'individual_supervision'">
+            <div v-if="client.origin_type !== 'individual'">
+              <button @click.prevent="openAppointPartnerModal">Назначити партнера</button>
+              <button @click.prevent="goToAddCoupleCycle">Додати цикл пари</button>
+              <button @click.prevent="goToViewCoupleCycle">Переглянути цикл пари</button>
+            </div>
+            <div>
+              <button @click.prevent="goToAddDigest">Додати дайджест психотерапевтичних думок</button>
+              <button @click.prevent="goToViewDigest">Переглянути дайджест психотерапевтичних думок</button>
+            </div>
+          </template>
           <div>
-            <button @click.prevent="goToAddDigest">Додати дайджест психотерапевтичних думок</button>
-            <button @click.prevent="goToViewDigest">Переглянути дайджест психотерапевтичних думок</button>
-            <button @click.prevent="goToAddExpertRating">Додати оцінку експерта</button>
-            <button @click.prevent="goToViewExpertRating">Переглянути оцінку експерта</button>
+            <button @click.prevent="goToAddExpertRating">
+              {{ client.origin_type === 'individual_supervision' ? 'Додати feedback супервізора' : 'Додати оцінку експерта' }}
+            </button>
+            <button @click.prevent="goToViewExpertRating">
+              {{ client.origin_type === 'individual_supervision' ? 'Переглянути feedback супервізора' : 'Переглянути оцінку експерта' }}
+            </button>
+            
+            <template v-if="client.origin_type === 'individual_supervision'">
+              <button @click.prevent="goToEditCaseDescription">Відредагувати опис кейсу</button>
+              <button @click.prevent="goToViewCaseDescription">Переглянути опис кейсу</button>
+            </template>
           </div>
-
         </div>
       </div>
     </div>
@@ -71,38 +81,62 @@
               </div>
             </div>
           </div>
-          <div class="block_info_client" v-if="client.was_agreed !== null">
-            <div class="text-template-for-view">
-              <div class="type-for-view">
-                <p>Інформована згода</p>
-              </div>
-              <div class="type-of-answers">
-                <p v-if="client.was_agreed" class="link-in-page">
-                  <router-link :to="{ name: 'ViewInformationConsent', params: { id: clientId } }">
-                    Прийняв
-                    <img src="@/assets/icons/share.svg" alt="icon">
-                  </router-link>
-                </p>
-                <p v-else>Не прийняв</p>
-              </div>
-            </div>
-          </div>
-          <div class="block_info_client" v-if="client.primary_poll_complete !== null">
-            <div class="text-template-for-view">
-              <div class="type-for-view">
-                <p>Первинне опитування</p>
-              </div>
-              <div class="type-of-answers">
-                <p v-if="client.primary_poll_complete" class="link-in-page">
-                  <router-link :to="{ name: 'ViewPrimaryPoll', params: { id: clientId } }">
-                    Пройшов
-                    <img src="@/assets/icons/share.svg" alt="icon">
-                  </router-link>
-                </p>
-                <p v-else>Не пройшов</p>
+          <template v-if="client.origin_type !== 'individual_supervision'">
+            <div class="block_info_client" v-if="client.was_agreed !== null">
+              <div class="text-template-for-view">
+                <div class="type-for-view">
+                  <p>Інформована згода</p>
+                </div>
+                <div class="type-of-answers">
+                  <p v-if="client.was_agreed" class="link-in-page">
+                    <router-link :to="{ name: 'ViewInformationConsent', params: { id: clientId } }">
+                      Прийняв
+                      <img src="@/assets/icons/share.svg" alt="icon">
+                    </router-link>
+                  </p>
+                  <p v-else>Не прийняв</p>
+                </div>
               </div>
             </div>
-          </div>
+            <div class="block_info_client" v-if="client.primary_poll_complete !== null">
+              <div class="text-template-for-view">
+                <div class="type-for-view">
+                  <p>Первинне опитування</p>
+                </div>
+                <div class="type-of-answers">
+                  <p v-if="client.primary_poll_complete" class="link-in-page">
+                    <router-link :to="{ name: 'ViewPrimaryPoll', params: { id: clientId } }">
+                      Пройшов
+                      <img src="@/assets/icons/share.svg" alt="icon">
+                    </router-link>
+                  </p>
+                  <p v-else>Не пройшов</p>
+                </div>
+              </div>
+            </div>
+          </template>
+          <template v-if="client.origin_type === 'individual_supervision'">
+            <!-- Опис кейсу для супервізійної сесії -->
+            <div class="block_info_client"  v-if="client.case_description_can_be_shown !== null">
+              <div class="text-template-for-view">
+                <div class="type-for-view">
+                  <p>Опис кейсу</p>
+                </div>
+                <div class="type-of-answers">
+<!--                  <p v-if="client.case_description_can_be_shown" class="link-in-page">-->
+<!--                    <router-link :to="{ name: 'ViewPrimaryPoll', params: { id: clientId } }">-->
+<!--                      Пройшов-->
+<!--                      <img src="@/assets/icons/share.svg" alt="icon">-->
+<!--                    </router-link>-->
+<!--                  </p>-->
+                  <p v-if="client.case_description_can_be_shown" class="link-in-page">
+                    Заповнив
+                  </p>
+                  <p v-else>Не заповнив</p>
+                </div>
+              </div>
+            </div>
+          </template>
           <div class="block_info_client" v-if="client.origin_type">
             <div class="text-template-for-view">
               <div class="type-for-view">
@@ -133,21 +167,23 @@
               </div>
             </div>
           </div>
-          <div class="block_info_client" v-if="client.partner_id">
-            <div class="text-template-for-view">
-              <div class="type-for-view">
-                <p>Партнер</p>
-              </div>
-              <div class="type-of-answers">
-                <p v-if="partnerName" class="link-in-page">
-                  <router-link :to="{ name: 'ClientInformation', params: { id: client.partner_id } }">
-                    {{ partnerName }}
-                    <img src="@/assets/icons/share.svg" alt="icon">
-                  </router-link>
-                </p>
+          <template v-if="client.origin_type !== 'individual_supervision'">
+            <div class="block_info_client" v-if="client.partner_id">
+              <div class="text-template-for-view">
+                <div class="type-for-view">
+                  <p>Партнер</p>
+                </div>
+                <div class="type-of-answers">
+                  <p v-if="partnerName" class="link-in-page">
+                    <router-link :to="{ name: 'ClientInformation', params: { id: client.partner_id } }">
+                      {{ partnerName }}
+                      <img src="@/assets/icons/share.svg" alt="icon">
+                    </router-link>
+                  </p>
+                </div>
               </div>
             </div>
-          </div>
+          </template>
           <div class="block_info_client" v-if="client.number_of_consultation">
             <div class="text-template-for-view">
               <div class="type-for-view">
@@ -170,7 +206,7 @@
           </div>
 
           <!-- Причина звернення до психолога -->
-          <div class="statistic-dropdown-container">
+          <div v-if="client.origin_type !== 'individual_supervision'" class="statistic-dropdown-container">
             <button class="dropdown-toggle" @click="toggleDropdown('primaryPoll')">
               <span class="dropdown-text">Причина звернення до психолога</span>
               <img
@@ -192,30 +228,78 @@
               </ul>
             </transition>
           </div>
-
-          <!-- Патерн самозахисту -->
-          <div class="statistic-dropdown-container">
-            <button class="dropdown-toggle" @click="toggleDropdown('consultation')">
-              <span class="dropdown-text">Патерн самозахисту</span>
+          <!-- Дубльований блок для Карта навичок (EFCT Growth Index), порожній -->
+          <div class="statistic-dropdown-container" v-if="client.origin_type == 'individual_supervision'">
+            <button class="dropdown-toggle" @click="toggleDropdown('EfctSkills')">
+              <span class="dropdown-text">Карта навичок (EFCT Growth Index)</span>
               <img
                   src="@/assets/icons/plus.png"
                   alt="Іконка"
                   class="dropdown-icon"
-                  :class="{ rotated: isConsultationOpen }"
+                  :class="{ rotated: isEfctSkillsOpen }"
               />
             </button>
-
             <transition name="slide-fade">
-              <ul v-show="isConsultationOpen" class="dropdown-menu-statistic">
-                <li v-if="!consultationData || consultationData.length === 0">Даних для відображення немає</li>
-                <li v-if="isConsultationLoading">Завантаження...</li>
-                <li v-for="(item, index) in consultationData" :key="'consult-' + index">
-                  <img src="@/assets/icons/chat-bubble.png" alt="Icon" class="dropdown-item-icon" />
-                  <p>{{ item }}</p>
-                </li>
-              </ul>
+              <div v-show="isEfctSkillsOpen" class="dropdown-menu-statistic" style="padding: 10px 0;">
+                  <div v-if="isEfctSkillsLoading" style="text-align: center; padding: 10px;">Завантаження...</div>
+                  <div v-else-if="!processedEfctTable || processedEfctTable.rows.length === 0" style="padding: 10px;">Даних немає</div>
+                  
+                  <div v-else class="table-responsive">
+                    <table class="efct-growth-index-table">
+                        <thead>
+                            <tr>
+                                <th>Навичка</th>
+                                <th class="left-dashed-border" v-for="(header, index) in processedEfctTable.headers" :key="index">
+                                    {{ header }}
+                                </th>
+                                <th class="left-dashed-border">Прогрес</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="(row, rIndex) in processedEfctTable.rows" :key="rIndex">
+                                <td>{{ row.title }}</td>
+                                <td class="left-dashed-border" v-for="(score, cIndex) in row.scores" :key="cIndex">
+                                    {{ score }}
+                                </td>
+                                <td class="left-dashed-border">
+                                    <img v-if="row.trend === 'up'" src="@/assets/icons/growth-index-up.svg" alt="Up">
+                                    <img v-else-if="row.trend === 'down'" src="@/assets/icons/growth-index-down.svg" alt="Down">
+                                    <img v-else src="@/assets/icons/growth-index-middle.svg" alt="Middle">
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                  </div>
+              </div>
             </transition>
           </div>
+
+          <!-- Патерн самозахисту (не для супервізійної) -->
+          <template v-if="client.origin_type !== 'individual_supervision'">
+            <div class="statistic-dropdown-container">
+              <button class="dropdown-toggle" @click="toggleDropdown('consultation')">
+                <span class="dropdown-text">Патерн самозахисту</span>
+                <img
+                    src="@/assets/icons/plus.png"
+                    alt="Іконка"
+                    class="dropdown-icon"
+                    :class="{ rotated: isConsultationOpen }"
+                />
+              </button>
+
+              <transition name="slide-fade">
+                <ul v-show="isConsultationOpen" class="dropdown-menu-statistic">
+                  <li v-if="!consultationData || consultationData.length === 0">Даних для відображення немає</li>
+                  <li v-if="isConsultationLoading">Завантаження...</li>
+                  <li v-for="(item, index) in consultationData" :key="'consult-' + index">
+                    <img src="@/assets/icons/chat-bubble.png" alt="Icon" class="dropdown-item-icon" />
+                    <p>{{ item }}</p>
+                  </li>
+                </ul>
+              </transition>
+            </div>
+          </template>
         </div>
 
         <div class="titte_field">
@@ -227,7 +311,8 @@
           <div
               v-for="consultation in consultations" :key="consultation.id" class="block_one_consultation"
           >
-            <router-link :to="{ name: 'ViewOneSession', params: { id: consultation.id } }"
+            <div class="session-block-link" @click="handleSessionClick(consultation)"
+                         style="cursor: pointer;"
                          v-if="consultation && consultation.id">
               <div>
                 <p>
@@ -241,7 +326,7 @@
                 </p>
                 <img src="@/assets/icons/share.svg" alt="View consultation client">
               </div>
-            </router-link>
+            </div>
           </div>
         </div>
       </div>
@@ -256,7 +341,7 @@
 </template>
 
 <script>
-import { ref, onMounted, watch, onBeforeUnmount } from 'vue';
+import { ref, onMounted, watch, onBeforeUnmount, computed } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import apiService from '@/services/apiService';
 import M from 'materialize-css';
@@ -281,8 +366,96 @@ export default {
     const consultationData = ref([]);
     const isPrimaryPollOpen = ref(false);
     const isConsultationOpen = ref(false);
-    const isCustomDropdown1Open = ref(false);
+    const isEfctSkillsOpen = ref(false);
     const isCustomDropdown2Open = ref(false);
+
+    // EFCT Skills Table State
+    const efctSkillsData = ref([]);
+    const isEfctSkillsLoading = ref(false);
+    const hasFetchedEfctSkills = ref(false);
+
+    const processedEfctTable = computed(() => {
+        if (!efctSkillsData.value || efctSkillsData.value.length === 0) return null;
+
+        const consultations = efctSkillsData.value;
+        // Змінюємо заголовки на "Сесія 1", "Сесія 2" ...
+        const headers = consultations.map((_, index) => `Сесія ${index + 1}`);
+        
+        let allSkillsMap = new Map();
+
+        consultations.forEach(session => {
+            session.efct_skill_items.forEach(skill => {
+                if (!allSkillsMap.has(skill.title)) {
+                    allSkillsMap.set(skill.title, []);
+                }
+            });
+        });
+
+        const rows = [];
+        const lastIndex = consultations.length - 1;
+        const prevIndex = consultations.length - 2;
+
+        allSkillsMap.forEach((_, skillTitle) => {
+            const row = {
+                title: skillTitle,
+                scores: [],
+                trend: 'middle' // Default trend
+            };
+
+            let lastScore = null;
+            let prevScore = null;
+
+            consultations.forEach((session, index) => {
+                const skillItem = session.efct_skill_items.find(s => s.title === skillTitle);
+                const score = skillItem ? skillItem.score : '-';
+                row.scores.push(score);
+
+                if (index === lastIndex) lastScore = skillItem ? skillItem.score : 0;
+                if (index === prevIndex) prevScore = skillItem ? skillItem.score : 0;
+            });
+
+            // Logic for trend
+            if (consultations.length >= 2) {
+                if (lastScore > prevScore) {
+                    row.trend = 'up';
+                } else if (lastScore < prevScore) {
+                    row.trend = 'down';
+                } else {
+                    row.trend = 'middle';
+                }
+            } else {
+                 // If less than 2 sessions, maybe no trend or default middle
+                 row.trend = 'middle';
+            }
+
+            rows.push(row);
+        });
+
+        return {
+            headers,
+            rows
+        };
+    });
+
+    const fetchEfctSkills = async () => {
+        if (hasFetchedEfctSkills.value) return;
+        
+        isEfctSkillsLoading.value = true;
+        try {
+            const token = localStorage.getItem('token');
+            const response = await apiService.getEfctSkills(token, clientId.value);
+            // API повертає { data: [...] }
+            if (response && response.data) {
+                efctSkillsData.value = response.data;
+            }
+            hasFetchedEfctSkills.value = true;
+        } catch (error) {
+            console.error("Error fetching EFCT skills:", error);
+            M.toast({ html: 'Помилка завантаження EFCT навичок' });
+        } finally {
+            isEfctSkillsLoading.value = false;
+        }
+    };
 
 
     const fetchClientInfo = async () => {
@@ -364,10 +537,12 @@ export default {
       switch (type) {
         case 'individual':
           return 'Індивідуальний';
-        case 'couple_сlassic':
+        case 'couple_classic':
           return 'Парний класничий';
         case 'couple_diagnostic':
           return 'Парний діагностичний';
+        case 'individual_supervision':
+          return 'Супервізійний індивідуальний';
         default:
           return type;
       }
@@ -415,6 +590,14 @@ export default {
       router.push({ name: 'ViewExpertRating', params: { id: clientId.value } });
     };
 
+    const goToViewCaseDescription = () => {
+      router.push({ name: 'ViewCaseDescription', params: { id: clientId.value } });
+    };
+
+    const goToEditCaseDescription = () => {
+      router.push({ name: 'EditCaseDescription', params: { id: clientId.value } });
+    };
+
     // const toggleDropdown = () => {
     //   isDropdownOpen.value = !isDropdownOpen.value;
     // };
@@ -454,12 +637,23 @@ export default {
         isPrimaryPollOpen.value = !isPrimaryPollOpen.value;
       } else if (type === 'consultation') {
         isConsultationOpen.value = !isConsultationOpen.value;
-      } else if (type === 'customDropdown1') {
-        isCustomDropdown1Open.value = !isCustomDropdown1Open.value;
+      } else if (type === 'EfctSkills') {
+        isEfctSkillsOpen.value = !isEfctSkillsOpen.value;
+        if (isEfctSkillsOpen.value) {
+            fetchEfctSkills();
+        }
       } else if (type === 'customDropdown2') {
         isCustomDropdown2Open.value = !isCustomDropdown2Open.value;
       }
       isDropdownOpen.value = !isDropdownOpen.value;
+    };
+
+    const handleSessionClick = (consultation) => {
+      if (consultation.status === 'done') {
+        router.push({ name: 'ViewOneSession', params: { id: consultation.id } });
+      } else {
+        M.toast({ html: 'Цю консультацію не можна ще переглянути бо вона не проведена' });
+      }
     };
 
 
@@ -476,6 +670,8 @@ export default {
       goToViewDigest,
       goToAddExpertRating,
       goToViewExpertRating,
+      goToViewCaseDescription,
+      goToEditCaseDescription,
       toggleDropdown,
       isDropdownOpen,
       consultations,
@@ -487,11 +683,14 @@ export default {
       truncateText,
       isPrimaryPollOpen,
       isConsultationOpen,
-      isCustomDropdown1Open,
+      isEfctSkillsOpen,
       isCustomDropdown2Open,
       fetchClientInfo,
       primaryPollData,
-      consultationData
+      consultationData,
+      isEfctSkillsLoading,
+      processedEfctTable,
+      handleSessionClick
     };
   }
 };

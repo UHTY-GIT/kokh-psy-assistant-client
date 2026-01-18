@@ -8,33 +8,59 @@
     <hr class="hr_profile">
     <div class="block_active_session">
       <form @submit.prevent="openModal">
-        <div v-for="(fields, categoryTitle) in categorizedFields" :key="categoryTitle">
+        <div v-for="(subGroups, categoryTitle) in categorizedFields" :key="categoryTitle">
           <div class="titte_field">
-            <p>{{ categoryTitle || "Без категорії" }}</p>
+            <p>{{ categoryTitle }}</p>
           </div>
-          <div class="block_input_field">
-            <div v-for="field in fields" :key="field.id" class="forms-name-add active_session_fields">
-              <div class="container-input">
-                <label :for="field.field_name">{{ field.field_name }}</label>
-                <textarea
-                    v-if="field.field_type === 'text'"
-                    :id="field.field_name"
-                    v-model="field.text_answer"
-                    :placeholder="'Введіть ' + field.field_name"
-                ></textarea>
-                <input
-                    v-else-if="field.field_type === 'string'"
-                    type="text"
-                    :id="field.field_name"
-                    v-model="field.text_answer"
-                    :placeholder="'Введіть ' + field.field_name"
-                >
-                <select v-else-if="field.field_type === 'select_v2'" :id="field.field_name" v-model="field.text_answer">
-                  <option disabled value="">Оберіть варіант</option>
-                  <option v-for="variant in field.variants" :key="variant">{{ variant }}</option>
-                </select>
+          
+          <div v-for="(fields, subCategoryTitle) in subGroups" :key="subCategoryTitle">
+            <div v-if="subCategoryTitle !== 'default'" class="sub-category-title">
+               <p>{{ subCategoryTitle }}</p>
+            </div>
+            
+            <div class="block_input_field">
+              <div v-for="field in fields" :key="field.id" class="forms-name-add active_session_fields">
+                <div class="container-input">
+
+                  <div class="container-label">
+                    <div class="type-for-view">
+                      <label :for="field.field_name" style="margin-bottom: 0;">{{ field.field_name }}</label>
+
+                      <div v-if="field.help_text" class="help-icon-wrapper">
+                        <img src="@/assets/icons/circle_help.svg" alt="Info" class="help-icon">
+                        <div class="help-tooltip">
+                          {{ field.help_text }}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                
+                  <textarea
+                        v-if="field.field_type === 'text'"
+                        :id="field.field_name"
+                        v-model="field.text_answer"
+                        :placeholder="'Введіть ' + field.field_name"
+                    >
+                  </textarea>
+                  <input
+                      v-else-if="field.field_type === 'string'"
+                      type="text"
+                      :id="field.field_name"
+                      v-model="field.text_answer"
+                      :placeholder="'Введіть ' + field.field_name"
+                  >
+                  <select v-else-if="field.field_type === 'select_v2'" :id="field.field_name" v-model="field.text_answer">
+                    <option disabled value="">Оберіть варіант</option>
+                    <option v-for="variant in field.variants" :key="variant">{{ variant }}</option>
+                  </select>
+                  <select v-else-if="field.field_type === 'range'" :id="field.field_name" v-model="field.text_answer">
+                    <option disabled value="">Оберіть оцінку</option>
+                    <option v-for="variant in field.variants" :key="variant" :value="variant">{{ variant }}</option>
+                  </select>
+                </div>
               </div>
             </div>
+          
           </div>
         </div>
         <div class="container-global-form-edit active_session_button">
@@ -99,14 +125,34 @@ export default {
         dateConsultation.value = data.consultation_date;
 
         // Мапінг полів для редагування
-        formData.value.fields = data.answers.map(item => ({
-          id: item.id,
-          field_name: item.form_item.field_name,
-          text_answer: item.text_answer,
-          field_type: item.form_item.field_type || "text",
-          variants: item.form_item.variants || [],
-          category: item.form_item.form_item_category_title || "Без категорії"
-        }));
+        formData.value.fields = data.answers.map(item => {
+          let variants = item.form_item.variants || [];
+          
+          if (item.form_item.field_type === 'range' && typeof item.form_item.variants === 'string') {
+              const parts = item.form_item.variants.split('-');
+              if (parts.length === 2) {
+                  const min = parseInt(parts[0]);
+                  const max = parseInt(parts[1]);
+                  if (!isNaN(min) && !isNaN(max)) {
+                      variants = [];
+                      for (let i = min; i <= max; i++) {
+                          variants.push(i);
+                      }
+                  }
+              }
+          }
+
+          return {
+            id: item.id,
+            field_name: item.form_item.field_name,
+            text_answer: item.text_answer,
+            field_type: item.form_item.field_type || "text",
+            variants: variants,
+            help_text: item.form_item.help_text,
+            category: item.form_item.form_item_main_category_title || "Без категорії",
+            sub_category: item.form_item.form_item_child_category_title || "default"
+          };
+        });
       } catch (error) {
         console.error("Error fetching session data:", error);
       }
@@ -114,11 +160,16 @@ export default {
 
     const categorizedFields = computed(() => {
       return formData.value.fields.reduce((acc, field) => {
-        const category = field.category;
-        if (!acc[category]) {
-          acc[category] = [];
+        const mainCat = field.category;
+        const subCat = field.sub_category;
+        
+        if (!acc[mainCat]) {
+          acc[mainCat] = {};
         }
-        acc[category].push(field);
+        if (!acc[mainCat][subCat]) {
+          acc[mainCat][subCat] = [];
+        }
+        acc[mainCat][subCat].push(field);
         return acc;
       }, {});
     });

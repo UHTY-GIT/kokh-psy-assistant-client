@@ -1,12 +1,12 @@
 <!-- src/components/modal/ModalDeleteCalendar.vue -->
 <template>
-  <div :class="{ 'modal-window': true, 'is-active': showModal }">
-    <div class="modal-content">
+  <div :class="{ 'modal-window': true, 'is-active': showModal }" @click="closeModal">
+    <div class="modal-content" @click.stop>
       <div class="modal-close-butt">
         <img src="@/assets/icons/close-modal.svg" alt="close" @click="closeModal">
       </div>
       <div class="modal-content-all">
-        <p>Ви дійсно хочете видалити сесію <b>{{ nameSession }}</b> з клієнтом <b>{{ firstNameClient }}</b>?</p>
+        <p>Ви дійсно хочете видалити сесію <span>{{ nameSession }}</span> з клієнтом <span>{{ firstNameClient }}</span>?</p>
         <div>
           <div class="modal-btn">
             <button class="btn-send-templates btn-margin-modal" @click="closeModal">Ні</button>
@@ -73,10 +73,13 @@ export default {
 .modal-content-all p {
   font-family: "Nunito", sans-serif;
   font-style: normal;
-  font-weight: 700;
+  font-weight: 500;
   font-size: 20px;
   margin: 10px 0 20px;
   text-align: center;
+}
+.modal-content-all p span {
+  font-weight: 700;
 }
 .modal-close-butt {
   display: flex;

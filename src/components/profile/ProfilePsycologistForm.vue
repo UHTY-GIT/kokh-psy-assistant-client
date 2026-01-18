@@ -9,8 +9,10 @@
       <form class="name-update-form" @submit.prevent="submitUserProfile">
         <!-- Поле для введення імені -->
         <div class="input-field-text">
-          <div class="container-input">
-            <label for="name">Введіть ім’я</label>
+          <div class="container-input user-profile">
+            <div class="type-for-view">
+              <label for="name">Введіть ім’я</label>
+            </div>
             <input
                 id="name"
                 type="text"
@@ -24,8 +26,10 @@
 
         <!-- Поля для завантаження файлів -->
         <div class="file-upload-field">
-          <div class="container-input">
-            <label>Встановити аватар</label>
+          <div class="container-input user-profile">
+            <div class="type-for-view">
+              <label>Встановити аватар</label>
+            </div>
             <input
                 type="file"
                 ref="fileInputAvatar"
@@ -37,20 +41,25 @@
         </div>
 
         <div class="file-upload-field">
-          <div class="container-input">
-            <label>Встановити зображення</label>
+          <div class="container-input user-profile">
+            <div class="type-for-view">
+              <label>Встановити зображення</label>
+            </div>
             <input
                 type="file"
                 ref="fileInputBackPhoto"
                 @change="handleFileUpload($event, 'background_photo')"
+                style="display: none;"
             >
             <span class="file-chosen" @click="triggerFileInputBackPhoto">{{ fileNameImage ? fileNameImage : "Натисніть щоб вибрати файл" }}</span>
           </div>
         </div>
 
         <div class="select-field">
-          <div class="container-input">
-            <label for="timezone">Встановити тайм-зону</label>
+          <div class="container-input user-profile">
+            <div class="type-for-view">
+              <label for="timezone">Встановити тайм-зону</label>
+            </div>
             <select id="timezone" v-model="profile.timezone">
               <option v-for="zone in timezones" :key="zone" :value="zone">{{ zone }}</option>
             </select>
@@ -59,8 +68,10 @@
 
         <!-- Поле для вибору дати -->
         <div class="date-field">
-          <div class="container-input">
-            <label for="birthdate">Дата народження</label>
+          <div class="container-input user-profile">
+            <div class="type-for-view">
+              <label for="birthdate">Дата народження</label>
+            </div>
             <input
                 id="birthdate"
                 type="date"
@@ -72,8 +83,10 @@
 
         <!-- Чекбокси для типу роботи -->
         <div class="checkbox-field">
-          <div class="container-input">
-            <label>Тип роботи</label>
+          <div class="container-input user-profile">
+            <div class="type-for-view">
+              <label>Тип роботи</label>
+            </div>
             <div class="checkbox-group">
               <label class="custom-checkbox">
                 <input type="checkbox" v-model="profile.workType" value="individual" />
@@ -114,8 +127,10 @@
 
         <!-- Текстове поле для кваліфікації -->
         <div class="input-field-text">
-          <div class="container-input">
-            <label for="qualification">Кваліфікація</label>
+          <div class="container-input user-profile">
+            <div class="type-for-view">
+              <label for="qualification">Кваліфікація</label>
+            </div>
             <input
                 id="qualification"
                 type="text"

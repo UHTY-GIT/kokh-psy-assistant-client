@@ -5,7 +5,11 @@
       <input type="text" class="search-input" placeholder="Пошук">
     </div>
 
-    <div class="client-list">
+    <div v-if="isLoading" class="loader-wrapper">
+      <Loader />
+    </div>
+
+    <div v-else class="client-list">
       <table class="table">
         <thead>
         <tr>
@@ -21,18 +25,20 @@
           <td>{{ consultation.number }}</td>
           <td>{{ formatTime(consultation.consultation_date) }}</td>
           <td>{{ formatDate(consultation.consultation_date) }}</td>
-          <td>{{ consultation.client.first_name }}</td>
+          <td @click="viewClientInfo(consultation.client.id)" class="client-name-link">
+            {{ consultation.client.first_name }}
+          </td>
           <td class="all-butt-management">
             <button class="btn-action" :data-tooltip="getStatusTooltip(consultation.status)">
               <img :src="getStatusIcon(consultation.status)" alt="Статус">
             </button>
-            <button class="btn-action" data-tooltip="Переглянути дані сесії" @click="openViewSession(consultation.id)">
+            <button class="btn-action" data-tooltip="Переглянути дані сесії" @click="openViewSession(consultation.id, consultation.status)">
               <img src="@/assets/icons/visible-client.svg" alt="Переглянути">
             </button>
             <button
                 class="btn-action"
                 data-tooltip="Видалити сесію"
-                @click="deleteClientSession(consultation.id)"
+                @click="openDeleteSessionModal(consultation)"
             >
               <img src="@/assets/icons/trash-client.svg" alt="Видалити сесію">
             </button>
@@ -50,7 +56,7 @@
       </table>
     </div>
 
-    <div class="client-footer">
+    <div v-if="!isLoading" class="client-footer">
       <div class="pagination-info">
         Сторінка {{ currentPage }} з {{ totalPages }}
       </div>
@@ -69,6 +75,17 @@
       @close="showModal = false"
       @confirm="startSession"
   />
+
+  <!-- Модальне вікно для видалення сесії -->
+  <ModalDeleteSession
+      v-if="showDeleteModal"
+      :showModal="showDeleteModal"
+      :clientName="sessionToDelete?.clientName"
+      :sessionTitle="sessionToDelete?.title"
+      :sessionId="sessionToDelete?.id"
+      @close="showDeleteModal = false"
+      @confirm="confirmDeleteSession"
+  />
 </template>
 
 <script>
@@ -77,17 +94,22 @@ import apiService from "@/services/apiService";
 import { useRouter } from 'vue-router';
 import M from "materialize-css";
 import ModalStartSession from "@/components/modal/ModalStartSession.vue";
+import Loader from "@/components/app/Loader.vue";
+import ModalDeleteSession from "@/components/modal/ModalDeleteSession.vue";
 
 export default {
   name: "mySession",
   components: {
-    ModalStartSession
+    ModalStartSession,
+    Loader,
+    ModalDeleteSession
   },
   setup() {
     const consultations = ref([]);
     const showModal = ref(false);
     const selectedConsultation = ref(null);
     const router = useRouter();
+    const isLoading = ref(false);
 
     // Пагінація
     const currentPage = ref(1);
@@ -95,6 +117,7 @@ export default {
     const totalPages = computed(() => Math.ceil(consultations.value.length / itemsPerPage));
 
     const fetchConsultations = async () => {
+      isLoading.value = true;
       try {
         const token = localStorage.getItem('token');
         if (!token) {
@@ -108,6 +131,8 @@ export default {
         M.toast({html: 'Помилка завантаження консультацій'});
         M.toast({ html: `Увійдіть у систему` });
         router.push({name: 'login'});
+      } finally {
+        isLoading.value = false;
       }
     };
 
@@ -154,14 +179,37 @@ export default {
       });
     };
 
-    const openViewSession = (id) => {
+    const openViewSession = (id, status) => {
+      if (status !== 'done') {
+        M.toast({ html: 'Не можна переглянути сесію яка не була завершена' });
+        return;
+      }
       router.push({
         name: 'ViewOneSession',
         params: { id }
       });
     };
 
-    const deleteClientSession = async (id) => {
+    const viewClientInfo = (clientId) => {
+      router.push({
+        name: 'ClientInformation',
+        params: { id: clientId }
+      });
+    };
+
+    const showDeleteModal = ref(false);
+    const sessionToDelete = ref(null);
+
+    const openDeleteSessionModal = (consultation) => {
+      sessionToDelete.value = {
+        id: consultation.id,
+        clientName: consultation.client.first_name,
+        title: consultation.title
+      };
+      showDeleteModal.value = true;
+    };
+
+    const confirmDeleteSession = async (id) => {
       try {
         const token = localStorage.getItem('token');
         if (!token) {
@@ -178,8 +226,11 @@ export default {
       } catch (error) {
         M.toast({html: 'Не вдалося видалити сесію'});
         console.error('Error deleting session:', error);
+      } finally {
+        showDeleteModal.value = false;
+        sessionToDelete.value = null;
       }
-    }
+    };
 
     // Функція для зміни іконки в залежності від статусу сесії
     const getStatusIcon = (status) => {
@@ -231,16 +282,39 @@ export default {
       openModal,
       startSession,
       openViewSession,
+      viewClientInfo,
       showModal,
       selectedConsultation,
       getStatusIcon,
       getStatusTooltip,
-      deleteClientSession,
+      openDeleteSessionModal,
+      confirmDeleteSession,
+      showDeleteModal,
+      sessionToDelete,
       currentPage,
       totalPages,
       changePage,
-      paginatedConsultations
+      paginatedConsultations,
+      isLoading
     };
   }
 }
 </script>
+
+<style scoped>
+.loader-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: 50px;
+}
+
+.client-name-link {
+  cursor: pointer;
+  text-decoration: underline;
+  transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+.client-name-link:hover {
+  color: #181e21;
+}
+</style>

@@ -18,10 +18,17 @@
       </div>
     </div>
     <div class="search">
-      <input type="text" class="search-input" placeholder="Пошук">
+      <button class="btn-search" @click="handleSearch">
+        <img src="@/assets/icons/search-icon.svg" alt="Пошук">
+      </button>
+      <input type="text" class="search-input" placeholder="Пошук" v-model="searchQuery" @keyup.enter="handleSearch">
     </div>
 
-    <div class="client-list">
+    <div v-if="isLoading" class="loader-wrapper">
+      <Loader />
+    </div>
+
+    <div v-else class="client-list">
       <table class="table">
         <thead>
         <tr>
@@ -32,7 +39,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr v-for="client in paginatedClients" :key="client.telegram_id">
+        <tr v-for="client in clients" :key="client.telegram_id">
 <!--          Якщо змінити ключ на client.id тоді зміниться порядок клієнтів-->
           <td>{{ client.name }}</td>
           <td>{{ client.phone }}</td>
@@ -48,7 +55,7 @@
             <button class="btn-action" data-tooltip="Редагувати">
               <img src="@/assets/icons/edit-client.svg" alt="Редагувати">
             </button>
-            <button class="btn-action" data-tooltip="Архівувати" @click="AddToArchive(client.id)">
+            <button class="btn-action" data-tooltip="Архівувати" @click="AddToArchive(client)">
               <img src="@/assets/icons/archive-personal.png" alt="Архівувати">
             </button>
           </td>
@@ -58,7 +65,7 @@
       </table>
     </div>
 
-    <div class="client-footer">
+    <div v-if="!isLoading" class="client-footer">
       <div class="pagination-info">
         Сторінка {{ currentPage }} з {{ totalPages }}
       </div>
@@ -79,20 +86,32 @@
       :clientPrimaryPollComplete="clientPrimaryPollComplete"
       @close="showModal = false"
   />
+  <modal-archive-client
+      v-if="showArchiveModal"
+      :showModal="showArchiveModal"
+      :clientName="clientToArchive?.name"
+      @close="showArchiveModal = false"
+      @confirm="confirmArchive"
+  />
 </template>
 <script>
 import apiService from '@/services/apiService';
 import M from 'materialize-css';
-import { ref, computed } from 'vue';
+import { ref, watch } from 'vue';
 import ModalTemplates from "@/components/modal/ModalTemplates.vue";
-import {useRouter} from "vue-router";
+import ModalArchiveClient from "@/components/modal/ModalArchiveClient.vue";
+import Loader from "@/components/app/Loader.vue";
+import {useRouter, useRoute} from "vue-router";
 export default {
   name: "AllClient",
   components: {
-    ModalTemplates
+    ModalTemplates,
+    ModalArchiveClient,
+    Loader
   },
   setup() {
     const showModal = ref(false);
+    const showArchiveModal = ref(false);
     const clients = ref([]);
     const templates = ref([]);
     const selectedClientId = ref(null); // зберігання ID вибраного клієнта
@@ -100,26 +119,76 @@ export default {
     const clientWasAgreedConsent = ref(false);
     const clientPrimaryPollComplete = ref(false);
     const router = useRouter();
+    const route = useRoute();
+    const isLoading = ref(false);
+
+    // For Archive Modal
+    const clientToArchive = ref(null);
 
     // Пагінація
     const currentPage = ref(1);
-    const itemsPerPage = 10; // Кількість клієнтів на сторінку
-    const totalPages = computed(() => Math.ceil(clients.value.length / itemsPerPage));
+    const totalPages = ref(1);
+    const itemsPerPage = 5;
+    const searchQuery = ref('');
+
 
     const fetchClients = async () => {
+      isLoading.value = true;
       try {
         const token = localStorage.getItem('token'); // Отримання токена з локального сховища
         if (token) {
-          const response = await apiService.getClients(token);
-          if (response && response.data && response.data.data) {
-            clients.value = response.data.data; // Зберігання даних клієнтів у масив
+          // currentPage.value, яка вже оновлена через watcher або ініціалізацію
+          const params = {
+            page: currentPage.value,
+            per_page: itemsPerPage,
+            search: searchQuery.value
+          };
+          
+          const response = await apiService.getClients(token, params);
+          
+          if (response) {
+             const clientList = response.data;
+             
+             if (clientList) {
+                // Фільтруємо на клієнті
+                clients.value = clientList.filter(
+                    client => client.origin_type !== 'individual_supervision'
+                );
+             }
+
+             if (response.pagy) {
+                 totalPages.value = response.pagy.total_pages;
+             }
           }
         }
       } catch (error) {
         console.error('Error fetching clients:', error);
         M.toast({ html: `Увійдіть у систему` });
         router.push({name: 'login'});
+      } finally {
+        isLoading.value = false;
       }
+    };
+
+    const handleSearch = () => {
+        if (currentPage.value === 1) {
+            fetchClients();
+        } else {
+            updatePage(1);
+        }
+    };
+    
+    // Функція оновлення сторінки
+    const changePage = (step) => {
+      const nextPage = currentPage.value + step;
+      if (nextPage >= 1 && nextPage <= totalPages.value) {
+        updatePage(nextPage);
+      }
+    };
+
+    const updatePage = (page) => {
+        // Оновлюємо URL, це тригерне watcher
+        router.push({ query: { ...route.query, page: page } });
     };
 
     const fetchTemplates = async () => {
@@ -163,7 +232,14 @@ export default {
       router.push({name: 'AllStatisticPage'})
     };
 
-    const AddToArchive = async (clientId) => {
+    const AddToArchive = (client) => {
+      clientToArchive.value = client;
+      showArchiveModal.value = true;
+    }
+
+    const confirmArchive = async () => {
+      if (!clientToArchive.value) return;
+      
       try {
         const token = localStorage.getItem('token');
         if (!token) {
@@ -172,9 +248,11 @@ export default {
           return;
         }
 
-        await apiService.AddArchiveClient(token, clientId);
+        await apiService.AddArchiveClient(token, clientToArchive.value.id);
         M.toast({ html: 'Клієнта успішно архівовано' });
         fetchClients();  // Оновлення списку після архівації
+        showArchiveModal.value = false;
+        clientToArchive.value = null;
 
       } catch (error) {
         console.error('Error archiving client:', error);
@@ -183,21 +261,33 @@ export default {
     }
 
 
-    //Пагінація сторінок
-    const paginatedClients = computed(() => {
-      const start = (currentPage.value - 1) * itemsPerPage;
-      const end = start + itemsPerPage;
-      return clients.value.slice(start, end);
+    // Ініціалізація
+    const initialize = () => {
+        const pageFromUrl = parseInt(route.query.page) || 1;
+        currentPage.value = pageFromUrl;
+        fetchClients();
+    }
+    initialize();
+    
+    // Слідкуємо за зміною сторінки в URL
+    
+    watch(() => route.query.page, (newPage) => {
+       const page = parseInt(newPage) || 1;
+       if (page !== currentPage.value) {
+           currentPage.value = page;
+           fetchClients();
+       } else if (page === 1 && !newPage) {
+           // Handle case where query param is removed (implicit page 1)
+           // If currentPage is already 1, nothing to do, but fetchClients called by updatePage if via button
+           // But here we rely on watcher
+           fetchClients();
+       } else {
+           // If parameters match, we still might want to fetch if triggered by other means? 
+           // In our flow, updatePage changes URL -> triggers Watcher -> fetches.
+           // So yes, fetch.
+           fetchClients();
+       }
     });
-
-    const changePage = (step) => {
-      if (currentPage.value + step >= 1 && currentPage.value + step <= totalPages.value) {
-        currentPage.value += step;
-      }
-    };
-
-    // Перенесіть логіку з mounted сюди, якщо потрібно запустити щось при створенні компонента
-    fetchClients();
 
     return {
       clients,
@@ -214,9 +304,23 @@ export default {
       currentPage,
       totalPages,
       changePage,
-      paginatedClients,
-      OpenStatistic
+      OpenStatistic,
+      isLoading,
+      showArchiveModal,
+      clientToArchive,
+      confirmArchive,
+      searchQuery,
+      handleSearch,
+      fetchClients
     }
   }
 };
 </script>
+
+<style scoped>
+.loader-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: 50px;
+}
+</style>

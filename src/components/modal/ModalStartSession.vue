@@ -1,7 +1,7 @@
 <!-- src/components/modal/ModalStartSession.vue -->
 <template>
-  <div :class="{ 'modal-window': true, 'is-active': showModal }">
-    <div class="modal-content">
+  <div :class="{ 'modal-window': true, 'is-active': showModal }" @click="closeModal">
+    <div class="modal-content" @click.stop>
       <div class="modal-close-butt">
         <img src="@/assets/icons/close-modal.svg" alt="close" @click="closeModal">
       </div>

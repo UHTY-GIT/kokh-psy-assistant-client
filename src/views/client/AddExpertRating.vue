@@ -1,10 +1,9 @@
-<!-- src/views/client/AddExpertRating.vue -->
 <template>
   <div>
     <div>
       <div class="profile_tittle">
         <p>
-          Оцінка експерта, для клієнта {{ client.name }}
+          {{ client.origin_type === 'individual_supervision' ? 'Feedback супервізора' : 'Оцінка експерта' }}, для клієнта {{ client.name }}
         </p>
       </div>
       <hr class="hr_profile">
@@ -12,25 +11,31 @@
         <form class="cycle_couple_form" @submit.prevent="submitExpertAssessment">
           <div class="titte_field">
             <p>
-              Додати оцінку експерта
+              {{ client.origin_type === 'individual_supervision' ? 'Додати feedback супервізора' : 'Додати оцінку експерта' }}
             </p>
           </div>
           <div class="block_input_field">
             <div class="forms-name-add active_session_fields">
               <div class="container-input">
-                <label for="expert-assessment">Оцінка експерта</label>
+                <div class="type-for-view">
+                  <label for="expert-assessment">
+                    {{ client.origin_type === 'individual_supervision' ? 'Feedback супервізора' : 'Оцінка експерта' }}
+                  </label>
+                </div>  
                 <textarea
                     id="expert-assessment"
                     v-model="expertAssessmentContent"
-                    placeholder="Введіть оцінку експерта"
-                ></textarea>
+                    :placeholder="client.origin_type === 'individual_supervision' ? 'Введіть feedback супервізора' : 'Введіть оцінку експерта'"
+                ></textarea>            
               </div>
             </div>
           </div>
           <div class="container-global-form-edit active_session_button cycle_button_submit">
             <button class="global-form-edit" type="submit">
               <img src="../../assets/icons/share.svg" alt="Send name form">
-              <span class="edit-link">Надіслати оцінку</span>
+              <span class="edit-link">
+                {{ client.origin_type === 'individual_supervision' ? 'Надіслати feedback' : 'Надіслати оцінку' }}
+              </span>
             </button>
           </div>
         </form>

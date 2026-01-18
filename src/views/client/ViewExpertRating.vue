@@ -4,7 +4,7 @@
     <div>
       <div class="profile_tittle">
         <p>
-          Переглянути оцінку експерта, для клієнта {{ client.name }}
+          {{ client.origin_type === 'individual_supervision' ? 'Переглянути feedback супервізора, для клієнта' : 'Переглянути оцінку експерта, для клієнта' }} {{ client.name }}
         </p>
       </div>
       <hr class="hr_profile">

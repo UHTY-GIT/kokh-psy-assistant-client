@@ -1,7 +1,7 @@
 <!-- src/components/modal/ModalAppointPartner.vue -->
 <template>
-  <div :class="{ 'modal-window': true, 'is-active': showModal }">
-    <div class="modal-content modal-appoint-partner">
+  <div :class="{ 'modal-window': true, 'is-active': showModal }" @click="$emit('close')">
+    <div class="modal-content modal-appoint-partner" @click.stop>
       <div class="modal-close-butt">
         <img src="@/assets/icons/close-modal.svg" alt="close" @click="$emit('close')" />
       </div>
