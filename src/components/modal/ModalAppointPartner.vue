@@ -86,8 +86,10 @@ export default {
       }
 
       try {
-        const response = await apiService.getClients(token);
-        availablePartners.value = response.data.data.filter(c => c.id !== props.clientId); // Виключаємо самого себе зі списку
+        const response = await apiService.getClientsAll(token);
+        if (response && response.data) {
+            availablePartners.value = response.data.filter(c => c.id !== props.clientId); 
+        }
       } catch (error) {
         console.error('Error fetching clients:', error);
         M.toast({ html: 'Помилка при завантаженні клієнтів' });

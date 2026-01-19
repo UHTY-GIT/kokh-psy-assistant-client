@@ -143,7 +143,7 @@ export default {
             origin_type: 'individual_supervision' // Фільтрація по типу на сервері
           };
 
-          const response = await apiService.getClients(token, params);
+          const response = await apiService.getClientsPagination(token, params);
           
           if (response) {
             const clientList = response.data;

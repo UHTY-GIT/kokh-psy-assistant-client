@@ -88,10 +88,11 @@ export default {
       }
     };
 
+    
     const fetchAllClients = async () => {
       try {
         const token = localStorage.getItem('token');
-        const response = await apiService.getClients(token);
+        const response = await apiService.getClientsAll(token);
         if (response && response.data) {
              clients.value = response.data;
         }

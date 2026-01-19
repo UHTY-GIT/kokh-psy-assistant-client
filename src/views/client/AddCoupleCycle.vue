@@ -18,7 +18,9 @@
       <form class="name-update-form" @submit.prevent="handleSubmit">
         <div class="forms-name-add">
           <div class="container-input">
-            <label for="CoupleClient">Оберіть партнера клієнта</label>
+            <div class="type-for-view">
+              <label for="CoupleClient">Оберіть партнера клієнта</label>
+            </div>
             <select id="CoupleClient" v-model="selectedPartnerId">
               <option disabled value="">Будь ласка, оберіть партнера</option>
               <option v-for="partner in availablePartners" :key="partner.id" :value="partner.id">
@@ -43,7 +45,9 @@
         <div class="block_input_field">
           <div v-for="field in cycleFormFields" :key="field.id" class="forms-name-add active_session_fields">
             <div class="container-input">
-              <label :for="field.field_name">{{ field.field_name }}</label>
+              <div class="type-for-view">
+                <label :for="field.field_name">{{ field.field_name }}</label>
+              </div>
               <textarea
                   v-if="field.field_type === 'text'"
                   :id="field.field_name"
@@ -125,8 +129,10 @@ export default {
       }
 
       try {
-        const response = await apiService.getClients(token);
-        availablePartners.value = response.data.data.filter(c => Number(c.id) !== clientId);
+        const response = await apiService.getClientsAll(token);
+        if (response && response.data) {
+            availablePartners.value = response.data.filter(c => Number(c.id) !== clientId);
+        }
       } catch (error) {
         console.error('Error fetching clients:', error);
         M.toast({ html: 'Помилка при завантаженні клієнтів' });

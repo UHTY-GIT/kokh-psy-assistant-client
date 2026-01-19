@@ -24,7 +24,7 @@ const apiService = {
     },
 
     //Функція для відображення всіх клієнтів (по типам, якщо не передавати тип, тоді всі відображаються, якщо передавати, тоді якийсь один)
-    getClients: async (token, params = {}) => {
+    getClientsPagination: async (token, params = {}) => {
         const config = {
             headers: {
                 'Content-Type': 'application/json',
@@ -34,6 +34,19 @@ const apiService = {
         };
 
         const response = await axios.get(`${BASE_URL}/api/v1/clients`, config);
+        return response.data;
+    },
+
+    //Функція для відображення всіх клієнтів
+    getClientsAll: async (token) => {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                'authtoken': token,
+            }
+        };
+
+        const response = await axios.get(`${BASE_URL}/api/v1/clients/list`, config);
         return response.data;
     },
 

@@ -1916,7 +1916,6 @@ button:focus {
 .submit-coupe-partner {
   display: flex;
   justify-content: flex-end;
-  width: 840px;
 }
 .submit-coupe-partner button {
   width: 260px;

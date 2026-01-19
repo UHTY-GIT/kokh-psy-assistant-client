@@ -128,7 +128,7 @@ export default {
     // Пагінація
     const currentPage = ref(1);
     const totalPages = ref(1);
-    const itemsPerPage = 5;
+    const itemsPerPage = 10;
     const searchQuery = ref('');
 
 
@@ -144,7 +144,8 @@ export default {
             search: searchQuery.value
           };
           
-          const response = await apiService.getClients(token, params);
+          
+          const response = await apiService.getClientsPagination(token, params);
           
           if (response) {
              const clientList = response.data;

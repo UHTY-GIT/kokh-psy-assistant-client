@@ -18,7 +18,9 @@
           <div class="block_input_field">
             <div class="forms-name-add active_session_fields">
               <div class="container-input">
-                <label for="digest-psy-mind">Дайджест психотерапевтичних думок</label>
+                <div class="type-for-view">
+                  <label for="digest-psy-mind">Дайджест психотерапевтичних думок</label>
+                </div>
                 <textarea
                     id="digest-psy-mind"
                     v-model="digestPsyMindContent"
