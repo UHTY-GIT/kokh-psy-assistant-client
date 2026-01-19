@@ -92,9 +92,12 @@ export default {
       try {
         const token = localStorage.getItem('token');
         const response = await apiService.getClients(token);
-        clients.value = response.data.data;
+        if (response && response.data) {
+             clients.value = response.data;
+        }
       } catch (error) {
         M.toast({ html: 'Помилка завантаження клієнтів' });
+        clients.value = []; 
       }
     };
     
