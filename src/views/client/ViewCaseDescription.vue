@@ -108,7 +108,22 @@ export default {
         
         if (response && response.data && response.data.answers.length > 0) {
              hasData.value = true;
-             formItems.value = response.data.answers;
+             const answers = response.data.answers;
+             const items = response.data.custom_form.form_items;
+             
+             // Create a map for faster lookup
+             const itemsMap = {};
+             if (items && Array.isArray(items)) {
+                 items.forEach(i => itemsMap[i.id] = i);
+             }
+             
+             // Merge
+             formItems.value = answers.map(a => {
+                 return {
+                     ...a,
+                     form_item: itemsMap[a.form_item_id] || {}
+                 };
+             });
         } else {
             hasData.value = false;
         }

@@ -38,6 +38,7 @@
             <template v-if="client.origin_type === 'individual_supervision'">
               <button @click.prevent="goToEditCaseDescription">Відредагувати опис кейсу</button>
               <button @click.prevent="goToViewCaseDescription">Переглянути опис кейсу</button>
+              <button @click.prevent="goToAddBonusForCouple">Бонус для пари</button>
             </template>
           </div>
         </div>
@@ -598,6 +599,10 @@ export default {
       router.push({ name: 'EditCaseDescription', params: { id: clientId.value } });
     };
 
+    const goToAddBonusForCouple = () => {
+      router.push({ name: 'AddBonusForCouple', params: { id: clientId.value } });
+    };
+
     // const toggleDropdown = () => {
     //   isDropdownOpen.value = !isDropdownOpen.value;
     // };
@@ -672,6 +677,7 @@ export default {
       goToViewExpertRating,
       goToViewCaseDescription,
       goToEditCaseDescription,
+      goToAddBonusForCouple,
       toggleDropdown,
       isDropdownOpen,
       consultations,

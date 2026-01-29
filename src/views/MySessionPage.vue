@@ -165,7 +165,8 @@ export default {
         customFormTitle: consultation.custom_form.title,
         sessionNumber: consultation.number,
         IDconsultation: consultation.id,
-        dateConsultation: consultation.consultation_date
+        dateConsultation: consultation.consultation_date,
+        clientsOriginType: consultation.client.origin_type
       };
 
       // Якщо є партнер і його Telegram ID, додаємо до параметрів

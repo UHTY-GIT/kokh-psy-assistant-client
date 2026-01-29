@@ -2,7 +2,7 @@
 <template>
   <div>
     <div class="profile_tittle">
-      <p>Опис кейсу, супервізант {{ clientName }}</p>
+      <p>Опис кейсу, супервізант {{ clientName }}, версія змін - {{ version }}</p>
     </div>
     <hr class="hr_profile">
     <div class="block_active_session">
@@ -73,7 +73,7 @@
         </div>
       </form>
     </div>
-    <ModalSessionSuccess
+    <ModalEditCaseConfirm
         v-if="showModal"
         :showModal="showModal"
         :IDconsultation="IDconsultation"
@@ -86,7 +86,7 @@
 </template>
 
 <script>
-import ModalSessionSuccess from "@/components/modal/ModalSessionSuccess.vue";
+import ModalEditCaseConfirm from "@/components/modal/ModalEditCaseConfirm.vue";
 import Loader from "@/components/app/Loader.vue";
 import { useRoute, useRouter } from "vue-router";
 import { computed, onMounted, ref } from "vue";
@@ -95,7 +95,7 @@ import apiService from "@/services/apiService";
 
 export default {
   name: "EditCaseDescription",
-  components: { ModalSessionSuccess, Loader },
+  components: { ModalEditCaseConfirm, Loader },
   setup() {
     const route = useRoute();
     const router = useRouter();
@@ -105,6 +105,7 @@ export default {
     const clientName = ref("");
     const IDconsultation = ref(null);
     const loading = ref(false);
+    const version = ref("");
 
     // Функція отримання даних сесії для редагування
     const fetchCaseData = async () => {
@@ -129,13 +130,23 @@ export default {
         const data = response.data;
         
         IDconsultation.value = data.id;
+        version.value = data.case_version;
 
         // Мапінг полів для редагування
-        formData.value.fields = data.answers.map(item => {
-          let variants = item.form_item.variants || [];
+        const items = data.custom_form.form_items;
+        const answers = data.answers;
+        
+        const itemsMap = {};
+        if (items && Array.isArray(items)) {
+            items.forEach(i => itemsMap[i.id] = i);
+        }
+
+        formData.value.fields = answers.map(item => {
+          const formItem = itemsMap[item.form_item_id] || {};
+          let variants = formItem.variants || [];
           
-          if (item.form_item.field_type === 'range' && typeof item.form_item.variants === 'string') {
-              const parts = item.form_item.variants.split('-');
+          if (formItem.field_type === 'range' && typeof formItem.variants === 'string') {
+              const parts = formItem.variants.split('-');
               if (parts.length === 2) {
                   const min = parseInt(parts[0]);
                   const max = parseInt(parts[1]);
@@ -150,13 +161,13 @@ export default {
 
           return {
             id: item.id,
-            field_name: item.form_item.field_name,
+            field_name: formItem.field_name,
             text_answer: item.text_answer,
-            field_type: item.form_item.field_type || "text",
+            field_type: formItem.field_type || "text",
             variants: variants,
-            help_text: item.form_item.help_text,
-            category: item.form_item.form_item_main_category_title || "Без категорії",
-            sub_category: item.form_item.form_item_child_category_title || "default"
+            help_text: formItem.help_text,
+            category: formItem.form_item_main_category_title || "Без категорії",
+            sub_category: formItem.form_item_child_category_title || "default"
           };
         });
       } catch (error) {
@@ -228,7 +239,8 @@ export default {
       openModal,
       submitEditedSession,
       categorizedFields,
-      loading
+      loading,
+      version
     };
   }
 };

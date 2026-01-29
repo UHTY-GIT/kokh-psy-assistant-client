@@ -139,6 +139,12 @@ const routes = [
     component: () => import('../views/client/ViewDigestPsyMind.vue'),
   },
   {
+    path: '/add-bonus-for-couple/:id',
+    name: 'AddBonusForCouple',
+    meta: { layout: 'main', requiresAuth: true },
+    component: () => import('../views/client/AddBonusForCouple.vue'),
+  },
+  {
     path: '/add-expert-rating/:id',
     name: 'AddExpertRating',
     meta: { layout: 'main', requiresAuth: true },

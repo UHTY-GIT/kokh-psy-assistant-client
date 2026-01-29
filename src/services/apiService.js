@@ -187,6 +187,18 @@ const apiService = {
         return response.data;
     },
 
+    // Функція для надсилання на телеграм бота конфігу з позначкою що сесія успішно завершена (для супервізії)
+    sendSessionSupervisorEndNotification: async (clientTelegramId) => {
+        const response = await axios.post(`${BASE_URL_TELEGRAM}/session_supervisor_end`, {
+            client_id: clientTelegramId,
+        }, {
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        });
+        return response.data;
+    },
+
     // Функція для сповіщення бота про необхідність заповнити опис кейсу
     notifyCaseFill: async (clientTelegramId) => {
         const response = await axios.post(`${BASE_URL_TELEGRAM}/notify_case_fill`, {
@@ -636,6 +648,37 @@ const apiService = {
             },
         };
         const response = await axios.get(`${BASE_URL}/api/v1/case_descriptions`, config);
+        return response.data;
+    },
+
+    // Функція для створення/оновлення бонусу для пари
+    createOrUpdateBonusForCouple: async (token, clientId, text) => {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                'authtoken': token,
+            },
+        };
+        const payload = {
+            client_id: clientId,
+            text: text
+        };
+        const response = await axios.post(`${BASE_URL}/api/v1/bonus_of_couple_cycle`, payload, config);
+        return response.data;
+    },
+
+    // Функція для отримання бонусу для пари
+    getBonusForCouple: async (token, clientId) => {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                'authtoken': token,
+            },
+            params: {
+                client_id: clientId,
+            },
+        };
+        const response = await axios.get(`${BASE_URL}/api/v1/bonus_of_couple_cycle`, config);
         return response.data;
     }
 };

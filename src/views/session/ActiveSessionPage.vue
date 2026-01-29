@@ -116,6 +116,7 @@ export default {
     const sessionNumber = route.query.sessionNumber;
     const IDconsultation = parseInt(route.query.IDconsultation);
     const dateConsultation = route.query.dateConsultation;
+    const clientsOriginType = route.query.clientsOriginType;
 
     const fetchFormData = async () => {
       try {
@@ -218,10 +219,17 @@ export default {
 
           // Відправка повідомлення в телеграм
           try {
-            await apiService.sendSessionEndNotification(clientTelegramId);
-            if (PartnerTelegramId) {
-              await apiService.sendSessionEndNotification(PartnerTelegramId);
+            if (clientsOriginType === 'individual_supervision') {
+               await apiService.sendSessionSupervisorEndNotification(clientTelegramId);
+            } else {
+               await apiService.sendSessionEndNotification(clientTelegramId);
             }
+
+            if (PartnerTelegramId) {
+               await apiService.sendSessionEndNotification(PartnerTelegramId);
+            }
+
+
             M.toast({ html: 'Повідомлення у телеграм успішно надіслано' });
           } catch (telegramError) {
             console.error('Error sending Telegram notification:', telegramError);
@@ -252,7 +260,8 @@ export default {
       openModal,
       submitForm,
       categorizedFields,
-      formattedDate
+      formattedDate,
+      clientsOriginType
     };
   }
 }
