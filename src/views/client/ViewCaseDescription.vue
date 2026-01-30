@@ -27,40 +27,57 @@
     </div>
 
     <div v-else>
-        <div v-for="(subGroups, categoryTitle) in categorizedFields" :key="categoryTitle">
+      <div v-for="(subGroups, categoryTitle) in categorizedFields" :key="categoryTitle">
         <div class="block_active_session">
-            <div class="titte_field">
+          <div class="titte_field">
             <p>{{ categoryTitle }}</p>
-            </div>
+          </div>
 
             <div v-for="(fields, subCategoryTitle) in subGroups" :key="subCategoryTitle">
-            <div v-if="subCategoryTitle !== 'default'" class="sub-category-title">
-                <p>{{ subCategoryTitle }}</p>
-            </div>
+              <div v-if="subCategoryTitle !== 'default'" class="sub-category-title">
+                  <p>{{ subCategoryTitle }}</p>
+              </div>
 
-            <div v-for="field in fields" :key="field.id" class="template-container-for-view">
-                <div class="text-template-for-view">
-                <div class="type-for-view">
-                    <p style="margin: 0;">{{ field.form_item.field_name }}</p>
+              <div v-for="field in fields" :key="field.id" class="template-container-for-view">
+                  <div class="text-template-for-view">
+                  <div class="type-for-view">
+                      <p style="margin: 0;">{{ field.form_item.field_name }}</p>
 
-                    <div v-if="field.form_item.help_text" class="help-icon-wrapper">
-                    <img src="@/assets/icons/circle_help.svg" alt="Info" class="help-icon">
-                    <div class="help-tooltip">
-                        {{ field.form_item.help_text }}
-                    </div>
-                    </div>
-                </div>
-                <div class="type-of-answers">
-                    <p>
-                    {{ field.text_answer || '—' }}
-                    </p>
-                </div>
-                </div>
+                      <div v-if="field.form_item.help_text" class="help-icon-wrapper">
+                      <img src="@/assets/icons/circle_help.svg" alt="Info" class="help-icon">
+                      <div class="help-tooltip">
+                          {{ field.form_item.help_text }}
+                      </div>
+                      </div>
+                  </div>
+                  <div class="type-of-answers">
+                      <p>
+                      {{ field.text_answer || '—' }}
+                      </p>
+                  </div>
+                  </div>
+              </div>
             </div>
-            </div>
-
+          </div>
+      </div>
+      <div v-if="clientAssets.length > 0" class="block_active_session">
+        <div class="titte_field">
+          <p>Відеоматеріали</p>
         </div>
+
+        <div v-for="(asset, index) in clientAssets" :key="asset.id || index" class="template-container-for-view">
+          <div class="text-template-for-view">
+            <div class="type-for-view">
+              <p style="margin: 0;">{{ asset.title }}</p>
+            </div>
+            <div class="type-of-answers">
+              <p>
+                <a :href="asset.link" target="_blank">{{ asset.link }}</a>
+              </p>
+            </div>
+          </div>
         </div>
+      </div>
     </div>
   </div>
 </template>
@@ -85,6 +102,7 @@ export default {
     const clientId = ref(route.params.id);
     const loading = ref(false);
     const hasData = ref(false);
+    const clientAssets = ref([]);
 
     const fetchCaseDescription = async () => {
       const token = localStorage.getItem('token');
@@ -126,6 +144,19 @@ export default {
              });
         } else {
             hasData.value = false;
+        }
+
+        try {
+            const assetsResponse = await apiService.getClientAssets(token, id);
+            clientAssets.value = assetsResponse.data || []; 
+
+            console.log(clientAssets.value);
+            
+            if (clientAssets.value.length > 0) {
+                hasData.value = true;
+            }
+        } catch (assetErr) {
+            console.error('Error fetching assets:', assetErr);
         }
 
       } catch (err) {
@@ -172,7 +203,8 @@ export default {
       categorizedFields,
       openEditSession,
       loading,
-      hasData
+      hasData,
+      clientAssets
     };
   },
 }

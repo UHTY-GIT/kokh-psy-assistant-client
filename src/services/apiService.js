@@ -667,6 +667,18 @@ const apiService = {
         return response.data;
     },
 
+    // Функція для отримання посилань з відеоматеріалами
+    getClientAssets: async (token, clientId) => {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                'authtoken': token,
+            },
+        };
+        const response = await axios.get(`${BASE_URL}/api/v1/clients/${clientId}/assets`, config);
+        return response.data;
+    },
+
     // Функція для отримання бонусу для пари
     getBonusForCouple: async (token, clientId) => {
         const config = {
