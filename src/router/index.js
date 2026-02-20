@@ -192,28 +192,44 @@ const router = createRouter({
 })
 
 // Використання глобального навігаційного хука beforeEach для перевірки автентифікації користувача
+// router.beforeEach((to, from, next) => {
+//   // Перевірка, чи маршрут вимагає аутентифікації
+//   if (to.matched.some(record => record.meta.requiresAuth)) {
+//     // Перевірка наявності токена аутентифікації
+//     const isAuthenticated = localStorage.getItem('token');
+//     if (!isAuthenticated) {
+//       console.log('Є токент?' + isAuthenticated)
+//       // Якщо користувач не аутентифікований, перенаправлення на сторінку входу
+//       // window.location.href = 'https://crm-assistant.psy-kokh.online/login?message=redirect';
+//       //window.location.href = 'https://crm-assistant.psy-kokh.online/';
+//       next({
+//         path: '/login',
+//         //query: { message: 'redirect' } // Збереження маршруту для можливого перенаправлення після входу
+//       });
+//     } else {
+//       // Якщо аутентифікований, продовження навігації
+//       next();
+//     }
+//   } else {
+//     // Якщо маршрут не вимагає аутентифікації, просто продовження навігації
+//     next();
+//   }
+// })
 router.beforeEach((to, from, next) => {
-  // Перевірка, чи маршрут вимагає аутентифікації
-  if (to.matched.some(record => record.meta.requiresAuth)) {
-    // Перевірка наявності токена аутентифікації
-    const isAuthenticated = localStorage.getItem('token');
-    if (!isAuthenticated) {
-      console.log('Є токент?' + isAuthenticated)
-      // Якщо користувач не аутентифікований, перенаправлення на сторінку входу
-      // window.location.href = 'https://crm-assistant.psy-kokh.online/login?message=redirect';
-      //window.location.href = 'https://crm-assistant.psy-kokh.online/';
-      next({
-        path: '/login',
-        //query: { message: 'redirect' } // Збереження маршруту для можливого перенаправлення після входу
-      });
+    if (to.matched.some(record => record.meta.requiresAuth)) {
+        const token =
+            typeof window !== 'undefined'
+                ? localStorage.getItem('token')
+                : null;
+
+        if (!token) {
+            next({ path: '/login?message=redirect' });
+        } else {
+            next();
+        }
     } else {
-      // Якщо аутентифікований, продовження навігації
-      next();
+        next();
     }
-  } else {
-    // Якщо маршрут не вимагає аутентифікації, просто продовження навігації
-    next();
-  }
-})
+});
 
 export default router

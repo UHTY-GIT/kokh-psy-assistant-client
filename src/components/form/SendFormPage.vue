@@ -1,3 +1,4 @@
+<!-- src/components/form/SendFormPage.vue -->
 <template>
   <div class="send-form-page">
     <!-- Рендеринг для типу форми "consent_individual" -->
@@ -75,6 +76,7 @@
             </span>
             <p>
               Клієнт / ка може писати психологу для узгодження часу наступної зустрічі або роз'яснення домашнього завдання (при його наявності) в
+            </p>
               <ul>
                 <li>Viber/ Telegram +380955634180</li>
                 <li>Консультації відбуваються через додаток Zoom</li>
@@ -87,7 +89,6 @@
                   <a href="mailto:katyakokhpsychologist@gmail.com">katyakokhpsychologist@gmail.com</a>
                 </li>
               </ul>
-            </p>
             <p>
               Якщо під час такого звернення у психолога проходить сесія/ консультація з іншим клієнтом, групова робота або відрядження, можна відповідати не відразу. Дзвінки можливі тільки в разі потреби, термінового скасування зустрічі за тел. +380955634180 (Viber/Telegram).
             </p>
@@ -115,13 +116,13 @@
             <span>
               Клієнт / ка також має право
             </span>
-            <p>
               <ul>
                 <li>Виносити на обговорення і в роботу будь-яку хвилюючу його / її тему;</li>
                 <li>Не працювати над собою і не виконувати домашні завдання;</li>
                 <li>Відмовитися від участі в пропонованих методиках;</li>
                 <li>Не відповідати на питання, на який не готовий / а відповісти.</li>
               </ul>
+            <p>
               Психолог бере на себе відповідальність безроздільно приділяти клієнтові / тці час, відведений йому / їй під час сесій/консультації, не відволікаючись на сторонні процеси і не перериваючи сесію.
               Психолог має право не давати порад і рекомендацій, оскільки такого підходу вимагає сам формат психологічного консультування.
               Психолог створює умови для самостійного аналізу клієнтом/ ою власної ситуації/ проблеми/питання.
@@ -195,12 +196,12 @@
               <br>
               Психолог може відмовитися від роботи з клієнтом / кою  або змінити умови оплати своїх послуг, якщо клієнт / ка демонструє низьку зацікавленість у спільній роботі з психологом.
               Наприклад, якщо: <br>
+            </p>
               <ul>
                 <li>Клієнт / ка систематично запізнюється (2-3 рази поспіль) без вагомих причин;</li>
                 <li>Клієнт / ка завчасно не попереджає про своє запізнення або відсутності можливості прийти на зустріч;</li>
                 <li>Клієнт / ка не оплачує щонайменше одну консультацію, що відбулася.</li>
               </ul>
-            </p>
             <span>
               Перенесення терапії та паузи у терапії
             </span>
@@ -240,12 +241,14 @@
               <label :for="`field-${index}`">{{ field.field_name }}</label>
 
               <!-- Інтеграція поля select_v2 -->
-              <select v-if="field.field_type === 'select_v2'" :id="`field-${index}`" v-model="field.value">
-                <option disabled value="">Оберіть варіант</option>
-                <option v-for="variant in field.variants" :key="variant">{{ variant }}</option>
+              <select v-if="field.field_type === 'select_v2'" :id="`field-${index}`" v-model="field.value" required>
+                <option disabled :value="undefined" selected>Оберіть варіант</option>
+                <option v-for="variant in field.variants" :key="variant" :value="variant">{{ variant }}</option>
               </select>
 
               <!-- Поле для введення тексту -->
+              <textarea v-else-if="field.field_type === 'text'" :id="`field-${index}`" v-model="field.value" required placeholder="Ваша відповідь"></textarea>
+
               <input v-else :id="`field-${index}`" type="text" v-model="field.value" required placeholder="Ваша відповідь"/>
             </div>
           </div>
@@ -359,19 +362,20 @@
             </span>
             <p>
               Клієнт / ка може писати психологу для узгодження часу наступної зустрічі або роз'яснення домашнього завдання (при його наявності) в
-              <ul>
-                <li>Viber/ Telegram +380955634180</li>
-                <li>Консультації відбуваються через додаток Zoom</li>
-                <li>
-                  В робочій сторінці Instagram:
-                  <a href="https://instagram.com/kokh.kateryna" target="_blank" rel="noopener noreferrer">instagram.com/kokh.kateryna</a>
-                </li>
-                <li>
-                  або на електронну скриньку:
-                  <a href="mailto:katyakokhpsychologist@gmail.com">katyakokhpsychologist@gmail.com</a>
-                </li>
-              </ul>
             </p>
+            <ul>
+              <li>Viber/ Telegram +380955634180</li>
+              <li>Консультації відбуваються через додаток Zoom</li>
+              <li>
+                В робочій сторінці Instagram:
+                <a href="https://instagram.com/kokh.kateryna" target="_blank" rel="noopener noreferrer">instagram.com/kokh.kateryna</a>
+              </li>
+              <li>
+                або на електронну скриньку:
+                <a href="mailto:katyakokhpsychologist@gmail.com">katyakokhpsychologist@gmail.com</a>
+              </li>
+            </ul>
+            
             <p>
               Якщо під час такого звернення у психолога проходить сесія/ консультація з іншим клієнтом, групова робота або відрядження, можна відповідати не відразу. Дзвінки можливі тільки в разі потреби, термінового скасування зустрічі за тел. +380955634180 (Viber/Telegram).
             </p>
@@ -399,13 +403,13 @@
             <span>
               Клієнт / ка також має право
             </span>
-            <p>
               <ul>
                 <li>Виносити на обговорення і в роботу будь-яку хвилюючу його / її тему;</li>
                 <li>Не працювати над собою і не виконувати домашні завдання;</li>
                 <li>Відмовитися від участі в пропонованих методиках;</li>
                 <li>Не відповідати на питання, на який не готовий / а відповісти.</li>
               </ul>
+            <p>
               Психолог бере на себе відповідальність безроздільно приділяти клієнтові / тці час, відведений йому / їй під час сесій/консультації, не відволікаючись на сторонні процеси і не перериваючи сесію.
               Психолог має право не давати порад і рекомендацій, оскільки такого підходу вимагає сам формат психологічного консультування.
               Психолог створює умови для самостійного аналізу клієнтом/ ою власної ситуації/ проблеми/питання.
@@ -441,21 +445,25 @@
               Психолог надає послуги парного консультування у двох форматах
             </p>
             <table>
-              <tr>
-                <th>Тип послуги</th>
-                <th>Ціна за одну консультацію</th>
-                <th>Ціна в іншій валюті</th>
-              </tr>
-              <tr>
-                <td>Діагностичний пакет для пар (3 індивідуальні консультації (по одній для кожного партнера))</td>
-                <td>21 600 грн</td>
-                <td>440$/440€</td>
-              </tr>
-              <tr>
-                <td>Довгостроковий формат парного консультування / Парна психотерапія (40 парних консультацій)</td>
-                <td>4800 грн</td>
-                <td>98$/98€</td>
-              </tr>
+              <thead>
+                <tr>
+                  <th>Тип послуги</th>
+                  <th>Ціна за одну консультацію</th>
+                  <th>Ціна в іншій валюті</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Діагностичний пакет для пар (3 індивідуальні консультації (по одній для кожного партнера))</td>
+                  <td>21 600 грн</td>
+                  <td>440$/440€</td>
+                </tr>
+                <tr>
+                  <td>Довгостроковий формат парного консультування / Парна психотерапія (40 парних консультацій)</td>
+                  <td>4800 грн</td>
+                  <td>98$/98€</td>
+                </tr>
+              </tbody>
             </table>
 
             <p>До початку співпраці клієнт/ка обирають бажаний формат співпраці та повідомляють
@@ -465,16 +473,20 @@
             </p>
 
             <table>
-              <tr>
-                <th>Тип послуги</th>
-                <th>Ціна за одну консультацію</th>
-                <th>Ціна в іншій валюті</th>
-              </tr>
-              <tr>
-                <td>Вартість індивідуальної діагностичної сесії довгострокового парного процесу</td>
-                <td>3300 грн</td>
-                <td>67$/67€</td>
-              </tr>
+              <thead>
+                <tr>
+                  <th>Тип послуги</th>
+                  <th>Ціна за одну консультацію</th>
+                  <th>Ціна в іншій валюті</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Вартість індивідуальної діагностичної сесії довгострокового парного процесу</td>
+                  <td>3300 грн</td>
+                  <td>67$/67€</td>
+                </tr>
+              </tbody>
             </table>
             <p>
               Розмір оплати може бути переглянутий в залежності від професійного зростання психолога і індивідуальної ситуації клієнта / ки. Проте розмір оплати при пролонгований роботі (формат терапевтичного альянсу короткостроковий (від 1 до 12 зустрічей) та довгостроковий (20 зустрічей)) не змінюється до завершення крайньої сесії із серії консультацій.
@@ -519,13 +531,13 @@
               <br>
               Психолог може відмовитися від роботи з клієнтом / кою  або змінити умови оплати своїх послуг, якщо клієнт / ка демонструє низьку зацікавленість у спільній роботі з психологом.
               Наприклад, якщо: <br>
+            </p>
               <ul>
                 <li>Клієнт / ка систематично запізнюється (2-3 рази поспіль) без вагомих причин;</li>
                 <li>Клієнт / ка завчасно не попереджає про своє запізнення або відсутності можливості прийти на зустріч;</li>
                 <li>Клієнт / ка систематично не виконує домашні завдання, коли цього вимагає підхід, в якому працює психолог;</li>
                 <li>Клієнт / ка не оплачує щонайменше одну консультацію, що відбулася.</li>
               </ul>
-            </p>
             <span>
               Перенесення терапії та паузи у терапії
             </span>
@@ -550,11 +562,13 @@
             <!--              вартуватиме - 2300 грн (63$/63€)-->
             <!--            </p>-->
             <table>
-              <tr>
-                <th>Довгостроковий формат парного консультування /парна психотерапія
-                  (40 парних консультацій)
-                </th>
-              </tr>
+              <thead>
+                <tr>
+                  <th>Довгостроковий формат парного консультування /парна психотерапія
+                    (40 парних консультацій)
+                  </th>
+                </tr>
+              </thead>
             </table>
             <p>
               Клієнт/ка може <b>взяти паузу у терапії на період відпустки тривалістю до 2 тижнів - 2
@@ -599,13 +613,15 @@
               <label :for="`field-${index}`">{{ field.field_name }}</label>
 
               <!-- Інтеграція поля select_v2 -->
-              <select v-if="field.field_type === 'select_v2'" :id="`field-${index}`" v-model="field.value">
-                <option disabled value="">Оберіть варіант</option>
-                <option v-for="variant in field.variants" :key="variant">{{ variant }}</option>
+              <select v-if="field.field_type === 'select_v2'" :id="`field-${index}`" v-model="field.value" required>
+                <option disabled :value="undefined" selected>Оберіть варіант</option>
+                <option v-for="variant in field.variants" :key="variant" :value="variant">{{ variant }}</option>
               </select>
 
               <!-- Поле для введення тексту -->
-              <input v-else :id="`field-${index}`" type="text" v-model="field.value" required placeholder="Ваша відповідь"/>
+              <textarea v-else-if="field.field_type === 'text'" :id="`field-${index}`" v-model="field.value" required placeholder="Ваша відповідь"></textarea>
+
+              <input v-else-if="field.field_type === 'string'" :id="`field-${index}`" type="text" v-model="field.value" required placeholder="Ваша відповідь"/>
             </div>
           </div>
 
@@ -677,12 +693,14 @@
               <label :for="`field-${index}`">{{ field.field_name }}</label>
 
               <!-- Інтеграція поля select_v2 -->
-              <select v-if="field.field_type === 'select_v2'" :id="`field-${index}`" v-model="field.value">
-                <option disabled value="">Оберіть варіант</option>
-                <option v-for="variant in field.variants" :key="variant">{{ variant }}</option>
+              <select v-if="field.field_type === 'select_v2'" :id="`field-${index}`" v-model="field.value" required>
+                <option disabled :value="undefined" selected>Оберіть варіант</option>
+                <option v-for="variant in field.variants" :key="variant" :value="variant">{{ variant }}</option>
               </select>
 
               <!-- Поле для введення тексту -->
+              <textarea v-else-if="field.field_type === 'text'" :id="`field-${index}`" v-model="field.value" required placeholder="Ваша відповідь"></textarea>
+
               <input v-else :id="`field-${index}`" type="text" v-model="field.value" required placeholder="Ваша відповідь"/>
             </div>
           </div>
@@ -758,13 +776,15 @@
               <label :for="`field-${index}`">{{ field.field_name }}</label>
 
               <!-- Інтеграція поля select_v2 -->
-              <select v-if="field.field_type === 'select_v2'" :id="`field-${index}`" v-model="field.value">
-                <option disabled value="">Оберіть варіант</option>
-                <option v-for="variant in field.variants" :key="variant">{{ variant }}</option>
+              <select v-if="field.field_type === 'select_v2'" :id="`field-${index}`" v-model="field.value" required>
+                <option disabled :value="undefined" selected>Оберіть варіант</option>
+                <option v-for="variant in field.variants" :key="variant" :value="variant">{{ variant }}</option>
               </select>
 
               <!-- Поле для введення тексту -->
-              <input v-else :id="`field-${index}`" type="text" v-model="field.value" required placeholder="Ваша відповідь"/>
+              <textarea v-else-if="field.field_type === 'text'" :id="`field-${index}`" v-model="field.value" required placeholder="Ваша відповідь"></textarea>
+
+              <input v-else-if="field.field_type === 'string'" :id="`field-${index}`" type="text" v-model="field.value" required placeholder="Ваша відповідь"/>
             </div>
           </div>
 

@@ -1352,12 +1352,14 @@ button:focus {
 }
 
 .container-for-label-and-input {
-  margin: 10px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 10px;
 }
 
 .container-input_froms_user {
-  display: flex;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: 300px 1fr;
 }
 .container-input_froms_user label {
   color: #FFF;
@@ -1366,7 +1368,7 @@ button:focus {
   font-weight: 700;
   background-color: #72A8BA;
   border-radius: 10px;
-  width: 500px;
+  width: 100%;
   padding: 10px 5px;
   display: flex;
   justify-content: center;
@@ -1388,7 +1390,7 @@ button:focus {
   height: auto !important;
   margin: 0 0 0 15px !important;
   line-height: normal;
-  max-width: 650px;
+  max-width: stretch;
 }
 .container-input_froms_user input::placeholder {
   color: #C8C8C8;
@@ -1415,6 +1417,26 @@ button:focus {
   max-width: 680px;
 }
 .container-input_froms_user input select::placeholder {
+  color: #C8C8C8;
+}
+.container-input_froms_user textarea {
+  color: #FFFFFF;
+  font-family: Nunito;
+  font-size: 18px !important;
+  font-weight: 600;
+  border-radius: 10px !important;
+  padding: 10px 15px !important;
+  border-bottom: none !important;
+  background-color: #494B55 !important;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  height: auto !important;
+  margin: 0 0 0 15px !important;
+  line-height: normal;
+  max-width: stretch;
+}
+.container-input_froms_user textarea::placeholder {
   color: #C8C8C8;
 }
 .container-input_froms_user .file-chosen {
@@ -1448,11 +1470,10 @@ button:focus {
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  width: 55%;
+  width: auto;
   height: auto !important;
   margin: 0 0 0 15px;
   line-height: normal;
-  max-width: 450px;
 }
 .container-input_froms_user .checkbox-group {
   display: flex;
@@ -1511,6 +1532,11 @@ button:focus {
     width: auto !important;
     max-width: 100% !important;
   }
+  .container-input_froms_user textarea {
+    margin: 0 10px !important;
+    width: auto !important;
+    max-width: 100% !important;
+  }
   .container-input_froms_user select {
     margin: 0 10px !important;
     width: auto !important;
@@ -1523,6 +1549,9 @@ button:focus {
     padding: 10px 10px;
   }
   .container-input_froms_user input {
+    margin: 0 !important;
+  }
+  .container-input_froms_user textarea {
     margin: 0 !important;
   }
   .container-input_froms_user select {

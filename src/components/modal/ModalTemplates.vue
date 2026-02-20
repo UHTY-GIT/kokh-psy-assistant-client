@@ -156,6 +156,7 @@ export default {
       // Стандартна логіка
       if (this.selectedClientId && this.selectedTelegramClientId) {
         const uniqueLink = `https://crm-assistant.psy-kokh.online/send-form?client=${this.selectedClientId}&template=${this.selectedTemplateId}`;
+        //const uniqueLink = `http://localhost:8080/send-form?client=${this.selectedClientId}&template=${this.selectedTemplateId}`;
 
         try {
           const response = await apiService.sendTelegramTemplate(this.selectedTelegramClientId, uniqueLink);
