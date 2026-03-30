@@ -108,6 +108,18 @@ const apiService = {
         });
     },
 
+    // Тимчасова функція для видалення відповіді (поля)
+    deleteAnswer: async (token, answerId) => {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                'authtoken': token,
+            },
+        };
+        const response = await axios.delete(`${BASE_URL}/api/v1/answers/${answerId}`, config);
+        return response.data;
+    },
+
     // Функція для відправки true/false для інформаованої згоди
     updateClientInformAgree: async (clientId, wasAgreed) => {
         const response = await axios.post(`${BASE_URL}/api/v1/clients/${clientId}/client_info`, {
