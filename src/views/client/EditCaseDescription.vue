@@ -24,7 +24,7 @@
               <div v-for="field in fields" :key="field.id" class="forms-name-add active_session_fields">
                 <div class="container-input">
 
-                  <div class="container-label" style="display: flex; justify-content: space-between; align-items: center; gap: 14px;">
+                  <div class="container-label">
                     <div class="type-for-view">
                       <label :for="field.field_name" style="margin-bottom: 0;">{{ field.field_name }}</label>
 
@@ -34,13 +34,6 @@
                           {{ field.help_text }}
                         </div>
                       </div>
-                    </div>
-
-                    <!-- Видалити поле -->
-                    <div @click="openDeleteModal(field.id, field.field_name)" style="cursor: pointer; display: flex; align-items: center;">
-                      <svg width="24" height="24" viewBox="0 0 34 37" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M23.3337 8.33317V6.99984C23.3337 5.133 23.3337 4.19957 22.9703 3.48654C22.6508 2.85933 22.1408 2.34939 21.5136 2.02982C20.8006 1.6665 19.8672 1.6665 18.0003 1.6665H15.3337C13.4668 1.6665 12.5334 1.6665 11.8204 2.02982C11.1932 2.34939 10.6832 2.85933 10.3636 3.48654C10.0003 4.19957 10.0003 5.133 10.0003 6.99984V8.33317M13.3337 17.4998V25.8332M20.0003 17.4998V25.8332M1.66699 8.33317H31.667M28.3337 8.33317V26.9998C28.3337 29.8001 28.3337 31.2002 27.7887 32.2698C27.3093 33.2106 26.5444 33.9755 25.6036 34.4549C24.5341 34.9998 23.1339 34.9998 20.3337 34.9998H13.0003C10.2001 34.9998 8.79993 34.9998 7.73037 34.4549C6.78956 33.9755 6.02466 33.2106 5.54529 32.2698C5.00033 31.2002 5.00033 29.8001 5.00033 26.9998V8.33317" stroke="#72A8BA" stroke-width="3.33333" stroke-linecap="round" stroke-linejoin="round"/>
-                      </svg>
                     </div>
                   </div>
 
@@ -89,21 +82,11 @@
         @close="showModal = false"
         @confirm="submitEditedSession"
     />
-    <!-- видалити -->
-    <ModalDeleteAnswer
-        v-if="showDeleteModal"
-        :showModal="showDeleteModal"
-        :answerId="itemToDeleteId"
-        :containerLabel="itemToDeleteLabel"
-        @close="closeDeleteModal"
-        @confirm="confirmDelete"
-    />
   </div>
 </template>
 
 <script>
 import ModalEditCaseConfirm from "@/components/modal/ModalEditCaseConfirm.vue";
-import ModalDeleteAnswer from "@/components/modal/ModalDeleteAnswer.vue";
 import Loader from "@/components/app/Loader.vue";
 import { useRoute, useRouter } from "vue-router";
 import { computed, onMounted, ref } from "vue";
@@ -112,7 +95,7 @@ import apiService from "@/services/apiService";
 
 export default {
   name: "EditCaseDescription",
-  components: { ModalEditCaseConfirm, ModalDeleteAnswer, Loader },
+  components: { ModalEditCaseConfirm, Loader },
   setup() {
     const route = useRoute();
     const router = useRouter();
@@ -123,41 +106,6 @@ export default {
     const IDconsultation = ref(null);
     const loading = ref(false);
     const version = ref("");
-
-    // видалити
-    const showDeleteModal = ref(false);
-    const itemToDeleteId = ref(null);
-    const itemToDeleteLabel = ref("");
-
-    const openDeleteModal = (id, label) => {
-      itemToDeleteId.value = id;
-      itemToDeleteLabel.value = label;
-      showDeleteModal.value = true;
-    };
-
-    const closeDeleteModal = () => {
-      showDeleteModal.value = false;
-      itemToDeleteId.value = null;
-      itemToDeleteLabel.value = "";
-    };
-
-    const confirmDelete = async (id) => {
-      const token = localStorage.getItem("token");
-      try {
-        const response = await apiService.deleteAnswer(token, id);
-        if (response) {
-          M.toast({ html: 'Поле успішно видалено' });
-          formData.value.fields = formData.value.fields.filter(field => field.id !== id);
-          closeDeleteModal();
-        } else {
-          M.toast({ html: 'Помилка видалення поля' });
-        }
-      } catch (error) {
-        console.error("Error deleting answer:", error);
-        M.toast({ html: 'Помилка видалення поля' });
-      }
-    };
-    // видалити
 
     // Функція отримання даних сесії для редагування
     const fetchCaseData = async () => {
@@ -292,15 +240,7 @@ export default {
       submitEditedSession,
       categorizedFields,
       loading,
-      version,
-      // видалити
-      showDeleteModal,
-      itemToDeleteId,
-      itemToDeleteLabel,
-      openDeleteModal,
-      closeDeleteModal,
-      confirmDelete
-      // видалити
+      version
     };
   }
 };
@@ -311,6 +251,6 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 200px; /* Or min-height if preferred */
+  height: 200px;
 }
 </style>
