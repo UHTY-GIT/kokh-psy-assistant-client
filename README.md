@@ -1,4 +1,4 @@
-# assistant-psychologist-client
+# psy-crm-client
 
 ## Project setup
 ```

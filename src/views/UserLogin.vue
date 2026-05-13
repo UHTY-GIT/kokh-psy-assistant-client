@@ -5,7 +5,7 @@
       <div class="elipse_login_2"></div>
       <form class="card auth-card" @submit.prevent="submitHandler">
         <div class="card-content">
-          <span class="card-title">Psy Assistant</span>
+          <span class="card-title">PSY-CRM</span>
           <div class="input-field">
             <!--            .trim видаляє лишні пробіли
                             $dirty валідація буде якщо користувач вже шось роби в у полі
