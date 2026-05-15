@@ -231,7 +231,10 @@ body {
   line-height: normal;
 }
 
-.btn:focus, .btn-large:focus, .btn-small:focus, .btn-floating:focus {
+.btn:focus,
+.btn-large:focus,
+.btn-small:focus,
+.btn-floating:focus {
   background-color: #DAB189;
 }
 
@@ -284,12 +287,36 @@ input[type=password]:not(.browser-default) {
   background-size: cover;
 }
 
-input:not([type]):focus:not([readonly]), input[type=text]:not(.browser-default):focus:not([readonly]), input[type=password]:not(.browser-default):focus:not([readonly]), input[type=email]:not(.browser-default):focus:not([readonly]), input[type=url]:not(.browser-default):focus:not([readonly]), input[type=time]:not(.browser-default):focus:not([readonly]), input[type=date]:not(.browser-default):focus:not([readonly]), input[type=datetime]:not(.browser-default):focus:not([readonly]), input[type=datetime-local]:not(.browser-default):focus:not([readonly]), input[type=tel]:not(.browser-default):focus:not([readonly]), input[type=number]:not(.browser-default):focus:not([readonly]), input[type=search]:not(.browser-default):focus:not([readonly]), textarea.materialize-textarea:focus:not([readonly]) {
+input:not([type]):focus:not([readonly]),
+input[type=text]:not(.browser-default):focus:not([readonly]),
+input[type=password]:not(.browser-default):focus:not([readonly]),
+input[type=email]:not(.browser-default):focus:not([readonly]),
+input[type=url]:not(.browser-default):focus:not([readonly]),
+input[type=time]:not(.browser-default):focus:not([readonly]),
+input[type=date]:not(.browser-default):focus:not([readonly]),
+input[type=datetime]:not(.browser-default):focus:not([readonly]),
+input[type=datetime-local]:not(.browser-default):focus:not([readonly]),
+input[type=tel]:not(.browser-default):focus:not([readonly]),
+input[type=number]:not(.browser-default):focus:not([readonly]),
+input[type=search]:not(.browser-default):focus:not([readonly]),
+textarea.materialize-textarea:focus:not([readonly]) {
   border-bottom: 1px solid #ffffff;
   box-shadow: 0 1px 0 0 #ffffff;
 }
 
-input:not([type]):focus:not([readonly]) + label, input[type=text]:not(.browser-default):focus:not([readonly]) + label, input[type=password]:not(.browser-default):focus:not([readonly]) + label, input[type=email]:not(.browser-default):focus:not([readonly]) + label, input[type=url]:not(.browser-default):focus:not([readonly]) + label, input[type=time]:not(.browser-default):focus:not([readonly]) + label, input[type=date]:not(.browser-default):focus:not([readonly]) + label, input[type=datetime]:not(.browser-default):focus:not([readonly]) + label, input[type=datetime-local]:not(.browser-default):focus:not([readonly]) + label, input[type=tel]:not(.browser-default):focus:not([readonly]) + label, input[type=number]:not(.browser-default):focus:not([readonly]) + label, input[type=search]:not(.browser-default):focus:not([readonly]) + label, textarea.materialize-textarea:focus:not([readonly]) + label {
+input:not([type]):focus:not([readonly]) + label,
+input[type=text]:not(.browser-default):focus:not([readonly]) + label,
+input[type=password]:not(.browser-default):focus:not([readonly]) + label,
+input[type=email]:not(.browser-default):focus:not([readonly]) + label,
+input[type=url]:not(.browser-default):focus:not([readonly]) + label,
+input[type=time]:not(.browser-default):focus:not([readonly]) + label,
+input[type=date]:not(.browser-default):focus:not([readonly]) + label,
+input[type=datetime]:not(.browser-default):focus:not([readonly]) + label,
+input[type=datetime-local]:not(.browser-default):focus:not([readonly]) + label,
+input[type=tel]:not(.browser-default):focus:not([readonly]) + label,
+input[type=number]:not(.browser-default):focus:not([readonly]) + label,
+input[type=search]:not(.browser-default):focus:not([readonly]) + label,
+textarea.materialize-textarea:focus:not([readonly]) + label {
   color: #ffffff;
 }
 
@@ -302,10 +329,26 @@ input:not([type]):focus:not([readonly]) + label, input[type=text]:not(.browser-d
 }
 
 .background-navbar {
+  position: relative;
   background-position: center;
   background-size: cover;
   height: 155px;
   background-color: #72A8BA;
+}
+
+.navbar-title {
+  position: absolute;
+  width: 100%;
+  text-align: center;
+  top: 35px;
+  font-family: "Nunito", sans-serif;
+  font-size: 42px;
+  font-weight: 800;
+  color: rgb(255, 255, 255);
+  letter-spacing: 3px;
+  text-shadow: 0px 5px 0px rgba(0, 0, 0, 0.15);
+  pointer-events: none;
+  text-transform: uppercase;
 }
 
 .container-user-photo {
@@ -573,7 +616,8 @@ Main styles
   border: 2px solid #494B55;
 }
 
-.fc-theme-standard td, .fc-theme-standard th {
+.fc-theme-standard td,
+.fc-theme-standard th {
   border: 2px solid #494B55;
 }
 
@@ -633,7 +677,8 @@ Main styles
   font-weight: 600;
 }
 
-.fc .fc-cell-shaded, .fc .fc-day-disabled {
+.fc .fc-cell-shaded,
+.fc .fc-day-disabled {
   background: #494B55;
 }
 
@@ -786,7 +831,8 @@ Client styles
   min-height: 500px;
 }
 
-.table td, .table th {
+.table td,
+.table th {
   padding: 15px 15px !important;
   border-radius: 0px;
 }
@@ -842,7 +888,8 @@ Client styles
   font-size: 16px;
   font-style: normal;
   font-weight: 700;
-  line-height: 20px; /* 125% */
+  line-height: 20px;
+  /* 125% */
 }
 .client-footer .pagination-controls {
   display: flex;
@@ -961,14 +1008,29 @@ Profile styles
   margin: 0;
 }
 
-.input-field-text, .file-upload-field, .select-field, .date-field, .checkbox-field, .forms-name-add {
+.input-field-text,
+.file-upload-field,
+.select-field,
+.date-field,
+.checkbox-field,
+.forms-name-add {
   margin: 0 0 10px;
 }
-.input-field-text .container-input, .file-upload-field .container-input, .select-field .container-input, .date-field .container-input, .checkbox-field .container-input, .forms-name-add .container-input {
+.input-field-text .container-input,
+.file-upload-field .container-input,
+.select-field .container-input,
+.date-field .container-input,
+.checkbox-field .container-input,
+.forms-name-add .container-input {
   display: flex;
   align-items: center;
 }
-.input-field-text .container-input .type-for-view, .file-upload-field .container-input .type-for-view, .select-field .container-input .type-for-view, .date-field .container-input .type-for-view, .checkbox-field .container-input .type-for-view, .forms-name-add .container-input .type-for-view {
+.input-field-text .container-input .type-for-view,
+.file-upload-field .container-input .type-for-view,
+.select-field .container-input .type-for-view,
+.date-field .container-input .type-for-view,
+.checkbox-field .container-input .type-for-view,
+.forms-name-add .container-input .type-for-view {
   display: grid;
   align-items: center;
   position: relative;
@@ -982,7 +1044,12 @@ Profile styles
   padding: 10px 10px;
   grid-template-columns: 1fr auto;
 }
-.input-field-text .container-input .type-for-view label, .file-upload-field .container-input .type-for-view label, .select-field .container-input .type-for-view label, .date-field .container-input .type-for-view label, .checkbox-field .container-input .type-for-view label, .forms-name-add .container-input .type-for-view label {
+.input-field-text .container-input .type-for-view label,
+.file-upload-field .container-input .type-for-view label,
+.select-field .container-input .type-for-view label,
+.date-field .container-input .type-for-view label,
+.checkbox-field .container-input .type-for-view label,
+.forms-name-add .container-input .type-for-view label {
   color: #FFF;
   font-family: Nunito;
   font-size: 18px;
@@ -994,7 +1061,12 @@ Profile styles
   line-height: normal;
   text-align: center;
 }
-.input-field-text .container-input .type-for-view input, .file-upload-field .container-input .type-for-view input, .select-field .container-input .type-for-view input, .date-field .container-input .type-for-view input, .checkbox-field .container-input .type-for-view input, .forms-name-add .container-input .type-for-view input {
+.input-field-text .container-input .type-for-view input,
+.file-upload-field .container-input .type-for-view input,
+.select-field .container-input .type-for-view input,
+.date-field .container-input .type-for-view input,
+.checkbox-field .container-input .type-for-view input,
+.forms-name-add .container-input .type-for-view input {
   color: #FFFFFF;
   font-family: Nunito;
   font-size: 18px;
@@ -1010,13 +1082,28 @@ Profile styles
   margin: 0 0 0 15px;
   line-height: normal;
 }
-.input-field-text .container-input .type-for-view input::placeholder, .file-upload-field .container-input .type-for-view input::placeholder, .select-field .container-input .type-for-view input::placeholder, .date-field .container-input .type-for-view input::placeholder, .checkbox-field .container-input .type-for-view input::placeholder, .forms-name-add .container-input .type-for-view input::placeholder {
+.input-field-text .container-input .type-for-view input::placeholder,
+.file-upload-field .container-input .type-for-view input::placeholder,
+.select-field .container-input .type-for-view input::placeholder,
+.date-field .container-input .type-for-view input::placeholder,
+.checkbox-field .container-input .type-for-view input::placeholder,
+.forms-name-add .container-input .type-for-view input::placeholder {
   color: #C8C8C8;
 }
-.input-field-text .container-input .type-for-view input[type=file], .file-upload-field .container-input .type-for-view input[type=file], .select-field .container-input .type-for-view input[type=file], .date-field .container-input .type-for-view input[type=file], .checkbox-field .container-input .type-for-view input[type=file], .forms-name-add .container-input .type-for-view input[type=file] {
+.input-field-text .container-input .type-for-view input[type=file],
+.file-upload-field .container-input .type-for-view input[type=file],
+.select-field .container-input .type-for-view input[type=file],
+.date-field .container-input .type-for-view input[type=file],
+.checkbox-field .container-input .type-for-view input[type=file],
+.forms-name-add .container-input .type-for-view input[type=file] {
   display: none;
 }
-.input-field-text .container-input .file-chosen, .file-upload-field .container-input .file-chosen, .select-field .container-input .file-chosen, .date-field .container-input .file-chosen, .checkbox-field .container-input .file-chosen, .forms-name-add .container-input .file-chosen {
+.input-field-text .container-input .file-chosen,
+.file-upload-field .container-input .file-chosen,
+.select-field .container-input .file-chosen,
+.date-field .container-input .file-chosen,
+.checkbox-field .container-input .file-chosen,
+.forms-name-add .container-input .file-chosen {
   color: #FFFFFF;
   font-family: Nunito;
   font-size: 18px;
@@ -1034,7 +1121,12 @@ Profile styles
   max-width: 450px;
   cursor: pointer;
 }
-.input-field-text .container-input select, .file-upload-field .container-input select, .select-field .container-input select, .date-field .container-input select, .checkbox-field .container-input select, .forms-name-add .container-input select {
+.input-field-text .container-input select,
+.file-upload-field .container-input select,
+.select-field .container-input select,
+.date-field .container-input select,
+.checkbox-field .container-input select,
+.forms-name-add .container-input select {
   color: #FFFFFF;
   font-family: Nunito;
   font-size: 18px;
@@ -1050,13 +1142,23 @@ Profile styles
   margin: 0 0 0 15px;
   line-height: normal;
 }
-.input-field-text .container-input .checkbox-group, .file-upload-field .container-input .checkbox-group, .select-field .container-input .checkbox-group, .date-field .container-input .checkbox-group, .checkbox-field .container-input .checkbox-group, .forms-name-add .container-input .checkbox-group {
+.input-field-text .container-input .checkbox-group,
+.file-upload-field .container-input .checkbox-group,
+.select-field .container-input .checkbox-group,
+.date-field .container-input .checkbox-group,
+.checkbox-field .container-input .checkbox-group,
+.forms-name-add .container-input .checkbox-group {
   display: flex;
   justify-content: space-between;
   width: 465px;
   margin: 0 0 0 10px;
 }
-.input-field-text .container-input .checkbox-group label, .file-upload-field .container-input .checkbox-group label, .select-field .container-input .checkbox-group label, .date-field .container-input .checkbox-group label, .checkbox-field .container-input .checkbox-group label, .forms-name-add .container-input .checkbox-group label {
+.input-field-text .container-input .checkbox-group label,
+.file-upload-field .container-input .checkbox-group label,
+.select-field .container-input .checkbox-group label,
+.date-field .container-input .checkbox-group label,
+.checkbox-field .container-input .checkbox-group label,
+.forms-name-add .container-input .checkbox-group label {
   color: #494B55;
   font-family: Nunito;
   font-size: 18px;
@@ -1070,10 +1172,20 @@ Profile styles
   justify-content: center;
   align-items: center;
 }
-.input-field-text .container-input .checkbox-group label input, .file-upload-field .container-input .checkbox-group label input, .select-field .container-input .checkbox-group label input, .date-field .container-input .checkbox-group label input, .checkbox-field .container-input .checkbox-group label input, .forms-name-add .container-input .checkbox-group label input {
+.input-field-text .container-input .checkbox-group label input,
+.file-upload-field .container-input .checkbox-group label input,
+.select-field .container-input .checkbox-group label input,
+.date-field .container-input .checkbox-group label input,
+.checkbox-field .container-input .checkbox-group label input,
+.forms-name-add .container-input .checkbox-group label input {
   display: none;
 }
-.input-field-text .container-input .checkbox-group label span, .file-upload-field .container-input .checkbox-group label span, .select-field .container-input .checkbox-group label span, .date-field .container-input .checkbox-group label span, .checkbox-field .container-input .checkbox-group label span, .forms-name-add .container-input .checkbox-group label span {
+.input-field-text .container-input .checkbox-group label span,
+.file-upload-field .container-input .checkbox-group label span,
+.select-field .container-input .checkbox-group label span,
+.date-field .container-input .checkbox-group label span,
+.checkbox-field .container-input .checkbox-group label span,
+.forms-name-add .container-input .checkbox-group label span {
   display: inline-block;
   width: 35px;
   height: 35px;
@@ -1081,31 +1193,68 @@ Profile styles
   border-radius: 10px;
   margin-right: 10px;
 }
-.input-field-text .container-input .checkbox-group label span .svg-checkmark .checkmark-path, .file-upload-field .container-input .checkbox-group label span .svg-checkmark .checkmark-path, .select-field .container-input .checkbox-group label span .svg-checkmark .checkmark-path, .date-field .container-input .checkbox-group label span .svg-checkmark .checkmark-path, .checkbox-field .container-input .checkbox-group label span .svg-checkmark .checkmark-path, .forms-name-add .container-input .checkbox-group label span .svg-checkmark .checkmark-path {
+.input-field-text .container-input .checkbox-group label span .svg-checkmark .checkmark-path,
+.file-upload-field .container-input .checkbox-group label span .svg-checkmark .checkmark-path,
+.select-field .container-input .checkbox-group label span .svg-checkmark .checkmark-path,
+.date-field .container-input .checkbox-group label span .svg-checkmark .checkmark-path,
+.checkbox-field .container-input .checkbox-group label span .svg-checkmark .checkmark-path,
+.forms-name-add .container-input .checkbox-group label span .svg-checkmark .checkmark-path {
   stroke-dasharray: 32.9983329773;
-  stroke-dashoffset: 32.9983329773; /* Шлях спочатку не видно */
-  transition: stroke-dashoffset 0.3s ease-in-out; /* Плавний перехід для анімації */
+  stroke-dashoffset: 32.9983329773;
+  /* Шлях спочатку не видно */
+  transition: stroke-dashoffset 0.3s ease-in-out;
+  /* Плавний перехід для анімації */
 }
-.input-field-text .container-input .checkbox-group label p, .file-upload-field .container-input .checkbox-group label p, .select-field .container-input .checkbox-group label p, .date-field .container-input .checkbox-group label p, .checkbox-field .container-input .checkbox-group label p, .forms-name-add .container-input .checkbox-group label p {
+.input-field-text .container-input .checkbox-group label p,
+.file-upload-field .container-input .checkbox-group label p,
+.select-field .container-input .checkbox-group label p,
+.date-field .container-input .checkbox-group label p,
+.checkbox-field .container-input .checkbox-group label p,
+.forms-name-add .container-input .checkbox-group label p {
   cursor: pointer;
   margin: 0;
 }
-.input-field-text .user-profile, .file-upload-field .user-profile, .select-field .user-profile, .date-field .user-profile, .checkbox-field .user-profile, .forms-name-add .user-profile {
+.input-field-text .user-profile,
+.file-upload-field .user-profile,
+.select-field .user-profile,
+.date-field .user-profile,
+.checkbox-field .user-profile,
+.forms-name-add .user-profile {
   display: grid;
   grid-template-columns: 300px 1fr;
   gap: 15px;
 }
-.input-field-text .user-profile .type-for-view, .file-upload-field .user-profile .type-for-view, .select-field .user-profile .type-for-view, .date-field .user-profile .type-for-view, .checkbox-field .user-profile .type-for-view, .forms-name-add .user-profile .type-for-view {
+.input-field-text .user-profile .type-for-view,
+.file-upload-field .user-profile .type-for-view,
+.select-field .user-profile .type-for-view,
+.date-field .user-profile .type-for-view,
+.checkbox-field .user-profile .type-for-view,
+.forms-name-add .user-profile .type-for-view {
   width: 300px;
   margin: 0;
 }
-.input-field-text .user-profile select, .file-upload-field .user-profile select, .select-field .user-profile select, .date-field .user-profile select, .checkbox-field .user-profile select, .forms-name-add .user-profile select {
+.input-field-text .user-profile select,
+.file-upload-field .user-profile select,
+.select-field .user-profile select,
+.date-field .user-profile select,
+.checkbox-field .user-profile select,
+.forms-name-add .user-profile select {
   margin: 0;
 }
-.input-field-text .user-profile .checkbox-group, .file-upload-field .user-profile .checkbox-group, .select-field .user-profile .checkbox-group, .date-field .user-profile .checkbox-group, .checkbox-field .user-profile .checkbox-group, .forms-name-add .user-profile .checkbox-group {
+.input-field-text .user-profile .checkbox-group,
+.file-upload-field .user-profile .checkbox-group,
+.select-field .user-profile .checkbox-group,
+.date-field .user-profile .checkbox-group,
+.checkbox-field .user-profile .checkbox-group,
+.forms-name-add .user-profile .checkbox-group {
   margin: 0;
 }
-.input-field-text .user-profile input, .file-upload-field .user-profile input, .select-field .user-profile input, .date-field .user-profile input, .checkbox-field .user-profile input, .forms-name-add .user-profile input {
+.input-field-text .user-profile input,
+.file-upload-field .user-profile input,
+.select-field .user-profile input,
+.date-field .user-profile input,
+.checkbox-field .user-profile input,
+.forms-name-add .user-profile input {
   color: #FFFFFF;
   font-family: Nunito;
   font-size: 18px;
@@ -1122,23 +1271,48 @@ Profile styles
   width: -webkit-fill-available;
   margin: 0;
 }
-.input-field-text .user-profile input::placeholder, .file-upload-field .user-profile input::placeholder, .select-field .user-profile input::placeholder, .date-field .user-profile input::placeholder, .checkbox-field .user-profile input::placeholder, .forms-name-add .user-profile input::placeholder {
+.input-field-text .user-profile input::placeholder,
+.file-upload-field .user-profile input::placeholder,
+.select-field .user-profile input::placeholder,
+.date-field .user-profile input::placeholder,
+.checkbox-field .user-profile input::placeholder,
+.forms-name-add .user-profile input::placeholder {
   color: #C8C8C8;
 }
-.input-field-text .user-profile input[type=file], .file-upload-field .user-profile input[type=file], .select-field .user-profile input[type=file], .date-field .user-profile input[type=file], .checkbox-field .user-profile input[type=file], .forms-name-add .user-profile input[type=file] {
+.input-field-text .user-profile input[type=file],
+.file-upload-field .user-profile input[type=file],
+.select-field .user-profile input[type=file],
+.date-field .user-profile input[type=file],
+.checkbox-field .user-profile input[type=file],
+.forms-name-add .user-profile input[type=file] {
   display: none;
 }
-.input-field-text .user-profile .validate-error, .file-upload-field .user-profile .validate-error, .select-field .user-profile .validate-error, .date-field .user-profile .validate-error, .checkbox-field .user-profile .validate-error, .forms-name-add .user-profile .validate-error {
+.input-field-text .user-profile .validate-error,
+.file-upload-field .user-profile .validate-error,
+.select-field .user-profile .validate-error,
+.date-field .user-profile .validate-error,
+.checkbox-field .user-profile .validate-error,
+.forms-name-add .user-profile .validate-error {
   color: #EB5757;
   font-family: "Nunito", sans-serif;
   font-size: 14px;
   margin-top: 6px;
   display: block;
 }
-.input-field-text .user-profile .user-password-input, .file-upload-field .user-profile .user-password-input, .select-field .user-profile .user-password-input, .date-field .user-profile .user-password-input, .checkbox-field .user-profile .user-password-input, .forms-name-add .user-profile .user-password-input {
+.input-field-text .user-profile .user-password-input,
+.file-upload-field .user-profile .user-password-input,
+.select-field .user-profile .user-password-input,
+.date-field .user-profile .user-password-input,
+.checkbox-field .user-profile .user-password-input,
+.forms-name-add .user-profile .user-password-input {
   position: relative;
 }
-.input-field-text .user-profile .change-password, .file-upload-field .user-profile .change-password, .select-field .user-profile .change-password, .date-field .user-profile .change-password, .checkbox-field .user-profile .change-password, .forms-name-add .user-profile .change-password {
+.input-field-text .user-profile .change-password,
+.file-upload-field .user-profile .change-password,
+.select-field .user-profile .change-password,
+.date-field .user-profile .change-password,
+.checkbox-field .user-profile .change-password,
+.forms-name-add .user-profile .change-password {
   position: absolute;
   right: 20px;
   top: 14px;
@@ -1147,7 +1321,12 @@ Profile styles
   font-size: 18px;
   z-index: 2;
 }
-.input-field-text .modal-input-block input, .file-upload-field .modal-input-block input, .select-field .modal-input-block input, .date-field .modal-input-block input, .checkbox-field .modal-input-block input, .forms-name-add .modal-input-block input {
+.input-field-text .modal-input-block input,
+.file-upload-field .modal-input-block input,
+.select-field .modal-input-block input,
+.date-field .modal-input-block input,
+.checkbox-field .modal-input-block input,
+.forms-name-add .modal-input-block input {
   color: #FFFFFF;
   font-family: Nunito;
   font-size: 18px;
@@ -1164,7 +1343,12 @@ Profile styles
   width: -webkit-fill-available !important;
   margin: 0;
 }
-.input-field-text .modal-input-block input::placeholder, .file-upload-field .modal-input-block input::placeholder, .select-field .modal-input-block input::placeholder, .date-field .modal-input-block input::placeholder, .checkbox-field .modal-input-block input::placeholder, .forms-name-add .modal-input-block input::placeholder {
+.input-field-text .modal-input-block input::placeholder,
+.file-upload-field .modal-input-block input::placeholder,
+.select-field .modal-input-block input::placeholder,
+.date-field .modal-input-block input::placeholder,
+.checkbox-field .modal-input-block input::placeholder,
+.forms-name-add .modal-input-block input::placeholder {
   color: #C8C8C8;
 }
 
@@ -1176,7 +1360,8 @@ Profile styles
   stroke-dashoffset: 0;
 }
 
-[type=checkbox] + span:not(.lever):before, [type=checkbox]:not(.filled-in) + span:not(.lever):after {
+[type=checkbox] + span:not(.lever):before,
+[type=checkbox]:not(.filled-in) + span:not(.lever):after {
   content: none;
 }
 
@@ -1508,8 +1693,10 @@ button:focus {
 }
 .container-input_froms_user .checkbox-group label span .svg-checkmark .checkmark-path {
   stroke-dasharray: 32.9983329773;
-  stroke-dashoffset: 32.9983329773; /* Шлях спочатку не видно */
-  transition: stroke-dashoffset 0.3s ease-in-out; /* Плавний перехід для анімації */
+  stroke-dashoffset: 32.9983329773;
+  /* Шлях спочатку не видно */
+  transition: stroke-dashoffset 0.3s ease-in-out;
+  /* Плавний перехід для анімації */
 }
 .container-input_froms_user .checkbox-group label p {
   cursor: pointer;
@@ -2315,17 +2502,20 @@ Statistic styles
 }
 
 /* Анімація для плавного відкриття/закриття */
-.slide-fade-enter-active, .slide-fade-leave-active {
+.slide-fade-enter-active,
+.slide-fade-leave-active {
   transition: all 0.3s ease;
 }
 
-.slide-fade-enter-from, .slide-fade-leave-to {
+.slide-fade-enter-from,
+.slide-fade-leave-to {
   max-height: 0;
   opacity: 0;
   overflow: hidden;
 }
 
-.slide-fade-enter-to, .slide-fade-leave-from {
+.slide-fade-enter-to,
+.slide-fade-leave-from {
   height: auto;
   opacity: 1;
 }
@@ -2402,7 +2592,8 @@ Statistic styles
   visibility: hidden;
   opacity: 0;
   position: absolute;
-  bottom: 125%; /* Position above the icon */
+  bottom: 125%;
+  /* Position above the icon */
   left: 50%;
   transform: translateX(-50%);
   background-color: #385E6C;
@@ -2445,13 +2636,15 @@ Statistic styles
 .efct-growth-index-table tr {
   border-bottom: 2px dashed #72A8BA;
 }
-.efct-growth-index-table th, .efct-growth-index-table td {
+.efct-growth-index-table th,
+.efct-growth-index-table td {
   vertical-align: middle;
   padding: 12px 14px;
   text-align: center;
   border: none;
 }
-.efct-growth-index-table th:first-child, .efct-growth-index-table td:first-child {
+.efct-growth-index-table th:first-child,
+.efct-growth-index-table td:first-child {
   text-align: left;
   font-weight: 700;
   width: 250px;

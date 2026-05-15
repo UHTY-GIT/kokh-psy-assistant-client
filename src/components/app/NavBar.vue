@@ -1,5 +1,6 @@
 <template>
   <div :style="{ backgroundImage: `url(${fullBackgroundImageUrl})` }" class="background-navbar">
+    <div class="navbar-title">PSY-CRM 🤍</div>
     <div class="container-user-photo">
       <router-link to="/profile">
         <div class="user-photo">

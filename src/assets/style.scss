@@ -16,9 +16,11 @@ body {
   overflow-x: hidden;
   background-color: $base-color;
 }
+
 .background_main {
   background-color: $base-color;
 }
+
 /*Кастомний Скролбар*/
 /* width */
 ::-webkit-scrollbar {
@@ -41,6 +43,7 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: #d19c69;
 }
+
 /*Кастомний Скролбар - кінець*/
 
 
@@ -70,6 +73,7 @@ body {
 .background-login {
   background-color: $base-color;
 }
+
 .empty-layout {
   display: grid;
   width: 700px;
@@ -77,6 +81,7 @@ body {
   margin: 0 auto;
   align-items: center;
 }
+
 .card {
   position: relative;
   margin: .5rem 0 1rem 0;
@@ -85,6 +90,7 @@ body {
   border-radius: 18px;
   backdrop-filter: blur(5px);
 }
+
 .card .card-content {
   color: #fff;
   padding: 24px 24px 0;
@@ -97,20 +103,24 @@ body {
   font-weight: 500;
   font-family: 'Nunito', sans-serif;
 }
+
 .toggle-password {
   position: absolute;
   right: 10px;
   top: 20px;
 }
+
 .card .card-action {
   background-color: transparent;
   border-top: none;
   position: relative;
   padding: 0 24px 24px;
 }
+
 .card .card-action:last-child {
   border-radius: 0 0 18px 18px;
 }
+
 .butt_login {
   display: flex;
   justify-content: center;
@@ -133,12 +143,18 @@ body {
   height: auto;
   line-height: normal;
 }
-.btn:focus, .btn-large:focus, .btn-small:focus, .btn-floating:focus {
+
+.btn:focus,
+.btn-large:focus,
+.btn-small:focus,
+.btn-floating:focus {
   background-color: #DAB189;
 }
+
 .butt_login button:hover {
   background: #DAB189;
 }
+
 .butt_login button:active {
   -webkit-transform: translateY(5px);
   -ms-transform: translateY(5px);
@@ -146,15 +162,18 @@ body {
   -webkit-box-shadow: 0px 2px 0px #BA9571;
   box-shadow: 0px 2px 0px #BA9571 !important;
 }
+
 .input-field>label {
   color: #fff;
   font-weight: 400;
   font-family: 'Nunito', sans-serif;
 }
+
 input[type=text]:not(.browser-default),
-input[type=password]:not(.browser-default){
+input[type=password]:not(.browser-default) {
   border-bottom: 1px solid #ffffff;
 }
+
 .elipse_login_1 {
   background: url(@/assets/photo/contact-back-1.png) no-repeat top;
   pointer-events: none;
@@ -167,6 +186,7 @@ input[type=password]:not(.browser-default){
   width: 340px;
   background-size: cover;
 }
+
 .elipse_login_2 {
   background: url(@/assets/photo/contact-back-2.png) no-repeat top;
   pointer-events: none;
@@ -179,13 +199,40 @@ input[type=password]:not(.browser-default){
   width: 355px;
   background-size: cover;
 }
-input:not([type]):focus:not([readonly]), input[type=text]:not(.browser-default):focus:not([readonly]), input[type=password]:not(.browser-default):focus:not([readonly]), input[type=email]:not(.browser-default):focus:not([readonly]), input[type=url]:not(.browser-default):focus:not([readonly]), input[type=time]:not(.browser-default):focus:not([readonly]), input[type=date]:not(.browser-default):focus:not([readonly]), input[type=datetime]:not(.browser-default):focus:not([readonly]), input[type=datetime-local]:not(.browser-default):focus:not([readonly]), input[type=tel]:not(.browser-default):focus:not([readonly]), input[type=number]:not(.browser-default):focus:not([readonly]), input[type=search]:not(.browser-default):focus:not([readonly]), textarea.materialize-textarea:focus:not([readonly]) {
+
+input:not([type]):focus:not([readonly]),
+input[type=text]:not(.browser-default):focus:not([readonly]),
+input[type=password]:not(.browser-default):focus:not([readonly]),
+input[type=email]:not(.browser-default):focus:not([readonly]),
+input[type=url]:not(.browser-default):focus:not([readonly]),
+input[type=time]:not(.browser-default):focus:not([readonly]),
+input[type=date]:not(.browser-default):focus:not([readonly]),
+input[type=datetime]:not(.browser-default):focus:not([readonly]),
+input[type=datetime-local]:not(.browser-default):focus:not([readonly]),
+input[type=tel]:not(.browser-default):focus:not([readonly]),
+input[type=number]:not(.browser-default):focus:not([readonly]),
+input[type=search]:not(.browser-default):focus:not([readonly]),
+textarea.materialize-textarea:focus:not([readonly]) {
   border-bottom: 1px solid #ffffff;
   box-shadow: 0 1px 0 0 #ffffff;
 }
-input:not([type]):focus:not([readonly])+label, input[type=text]:not(.browser-default):focus:not([readonly])+label, input[type=password]:not(.browser-default):focus:not([readonly])+label, input[type=email]:not(.browser-default):focus:not([readonly])+label, input[type=url]:not(.browser-default):focus:not([readonly])+label, input[type=time]:not(.browser-default):focus:not([readonly])+label, input[type=date]:not(.browser-default):focus:not([readonly])+label, input[type=datetime]:not(.browser-default):focus:not([readonly])+label, input[type=datetime-local]:not(.browser-default):focus:not([readonly])+label, input[type=tel]:not(.browser-default):focus:not([readonly])+label, input[type=number]:not(.browser-default):focus:not([readonly])+label, input[type=search]:not(.browser-default):focus:not([readonly])+label, textarea.materialize-textarea:focus:not([readonly])+label {
+
+input:not([type]):focus:not([readonly])+label,
+input[type=text]:not(.browser-default):focus:not([readonly])+label,
+input[type=password]:not(.browser-default):focus:not([readonly])+label,
+input[type=email]:not(.browser-default):focus:not([readonly])+label,
+input[type=url]:not(.browser-default):focus:not([readonly])+label,
+input[type=time]:not(.browser-default):focus:not([readonly])+label,
+input[type=date]:not(.browser-default):focus:not([readonly])+label,
+input[type=datetime]:not(.browser-default):focus:not([readonly])+label,
+input[type=datetime-local]:not(.browser-default):focus:not([readonly])+label,
+input[type=tel]:not(.browser-default):focus:not([readonly])+label,
+input[type=number]:not(.browser-default):focus:not([readonly])+label,
+input[type=search]:not(.browser-default):focus:not([readonly])+label,
+textarea.materialize-textarea:focus:not([readonly])+label {
   color: #ffffff;
 }
+
 .input-field .helper-text {
   position: relative;
   min-height: 18px;
@@ -197,11 +244,28 @@ input:not([type]):focus:not([readonly])+label, input[type=text]:not(.browser-def
 //NavBar styles
 .background-navbar {
   //background: url(@/assets/photo/back-users-1.png) center center;
+  position: relative;
   background-position: center;
   background-size: cover;
   height: 155px;
   background-color: $hover-color;
 }
+
+.navbar-title {
+  position: absolute;
+  width: 100%;
+  text-align: center;
+  top: 35px;
+  font-family: "Nunito", sans-serif;
+  font-size: 42px;
+  font-weight: 800;
+  color: rgb(255 255 255);
+  letter-spacing: 3px;
+  text-shadow: 0px 5px 0px rgba(0, 0, 0, 0.15);
+  pointer-events: none;
+  text-transform: uppercase;
+}
+
 .container-user-photo {
   position: relative;
   border-radius: 100px;
@@ -210,6 +274,7 @@ input:not([type]):focus:not([readonly])+label, input[type=text]:not(.browser-def
   width: 90px;
   height: 90px;
 }
+
 .user-photo {
   background: #494B55;
   border-radius: 100%;
@@ -227,6 +292,7 @@ input:not([type]):focus:not([readonly])+label, input[type=text]:not(.browser-def
     object-fit: cover;
   }
 }
+
 .container-user-name {
   display: flex;
   justify-content: center;
@@ -243,6 +309,7 @@ SideBar styles
   width: 300px;
   //border: 1px #000 solid;
 }
+
 .title-navigation {
   display: flex;
   align-items: center;
@@ -252,12 +319,14 @@ SideBar styles
   font-weight: 700;
   margin: 10px 0;
 }
+
 .menu {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
 }
-.menu-item{
+
+.menu-item {
   display: flex;
   align-items: center;
 
@@ -266,10 +335,12 @@ SideBar styles
     width: 30px;
   }
 }
+
 .menu-item {
   img {
     transition: filter .3s;
   }
+
   span {
     color: $main-text-color;
     font-size: $S-size;
@@ -286,6 +357,7 @@ SideBar styles
   padding: 0px 7px 0 0;
   width: 37px;
 }
+
 nav {
   background-color: transparent;
   box-shadow: none;
@@ -329,9 +401,8 @@ nav {
 }
 
 
-.under-block {
+.under-block {}
 
-}
 .title-notification {
   display: flex;
   align-items: center;
@@ -340,10 +411,12 @@ nav {
   font-size: 27px;
   font-weight: 700;
   margin: 30px 0 20px 0;
+
   img {
     top: 0;
   }
 }
+
 .button-add-notf {
   margin: 0 20px 20px 20px;
 
@@ -386,15 +459,18 @@ nav {
     }
   }
 }
+
 .block-notification {
   margin: 0 20px 20px;
 }
+
 .notification-text {
   img {
     padding: 0 7px 0 0;
     position: relative;
     top: 3px;
   }
+
   span {
     color: #494B55;
     font-family: Nunito;
@@ -404,10 +480,12 @@ nav {
     text-align: justify;
   }
 }
+
 //CLOCK start
 .clock-block {
   margin: 0 0 30px;
 }
+
 .flip-clock {
   display: flex;
   justify-content: center;
@@ -449,6 +527,7 @@ nav {
     left: 14px;
   }
 }
+
 .line-clock {
   height: 3px;
   background: #fff;
@@ -467,15 +546,18 @@ Main styles
 .site-content {
   flex-grow: 1;
 }
+
 .main-section {
   margin: 85px 0px 20px;
   display: grid;
   grid-template-columns: 300px 1fr;
 }
+
 .calendar-width {
-    width: 95%;
-    margin: 0 30px;
+  width: 95%;
+  margin: 0 30px;
 }
+
 //.fc-icon-chevron-left::before {
 //  content: "назад";
 //}
@@ -486,6 +568,7 @@ Main styles
   font-weight: 700;
   color: $main-text-color;
 }
+
 .fc-scrollgrid-sync-inner {
 
   a {
@@ -493,28 +576,35 @@ Main styles
     font-weight: 700;
   }
 }
+
 .fc-h-event {
   background-color: $hover-color;
   border: 1px solid $hover-color;
   display: block;
 }
+
 .fc-daygrid-event-dot {
   border: calc(var(--fc-daygrid-event-dot-width)/2) solid $hover-color;
   border-radius: calc(var(--fc-daygrid-event-dot-width)/2);
 }
+
 .fc-theme-standard .fc-scrollgrid {
   border-radius: 10px;
   border: 2px solid $main-text-color;
 }
-.fc-theme-standard td, .fc-theme-standard th {
+
+.fc-theme-standard td,
+.fc-theme-standard th {
   border: 2px solid $main-text-color;
 }
-.fc .fc-scrollgrid-section > * {
+
+.fc .fc-scrollgrid-section>* {
   border-left-width: 0px;
   border-top-width: 0px;
   border-right-width: 0px;
   border-bottom-width: 0px;
 }
+
 .fc-button {
   display: flex;
   font-family: "Nunito";
@@ -548,23 +638,28 @@ Main styles
     box-shadow: 0px 2px 0px #BA9571 !important;
   }
 }
-.fc-direction-ltr .fc-button-group > .fc-button:not(:first-child) {
+
+.fc-direction-ltr .fc-button-group>.fc-button:not(:first-child) {
   border-bottom-left-radius: 0px;
   border-top-left-radius: 0px;
   margin-left: 1px;
 }
+
 .fc .fc-button-primary {
   border-color: transparent !important;
   color: #fff;
   font-weight: 700;
 }
+
 .fc-v-event {
   background-color: $hover-color;
   border: 1px solid $hover-color;
   display: block;
   font-weight: 600;
 }
-.fc .fc-cell-shaded, .fc .fc-day-disabled {
+
+.fc .fc-cell-shaded,
+.fc .fc-day-disabled {
   background: $main-text-color;
 }
 
@@ -576,12 +671,14 @@ Client styles
 .client-section {
   margin: 0 30px;
 }
+
 .client-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin: 0 0 20px;
 }
+
 .btn-add-client {
   display: flex;
   font-family: "Nunito";
@@ -615,6 +712,7 @@ Client styles
     box-shadow: 0px 2px 0px #BA9571 !important;
   }
 }
+
 .btn-refresh {
   display: flex;
   font-family: "Nunito";
@@ -718,9 +816,11 @@ Client styles
     color: #FFFFFF !important;
   }
 }
+
 .margin-search {
   margin: 0 0 20px 0;
 }
+
 .client-list {
   border-radius: 10px;
   border: 3px solid $main-text-color;
@@ -728,13 +828,16 @@ Client styles
   padding: 0 0 15px 0;
   min-height: 500px;
 }
+
 .table {
 
-  td, th {
+  td,
+  th {
     padding: 15px 15px !important;
     border-radius: 0px;
   }
 }
+
 .table {
   border-collapse: separate;
   border-spacing: 0px 5px;
@@ -744,6 +847,7 @@ Client styles
     font-size: $XS-size;
     color: #494B55;
   }
+
   tbody {
     font-weight: 600;
     font-size: 17px;
@@ -759,6 +863,7 @@ Client styles
     }
   }
 }
+
 .btn-action {
   background-color: transparent;
   border: none;
@@ -768,6 +873,7 @@ Client styles
     width: 20px;
   }
 }
+
 .all-butt-management {
   display: flex;
   justify-content: flex-end;
@@ -776,6 +882,7 @@ Client styles
     margin: 0 5px 0 0;
   }
 }
+
 .client-footer {
   display: flex;
   justify-content: space-between;
@@ -788,14 +895,15 @@ Client styles
     font-size: 16px;
     font-style: normal;
     font-weight: 700;
-    line-height: 20px; /* 125% */
+    line-height: 20px;
+    /* 125% */
   }
 
   .pagination-controls {
     display: flex;
     align-items: center;
 
-    .btn-pagination{
+    .btn-pagination {
       margin: 0px 2px 0 0;
       display: flex;
       font-family: "Nunito";
@@ -829,20 +937,24 @@ Client styles
         box-shadow: 0px 2px 0px #BA9571 !important;
       }
     }
+
     .before {
       border-radius: 10px 0 0 10px;
     }
+
     .after {
       border-radius: 0px 10px 10px 0px;
     }
   }
 }
+
 /*
 Profile styles
 */
 .profile-section {
   margin: 0 0 0 30px;
 }
+
 .profile_tittle {
   display: flex;
   align-items: center;
@@ -896,15 +1008,18 @@ Profile styles
     }
   }
 }
+
 .hr_profile {
   border-radius: 10px 0 0 10px;
   border: 0px solid $main-text-color;
   background: $main-text-color;
   height: 3px;
 }
+
 .profile_block {
   margin: 0 30px;
 }
+
 .update_profile_tittle {
   font-family: "Nunito";
   font-style: normal;
@@ -913,7 +1028,13 @@ Profile styles
   color: $main-text-color;
   margin: 0;
 }
-.input-field-text, .file-upload-field, .select-field, .date-field, .checkbox-field, .forms-name-add {
+
+.input-field-text,
+.file-upload-field,
+.select-field,
+.date-field,
+.checkbox-field,
+.forms-name-add {
   margin: 0 0 10px;
 
 
@@ -948,6 +1069,7 @@ Profile styles
         line-height: normal;
         text-align: center;
       }
+
       input {
         color: #FFFFFF;
         font-family: Nunito;
@@ -973,6 +1095,7 @@ Profile styles
         }
       }
     }
+
     .file-chosen {
       color: #FFFFFF;
       font-family: Nunito;
@@ -1008,6 +1131,7 @@ Profile styles
       margin: 0 0 0 15px;
       line-height: normal;
     }
+
     .checkbox-group {
       display: flex;
       justify-content: space-between;
@@ -1042,8 +1166,10 @@ Profile styles
 
           .svg-checkmark .checkmark-path {
             stroke-dasharray: 32.99833297729492;
-            stroke-dashoffset: 32.99833297729492; /* Шлях спочатку не видно */
-            transition: stroke-dashoffset 0.3s ease-in-out; /* Плавний перехід для анімації */
+            stroke-dashoffset: 32.99833297729492;
+            /* Шлях спочатку не видно */
+            transition: stroke-dashoffset 0.3s ease-in-out;
+            /* Плавний перехід для анімації */
           }
         }
 
@@ -1054,6 +1180,7 @@ Profile styles
       }
     }
   }
+
   .user-profile {
     display: grid;
     grid-template-columns: 300px 1fr;
@@ -1063,12 +1190,15 @@ Profile styles
       width: 300px;
       margin: 0;
     }
+
     select {
       margin: 0;
     }
+
     .checkbox-group {
       margin: 0;
     }
+
     input {
       color: #FFFFFF;
       font-family: Nunito;
@@ -1102,9 +1232,11 @@ Profile styles
       margin-top: 6px;
       display: block;
     }
+
     .user-password-input {
       position: relative;
     }
+
     .change-password {
       position: absolute;
       right: 20px;
@@ -1115,6 +1247,7 @@ Profile styles
       z-index: 2;
     }
   }
+
   .modal-input-block {
     input {
       color: #FFFFFF;
@@ -1139,21 +1272,27 @@ Profile styles
     }
   }
 }
+
 .select-field {
   .enter-name {
     display: block;
   }
 }
-.custom-checkbox input[type="checkbox"]:checked + .checkmark .svg-checkmark .checkmark-path {
+
+.custom-checkbox input[type="checkbox"]:checked+.checkmark .svg-checkmark .checkmark-path {
   stroke-dashoffset: 0;
 }
-[type="checkbox"]+span:not(.lever):before, [type="checkbox"]:not(.filled-in)+span:not(.lever):after {
+
+[type="checkbox"]+span:not(.lever):before,
+[type="checkbox"]:not(.filled-in)+span:not(.lever):after {
   content: none;
 }
+
 [type="checkbox"]+span:not(.lever) {
   padding-left: 0px !important;
   cursor: inherit;
 }
+
 .container-global-form-edit {
   margin: 15px 5px 10px;
   display: flex;
@@ -1198,11 +1337,13 @@ Profile styles
     }
   }
 }
+
 .button-disabled {
   background-color: #ccc !important;
   cursor: not-allowed !important;
   box-shadow: 0px 4px 0px #bbbbbb !important;
 }
+
 /* Звичайний стиль кнопки, коли чекбокс активний */
 .global-form-edit:not(.button-disabled) {
   background-color: #DAB189;
@@ -1214,6 +1355,7 @@ Profile styles
   color: #df4545;
   font-weight: 700;
 }
+
 .change-password {
   position: relative;
   right: 35px;
@@ -1227,6 +1369,7 @@ Profile styles
 .form-bank-info-container {
   margin: 22px 30px 0;
 }
+
 .undertittle-on-bank-ifro {
   font-family: "Nunito";
   font-style: normal;
@@ -1235,9 +1378,11 @@ Profile styles
   color: #494B55;
   margin: 0;
 }
+
 .bank-button-forms {
   display: flex;
 }
+
 .no-template-message {
   p {
     font-family: "Nunito";
@@ -1249,6 +1394,7 @@ Profile styles
     text-align: center;
   }
 }
+
 .create-template {
   display: flex;
   justify-content: flex-start;
@@ -1280,14 +1426,17 @@ Profile styles
     visibility: visible;
   }
 }
+
 button:focus {
   outline: none;
   background-color: transparent;
 }
+
 .modal-btn {
   display: flex;
   justify-content: flex-end;
 }
+
 .btn-send-templates {
   display: flex;
   font-family: "Nunito";
@@ -1322,11 +1471,13 @@ button:focus {
     box-shadow: 0px 2px 0px #BA9571 !important;
   }
 }
+
 .container-for-label-and-input {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 10px;
 }
+
 .container-input_froms_user {
   display: grid;
   grid-template-columns: 300px 1fr;
@@ -1345,6 +1496,7 @@ button:focus {
     align-items: center;
     line-height: normal;
   }
+
   input {
     color: #FFFFFF;
     font-family: Nunito;
@@ -1367,6 +1519,7 @@ button:focus {
     &::placeholder {
       color: #C8C8C8;
     }
+
     &[type="file"] {
       display: none;
     }
@@ -1395,6 +1548,7 @@ button:focus {
       }
     }
   }
+
   textarea {
     color: #FFFFFF;
     font-family: Nunito;
@@ -1416,6 +1570,7 @@ button:focus {
       color: #C8C8C8;
     }
   }
+
   .file-chosen {
     color: #FFFFFF;
     font-family: Nunito;
@@ -1453,6 +1608,7 @@ button:focus {
     margin: 0 0 0 15px;
     line-height: normal;
   }
+
   .checkbox-group {
     display: flex;
     justify-content: space-between;
@@ -1487,8 +1643,10 @@ button:focus {
 
         .svg-checkmark .checkmark-path {
           stroke-dasharray: 32.99833297729492;
-          stroke-dashoffset: 32.99833297729492; /* Шлях спочатку не видно */
-          transition: stroke-dashoffset 0.3s ease-in-out; /* Плавний перехід для анімації */
+          stroke-dashoffset: 32.99833297729492;
+          /* Шлях спочатку не видно */
+          transition: stroke-dashoffset 0.3s ease-in-out;
+          /* Плавний перехід для анімації */
         }
       }
 
@@ -1510,16 +1668,19 @@ button:focus {
       margin: 0 10px 10px;
       padding: 10px 10px;
     }
+
     input {
       margin: 0 10px !important;
       width: auto !important;
       max-width: 100% !important;
     }
+
     textarea {
       margin: 0 10px !important;
       width: auto !important;
       max-width: 100% !important;
     }
+
     select {
       margin: 0 10px !important;
       width: auto !important;
@@ -1527,24 +1688,29 @@ button:focus {
     }
 
   }
+
   @media (max-width: 500px) {
 
     label {
       margin: 0 0 10px;
       padding: 10px 10px;
     }
+
     input {
-      margin:0 !important;
+      margin: 0 !important;
     }
+
     textarea {
-      margin:0 !important;
+      margin: 0 !important;
     }
+
     select {
-      margin:0 !important;
+      margin: 0 !important;
     }
   }
 
 }
+
 .title_form_from_user {
 
   p {
@@ -1561,6 +1727,7 @@ button:focus {
       font-size: 23px !important;
     }
   }
+
   @media (max-width: 500px) {
 
     p {
@@ -1568,12 +1735,15 @@ button:focus {
     }
   }
 }
+
 .width-input-1200 {
   width: 1200px !important;
 }
+
 .center_group {
   justify-content: center;
 }
+
 .width-container_for_butt {
   width: 1200px;
   margin: 15px auto;
@@ -1582,6 +1752,7 @@ button:focus {
     width: 220px;
   }
 }
+
 .container-text-for-form {
   max-width: 1200px;
   margin: 0 auto;
@@ -1598,10 +1769,12 @@ button:focus {
       justify-content: center;
 
     }
+
     p {
       text-align: justify;
     }
   }
+
   .content_user_form {
     color: $main-text-color;
     font-family: Nunito;
@@ -1611,6 +1784,7 @@ button:focus {
     span {
       font-weight: 800;
     }
+
     p {
       text-align: justify;
 
@@ -1618,13 +1792,15 @@ button:focus {
         font-weight: 800;
       }
     }
+
     ul {
       margin: 0 0 20px 20px;
 
       li {
-        list-style-type:disc;
+        list-style-type: disc;
       }
     }
+
     table {
       tr {
         border-bottom: 2px solid rgb(73 75 85);
@@ -1640,6 +1816,7 @@ button:focus {
       span {
         font-weight: 700;
       }
+
       p {
         text-align: justify;
 
@@ -1651,6 +1828,7 @@ button:focus {
   }
 
 }
+
 .header_forms_for_users {
   display: flex;
   justify-content: center;
@@ -1670,6 +1848,7 @@ button:focus {
     }
   }
 }
+
 .thank-you-text {
   max-width: 1440px;
   margin: 30px auto;
@@ -1718,6 +1897,7 @@ button:focus {
     }
   }
 }
+
 .none-content {
   max-width: 1440px;
   margin: 30px auto;
@@ -1738,7 +1918,8 @@ button:focus {
   margin: 22px 30px 0;
 
   .titte_field {
-      margin: 0 0 15px 0;
+    margin: 0 0 15px 0;
+
     p {
       font-family: "Nunito";
       font-style: normal;
@@ -1746,18 +1927,18 @@ button:focus {
       font-size: 26px;
       color: #494B55;
       margin: 0;
-     }
+    }
   }
 }
+
 .active_session_fields {
 
   .container-input {
     display: flex;
     align-items: stretch;
 
-    label {
+    label {}
 
-    }
     textarea {
       color: #FFFFFF;
       font-family: Nunito;
@@ -1775,6 +1956,7 @@ button:focus {
       min-height: 44px;
       height: auto;
     }
+
     input {
       color: #FFFFFF;
       font-family: Nunito;
@@ -1788,17 +1970,19 @@ button:focus {
       margin: 0 0 0 15px;
       line-height: normal;
     }
-    select {
 
-    }
+    select {}
   }
 }
+
 .active_session_button {
   //width: 840px;
 }
+
 .btn-margin-modal {
   margin: 20px 15px 0 0;
 }
+
 .template-container-for-view {
   margin: 0 0 10px;
 
@@ -1809,9 +1993,9 @@ button:focus {
 
     // ✅ Адаптація для екранів менше 1300px
     @media (max-width: 1300px) {
-        display: flex;
-        align-items: stretch;
-        flex-direction: column;
+      display: flex;
+      align-items: stretch;
+      flex-direction: column;
     }
 
     .type-for-view {
@@ -1868,6 +2052,7 @@ button:focus {
         &::placeholder {
           color: #C8C8C8;
         }
+
         &[type="file"] {
           display: none;
         }
@@ -1882,6 +2067,7 @@ button:focus {
   }
 
 }
+
 .block_info_client {
   margin: 0 0 10px;
 
@@ -1937,6 +2123,7 @@ button:focus {
         &::placeholder {
           color: #C8C8C8;
         }
+
         &[type="file"] {
           display: none;
         }
@@ -1945,11 +2132,13 @@ button:focus {
     }
   }
 }
+
 .Block_client {
   margin: 0 0 0 30px;
 
   .titte_field {
     margin: 17px 0 22px 0;
+
     p {
       font-family: "Nunito";
       font-style: normal;
@@ -1968,6 +2157,7 @@ button:focus {
         label {
           width: 300px;
         }
+
         select {
           max-width: 530px;
         }
@@ -1979,11 +2169,13 @@ button:focus {
     margin: 20px 20px 0 0;
   }
 }
+
 .block_button_client_page {
   display: flex;
   justify-content: flex-end;
   margin: 10px 30px 0;
 }
+
 .submit-coupe-partner {
   display: flex;
   justify-content: flex-end;
@@ -1992,6 +2184,7 @@ button:focus {
     width: 260px;
   }
 }
+
 .cycle_button_submit {
 
   button {
@@ -2023,9 +2216,9 @@ button:focus {
   }
 }
 
- .block_button_client_page {
-   position: relative;
- }
+.block_button_client_page {
+  position: relative;
+}
 
 .dropdown {
   position: relative;
@@ -2257,9 +2450,11 @@ button:focus {
     }
   }
 }
+
 .title-archive {
   padding: 0 10px 10px;
 }
+
 .non-archive-client {
   p {
     font-weight: 700;
@@ -2271,6 +2466,7 @@ button:focus {
     width: 100%;
   }
 }
+
 .block-btn-view-session {
   display: flex;
   align-items: center;
@@ -2314,6 +2510,7 @@ button:focus {
     }
   }
 }
+
 .container-all-session-client {
   display: flex;
   flex-wrap: wrap;
@@ -2344,6 +2541,7 @@ button:focus {
             padding: 0 0 0 10px;
           }
         }
+
         .date-consultation-client {
           //font-size: 15px;
         }
@@ -2364,19 +2562,20 @@ Statistic styles
 .statisctic-section {
   margin: 0 30px;
 }
+
 .statistic-dropdown-container {
   margin: 20px 0;
 
 
   .dropdown-toggle {
-      background-color: #72a8ba;
-      border: none;
-      width: 100%;
-      padding: 17px;
-      display: flex;
-      justify-content: space-between;
-      border-radius: 16px;
-      align-items: center;
+    background-color: #72a8ba;
+    border: none;
+    width: 100%;
+    padding: 17px;
+    display: flex;
+    justify-content: space-between;
+    border-radius: 16px;
+    align-items: center;
 
     .dropdown-text {
       font-family: "Nunito";
@@ -2394,7 +2593,7 @@ Statistic styles
   ul {
     margin: 0;
 
-    li{
+    li {
       display: flex;
       align-items: flex-start;
       gap: 10px;
@@ -2407,6 +2606,7 @@ Statistic styles
       img {
         width: 20px;
       }
+
       p {
         margin: 0;
         color: #494B55;
@@ -2419,20 +2619,24 @@ Statistic styles
 }
 
 /* Анімація для плавного відкриття/закриття */
-.slide-fade-enter-active, .slide-fade-leave-active {
+.slide-fade-enter-active,
+.slide-fade-leave-active {
   transition: all 0.3s ease;
 }
 
-.slide-fade-enter-from, .slide-fade-leave-to {
+.slide-fade-enter-from,
+.slide-fade-leave-to {
   max-height: 0;
   opacity: 0;
   overflow: hidden;
 }
 
-.slide-fade-enter-to, .slide-fade-leave-from {
+.slide-fade-enter-to,
+.slide-fade-leave-from {
   height: auto;
   opacity: 1;
 }
+
 /* Анімація обертання іконки */
 .dropdown-icon {
   transition: transform 0.3s ease;
@@ -2449,16 +2653,20 @@ Statistic styles
     font-weight: 600;
     line-height: 22px;
   }
+
   @media (max-width: 1200px) {
     width: 800px;
   }
+
   @media (max-width: 1100px) {
     width: 750px;
   }
+
   @media (max-width: 1000px) {
     width: 700px;
   }
 }
+
 .bar-graphs {
   h5 {
     color: #494B55;
@@ -2502,7 +2710,8 @@ Statistic styles
   visibility: hidden;
   opacity: 0;
   position: absolute;
-  bottom: 125%; /* Position above the icon */
+  bottom: 125%;
+  /* Position above the icon */
   left: 50%;
   transform: translateX(-50%);
   background-color: #385E6C;
@@ -2547,7 +2756,9 @@ Statistic styles
   tr {
     border-bottom: 2px dashed #72A8BA;
   }
-  th, td {
+
+  th,
+  td {
     vertical-align: middle;
     padding: 12px 14px;
     text-align: center;
@@ -2560,6 +2771,7 @@ Statistic styles
       min-width: 200px;
     }
   }
+
   th {
     background-color: #e8f2f6;
     color: #72A8BA;
@@ -2570,10 +2782,12 @@ Statistic styles
     &:first-child {
       border-radius: 12px 0 0 0;
     }
+
     &:last-child {
       border-radius: 0 12px 0 0;
     }
   }
+
   .left-dashed-border {
     border-left: 2px dashed #72A8BA;
     text-align: center;
@@ -2582,6 +2796,7 @@ Statistic styles
     font-weight: 700;
   }
 }
+
 .table-responsive {
   width: 100%;
   overflow-x: auto;
@@ -2590,6 +2805,7 @@ Statistic styles
   background: white;
   border: 1px solid #e8edf2;
 }
+
 .slide-fade-enter-active,
 .slide-fade-leave-active {
   transition: all 0.4s ease-in-out;
