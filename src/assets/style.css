@@ -339,10 +339,10 @@ textarea.materialize-textarea:focus:not([readonly]) + label {
 .navbar-title {
   position: absolute;
   width: 100%;
-  text-align: center;
-  top: 35px;
+  top: 37px;
+  left: 70px;
   font-family: "Nunito", sans-serif;
-  font-size: 42px;
+  font-size: 34px;
   font-weight: 800;
   color: rgb(255, 255, 255);
   letter-spacing: 3px;
