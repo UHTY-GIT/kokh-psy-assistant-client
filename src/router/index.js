@@ -200,8 +200,8 @@ const router = createRouter({
 //     if (!isAuthenticated) {
 //       console.log('Є токент?' + isAuthenticated)
 //       // Якщо користувач не аутентифікований, перенаправлення на сторінку входу
-//       // window.location.href = 'https://crm-assistant.psy-kokh.online/login?message=redirect';
-//       //window.location.href = 'https://crm-assistant.psy-kokh.online/';
+//       // window.location.href = 'https://psy-crm.psy-kokh.online/login?message=redirect';
+//       //window.location.href = 'https://psy-crm.psy-kokh.online/';
 //       next({
 //         path: '/login',
 //         //query: { message: 'redirect' } // Збереження маршруту для можливого перенаправлення після входу
