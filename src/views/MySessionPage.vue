@@ -27,6 +27,14 @@
           <td>{{ formatDate(consultation.consultation_date) }}</td>
           <td @click="viewClientInfo(consultation.client.id)" class="client-name-link">
             {{ consultation.client.first_name }}
+            <span
+                v-if="getSessionRole(consultation)"
+                class="session-dot"
+                :class="`session-dot--${getSessionRole(consultation)}`"
+                :data-tooltip="getSessionRole(consultation) === 'main'
+                  ? 'Головна сесія — заповнюйте дані тут'
+                  : 'Дублікат — дані не зберігаються, заповнюйте головну сесію'"
+            ></span>
           </td>
           <td class="all-butt-management">
             <button class="btn-action" :data-tooltip="getStatusTooltip(consultation.status)">
@@ -261,6 +269,14 @@ export default {
       }
     };
 
+    // Парна сесія приходить двома рядками: is_main = true — головна (її заповнює психолог),
+    // false — дублікат, дані якого не зберігаються. Для індивідуальних сесій позначки не показуємо.
+    const getSessionRole = (consultation) => {
+      if (consultation.is_main === false) return 'duplicate';
+      if (consultation.is_main === true && consultation.partner) return 'main';
+      return null;
+    };
+
     //Пагінація
     const paginatedConsultations = computed(() => {
       const start = (currentPage.value - 1) * itemsPerPage;
@@ -288,6 +304,7 @@ export default {
       selectedConsultation,
       getStatusIcon,
       getStatusTooltip,
+      getSessionRole,
       openDeleteSessionModal,
       confirmDeleteSession,
       showDeleteModal,
@@ -317,5 +334,40 @@ export default {
 
 .client-name-link:hover {
   color: #181e21;
+}
+
+/* Парні сесії: крапка біля імені — головна (заповнюється психологом) чи дублікат */
+.session-dot {
+  position: relative;
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  margin-left: 8px;
+  border-radius: 50%;
+  vertical-align: middle;
+  cursor: help;
+}
+
+.session-dot--main {
+  background: #DAB189;
+}
+
+.session-dot--duplicate {
+  border: 2px solid rgba(255, 255, 255, 0.7);
+}
+
+.session-dot[data-tooltip]:hover::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #333;
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-weight: 600;
+  white-space: nowrap;
+  z-index: 1000;
 }
 </style>
