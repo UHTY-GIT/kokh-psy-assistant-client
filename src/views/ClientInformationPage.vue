@@ -185,7 +185,6 @@
                 </li>
               </ul>
               <p v-else class="insight-empty">
-                <IconMessageQuestion class="insight-empty__icon" />
                 <span>{{ client.primary_poll_complete
                   ? 'У відповідях первинного опитування причину звернення не вказано.'
                   : 'Клієнт ще не пройшов первинне опитування — причина звернення з’явиться тут після нього.' }}</span>
@@ -207,7 +206,6 @@
                 </li>
               </ul>
               <p v-else class="insight-empty">
-                <IconShield class="insight-empty__icon" />
                 <span>Патерн самозахисту ще не зафіксовано в жодній сесії. Він з’явиться тут, щойно його запишуть у формі сесії.</span>
               </p>
             </InsightAccordion>
@@ -226,7 +224,6 @@
               <span></span><span></span><span></span>
             </div>
             <p v-else-if="!processedEfctTable || processedEfctTable.rows.length === 0" class="insight-empty">
-              <IconTrendUp class="insight-empty__icon" />
               <span>Оцінок навичок ще немає. Вони з’являться після першої сесії з картою навичок.</span>
             </p>
             <div v-else class="table-responsive">
