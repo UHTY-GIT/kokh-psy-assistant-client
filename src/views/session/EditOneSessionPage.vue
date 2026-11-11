@@ -94,11 +94,13 @@
     />
     <!-- видалити -->
     <ModalSessionSuccess
-        v-if="showModal"
         :showModal="showModal"
         :IDconsultation="IDconsultation"
         :clientId="clientId"
         :formData="formData"
+        title="Зберегти зміни?"
+        text="Оновлені відповіді збережуться в цій сесії."
+        confirm-label="Зберегти"
         @close="showModal = false"
         @confirm="submitEditedSession"
     />

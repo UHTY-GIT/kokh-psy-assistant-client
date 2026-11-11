@@ -3772,3 +3772,129 @@ textarea::-webkit-scrollbar-thumb {
 textarea::-webkit-scrollbar-corner {
   background: transparent;
 }
+
+// ============================================================
+// Кнопка «Завершити сесію»: прапорець у плитці, при наведенні майорить, відблиск пробігає кнопкою
+// ============================================================
+.finish-session {
+  display: flex;
+  justify-content: flex-end;
+  margin: 8px 0 40px;
+}
+
+.finish-session__btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  height: 60px;
+  padding: 0 28px 0 10px;
+  overflow: hidden;
+  border: none;
+  border-radius: 18px;
+  background: $button-color;
+  box-shadow: 0 5px 0 #BA9571;
+  color: #fff;
+  font: 800 18px/1 "Nunito", sans-serif;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform .4s cubic-bezier(.34, 1.56, .64, 1), box-shadow .25s ease;
+
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(110deg, transparent 30%, rgba(255, 255, 255, .28) 50%, transparent 70%);
+    transform: translateX(-110%);
+    pointer-events: none;
+  }
+
+  &:focus {
+    background: $button-color;
+    outline: none;
+  }
+
+  &:focus-visible {
+    box-shadow: 0 5px 0 #BA9571, 0 0 0 4px rgba(56, 94, 108, .3);
+  }
+
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 0 #BA9571, 0 18px 26px -14px rgba(186, 149, 113, .9);
+
+    &::after {
+      transform: translateX(110%);
+      transition: transform .9s cubic-bezier(.22, 1, .36, 1);
+    }
+
+    .finish-session__icon {
+      transform: rotate(-8deg) scale(1.06);
+    }
+
+    .icon-flag__cloth {
+      animation: flag-wave .9s ease-in-out infinite;
+    }
+  }
+
+  &:active {
+    transform: translateY(4px);
+    box-shadow: 0 1px 0 #BA9571;
+    transition-duration: .12s;
+  }
+}
+
+.finish-session__icon {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 13px;
+  background: rgba(255, 255, 255, .24);
+  transition: transform .45s cubic-bezier(.34, 1.56, .64, 1);
+
+  svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  .icon-flag__cloth {
+    transform-box: fill-box;
+    transform-origin: left center;
+  }
+}
+
+@keyframes flag-wave {
+  0%, 100% {
+    transform: skewY(0) scaleX(1);
+  }
+  35% {
+    transform: skewY(-7deg) scaleX(.93);
+  }
+  70% {
+    transform: skewY(4deg) scaleX(.97);
+  }
+}
+
+@media (max-width: 760px) {
+  .finish-session {
+    margin-bottom: 24px;
+  }
+
+  .finish-session__btn {
+    width: 100%;
+    justify-content: center;
+    padding-right: 20px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .finish-session__btn,
+  .finish-session__btn::after,
+  .finish-session__icon,
+  .finish-session__btn .icon-flag__cloth {
+    animation: none !important;
+    transition: none !important;
+  }
+}

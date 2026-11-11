@@ -68,21 +68,23 @@
           </div>
         </div>
       </div>
-      <div class="container-global-form-edit active_session_button">
-        <button class="global-form-edit" type="submit">
-          <img src="../../assets/icons/share.svg" alt="Send name form">
-          <span class="edit-link">Завершити сесію</span>
+      <div class="finish-session">
+        <button class="finish-session__btn" type="submit">
+          <span class="finish-session__icon"><IconFlagFinish /></span>
+          <span class="finish-session__label">Завершити сесію</span>
         </button>
       </div>
     </form>
   </div>
   <!--  Модальне вікно-->
   <ModalSessionSuccess
-      v-if="showModal"
       :showModal="showModal"
       :IDconsultation="IDconsultation"
       :clientId="clientId"
       :formData="formData"
+      :filled="filledTotal.filled"
+      :total="filledTotal.total"
+      :busy="isSubmitting"
       @close="showModal = false"
       @confirm="submitForm"
   />
@@ -94,11 +96,13 @@ import { useRoute, useRouter } from 'vue-router';
 import apiService from "@/services/apiService";
 import FormSectionsNav from "@/components/ui/FormSectionsNav.vue";
 import ModalSessionSuccess from "@/components/modal/ModalSessionSuccess.vue";
+import IconFlagFinish from "@/components/icons/IconFlagFinish.vue";
 import M from "materialize-css";
 
 export default {
   components: { FormSectionsNav,
-    ModalSessionSuccess
+    ModalSessionSuccess,
+    IconFlagFinish
   },
   setup() {
     const route = useRoute();
@@ -191,7 +195,19 @@ export default {
       showModal.value = true;
     };
 
+    const isSubmitting = ref(false);
+
     const submitForm = async () => {
+      if (isSubmitting.value) return;
+      isSubmitting.value = true;
+      try {
+        await sendSession();
+      } finally {
+        isSubmitting.value = false;
+      }
+    };
+
+    const sendSession = async () => {
       const token = localStorage.getItem('token');
       if (!token) {
         M.toast({ html: 'Будь ласка, увійдіть у систему' });
@@ -254,6 +270,12 @@ export default {
       return { id: `form-section-${index}`, title, total: sectionFields.length, filled: sectionFields.filter((f) => isFilled(f.value)).length };
     }));
 
+    // для вікна підтвердження: скільки полів заповнено загалом
+    const filledTotal = computed(() => sectionNav.value.reduce((sum, section) => ({
+      filled: sum.filled + section.filled,
+      total: sum.total + section.total,
+    }), { filled: 0, total: 0 }));
+
     return {
       formData,
       clientId,
@@ -269,6 +291,8 @@ export default {
       submitForm,
       categorizedFields,
       sectionNav,
+      filledTotal,
+      isSubmitting,
       formattedDate,
       dateConsultation,
       clientsOriginType
