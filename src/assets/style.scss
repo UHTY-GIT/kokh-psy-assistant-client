@@ -3550,3 +3550,26 @@ $ease-smooth: cubic-bezier(.22, 1, .36, 1);
     animation: none;
   }
 }
+
+// ============================================================
+// Прокрутка всередині textarea: доріжка прозора й не доходить до кутів — кути поля лишаються круглими,
+// повзунок — тонкий і не налазить на тримач для розтягування знизу
+// ============================================================
+textarea::-webkit-scrollbar {
+  width: 12px;
+}
+
+textarea::-webkit-scrollbar-track {
+  margin: 12px 0 26px;
+  background: transparent;
+}
+
+textarea::-webkit-scrollbar-thumb {
+  border: 3px solid transparent;
+  border-radius: 10px;
+  background-clip: padding-box;
+}
+
+textarea::-webkit-scrollbar-corner {
+  background: transparent;
+}

@@ -3397,5 +3397,23 @@ Statistic styles
     animation: none;
   }
 }
+textarea::-webkit-scrollbar {
+  width: 12px;
+}
+
+textarea::-webkit-scrollbar-track {
+  margin: 12px 0 26px;
+  background: transparent;
+}
+
+textarea::-webkit-scrollbar-thumb {
+  border: 3px solid transparent;
+  border-radius: 10px;
+  background-clip: padding-box;
+}
+
+textarea::-webkit-scrollbar-corner {
+  background: transparent;
+}
 
 /*# sourceMappingURL=style.css.map */
