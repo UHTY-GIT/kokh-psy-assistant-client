@@ -7,7 +7,7 @@
       </p>
     </div>
     <div>
-      <form class="password-update-form" @submit.prevent="submitUserPassword">
+      <form class="password-update-form fields-grid" @submit.prevent="submitUserPassword">
         <div class="input-field-text">
           <div class="container-input user-profile">
             <div class="type-for-view">

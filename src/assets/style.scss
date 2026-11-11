@@ -2823,3 +2823,255 @@ Statistic styles
   margin-top: 0;
   margin-bottom: 0;
 }
+// ============================================================
+// Поля «Вкладка»: мітка — корінець папки, що тримається за поле
+// ============================================================
+$tab-red: #DF4545;
+$tab-disabled: #B5B6BB;
+$field-sand: #EFE4D6;
+$field-chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23DAB189' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+
+// Поле з міткою: label, .type-for-view або .container-label прямо всередині контейнера.
+// Модалки без міток і сторінки перегляду відповідей сюди не потрапляють.
+.container-input:has(> label, > .type-for-view, > .container-label),
+.container-input_froms_user {
+  display: flex !important;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+  gap: 0;
+  margin-bottom: 8px;
+
+  // корінець-мітка
+  > label,
+  > .type-for-view,
+  > .container-label > .type-for-view {
+    display: inline-flex !important;
+    align-items: center;
+    align-self: flex-start;
+    gap: 8px;
+    width: auto !important;
+    max-width: 100%;
+    margin: 0 !important;
+    padding: 10px 18px 9px !important;
+    border-radius: 12px 12px 0 0 !important;
+    background-color: $hover-color;
+    color: #fff;
+    font-family: "Nunito", sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 1.25;
+    text-align: left;
+    transition: background-color .2s;
+  }
+
+  > .container-label {
+    display: flex;
+    align-self: flex-start;
+    max-width: 100%;
+  }
+
+  > .type-for-view label,
+  > .container-label label {
+    display: inline;
+    width: auto !important;
+    margin: 0;
+    padding: 0;
+    background: transparent !important;
+    color: inherit;
+    font: inherit;
+    text-align: left;
+  }
+
+  .help-icon-wrapper {
+    margin: 0;
+  }
+
+  // тіло поля
+  > input,
+  > textarea,
+  > select,
+  > .file-chosen,
+  > .user-password-input > input {
+    display: flex;
+    align-items: center;
+    box-sizing: border-box !important; // Materialize ставить content-box текстовим полям
+    width: 100% !important;
+    max-width: none !important;
+    height: auto !important;
+    min-height: 54px;
+    margin: 0 !important;
+    padding: 14px 18px !important;
+    border: none !important;
+    border-radius: 0 12px 12px 12px !important;
+    background-color: $main-text-color !important;
+    box-shadow: none !important;
+    color: #fff;
+    font-family: "Nunito", sans-serif;
+    font-size: 17px !important;
+    font-weight: 600;
+    line-height: 1.35;
+    transition: box-shadow .2s;
+
+    &::placeholder {
+      color: #C8C8C8;
+      font-weight: 500;
+    }
+  }
+
+  > textarea {
+    min-height: 110px;
+    resize: vertical;
+  }
+
+  > select {
+    appearance: none;
+    -webkit-appearance: none;
+    padding-right: 52px !important;
+    background-image: $field-chevron;
+    background-repeat: no-repeat;
+    background-position: right 18px center;
+    background-size: 22px;
+    cursor: pointer;
+  }
+
+  > .file-chosen {
+    cursor: pointer;
+  }
+
+  > input[type="date"],
+  > input[type="time"] {
+    color-scheme: dark; // світла іконка календаря на графітовому полі
+  }
+
+  > .user-password-input {
+    position: relative;
+    width: 100%;
+
+    > input {
+      padding-right: 56px !important;
+    }
+
+    .change-password {
+      top: 50%;
+      right: 20px;
+      transform: translateY(-50%);
+    }
+  }
+
+  > .checkbox-group {
+    box-sizing: border-box;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 6px 26px;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 10px 14px;
+    border-radius: 0 12px 12px 12px;
+    background-color: $field-sand;
+  }
+
+  // фокус: корінець темнішає, знизу поля — золота смуга «зараз тут»
+  &:focus-within {
+    > label,
+    > .type-for-view,
+    > .container-label > .type-for-view {
+      background-color: $even-session;
+    }
+
+    > input,
+    > textarea,
+    > select,
+    > .user-password-input > input {
+      outline: none;
+      box-shadow: inset 0 -4px 0 $button-color, 0 8px 18px rgba(56, 94, 108, .18) !important;
+    }
+  }
+
+  // помилка: червоний корінець і червона смуга
+  &:has(.is-invalid) {
+    > label,
+    > .type-for-view,
+    > .container-label > .type-for-view {
+      background-color: $tab-red;
+    }
+
+    > input,
+    > textarea,
+    > select,
+    > .user-password-input > input {
+      box-shadow: inset 0 -4px 0 $tab-red !important;
+    }
+  }
+
+  // вимкнене поле
+  &:has(> input:disabled, > textarea:disabled, > select:disabled) {
+    > label,
+    > .type-for-view,
+    > .container-label > .type-for-view {
+      background-color: $tab-disabled;
+    }
+
+    > input,
+    > textarea,
+    > select {
+      background-color: #8E9097 !important;
+      color: #ECECEE;
+      cursor: not-allowed;
+    }
+  }
+
+  @media (max-width: 800px) {
+    > label,
+    > .type-for-view,
+    > .container-label > .type-for-view {
+      padding: 9px 14px 8px !important;
+      font-size: 15px;
+    }
+
+    > input,
+    > textarea,
+    > select,
+    > .file-chosen,
+    > .user-password-input > input {
+      font-size: 16px !important; // 16px — iOS не збільшує сторінку при фокусі
+    }
+
+    > textarea {
+      min-height: 100px;
+    }
+  }
+}
+
+.validate-error {
+  display: block;
+  margin: 2px 0 6px;
+  font-size: 14px;
+}
+
+// Дві колонки: короткі поля стають парами, текстові та чекбокси — на всю ширину
+.block_input_field,
+.fields-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 22px 26px;
+  align-items: start;
+
+  > * {
+    margin: 0 !important;
+  }
+
+  .container-input {
+    margin-bottom: 0;
+  }
+
+  > :has(textarea),
+  > .container-global-form-edit {
+    grid-column: 1 / -1;
+  }
+
+  @media (max-width: 1200px) {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 18px;
+  }
+}

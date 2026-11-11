@@ -2697,4 +2697,274 @@ Statistic styles
   margin-bottom: 0;
 }
 
+.container-input:has(> label, > .type-for-view, > .container-label),
+.container-input_froms_user {
+  display: flex !important;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+  gap: 0;
+  margin-bottom: 8px;
+}
+.container-input:has(> label, > .type-for-view, > .container-label) > label,
+.container-input:has(> label, > .type-for-view, > .container-label) > .type-for-view,
+.container-input:has(> label, > .type-for-view, > .container-label) > .container-label > .type-for-view,
+.container-input_froms_user > label,
+.container-input_froms_user > .type-for-view,
+.container-input_froms_user > .container-label > .type-for-view {
+  display: inline-flex !important;
+  align-items: center;
+  align-self: flex-start;
+  gap: 8px;
+  width: auto !important;
+  max-width: 100%;
+  margin: 0 !important;
+  padding: 10px 18px 9px !important;
+  border-radius: 12px 12px 0 0 !important;
+  background-color: #72A8BA;
+  color: #fff;
+  font-family: "Nunito", sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.25;
+  text-align: left;
+  transition: background-color 0.2s;
+}
+.container-input:has(> label, > .type-for-view, > .container-label) > .container-label,
+.container-input_froms_user > .container-label {
+  display: flex;
+  align-self: flex-start;
+  max-width: 100%;
+}
+.container-input:has(> label, > .type-for-view, > .container-label) > .type-for-view label,
+.container-input:has(> label, > .type-for-view, > .container-label) > .container-label label,
+.container-input_froms_user > .type-for-view label,
+.container-input_froms_user > .container-label label {
+  display: inline;
+  width: auto !important;
+  margin: 0;
+  padding: 0;
+  background: transparent !important;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+}
+.container-input:has(> label, > .type-for-view, > .container-label) .help-icon-wrapper,
+.container-input_froms_user .help-icon-wrapper {
+  margin: 0;
+}
+.container-input:has(> label, > .type-for-view, > .container-label) > input,
+.container-input:has(> label, > .type-for-view, > .container-label) > textarea,
+.container-input:has(> label, > .type-for-view, > .container-label) > select,
+.container-input:has(> label, > .type-for-view, > .container-label) > .file-chosen,
+.container-input:has(> label, > .type-for-view, > .container-label) > .user-password-input > input,
+.container-input_froms_user > input,
+.container-input_froms_user > textarea,
+.container-input_froms_user > select,
+.container-input_froms_user > .file-chosen,
+.container-input_froms_user > .user-password-input > input {
+  display: flex;
+  align-items: center;
+  box-sizing: border-box !important;
+  width: 100% !important;
+  max-width: none !important;
+  height: auto !important;
+  min-height: 54px;
+  margin: 0 !important;
+  padding: 14px 18px !important;
+  border: none !important;
+  border-radius: 0 12px 12px 12px !important;
+  background-color: #494B55 !important;
+  box-shadow: none !important;
+  color: #fff;
+  font-family: "Nunito", sans-serif;
+  font-size: 17px !important;
+  font-weight: 600;
+  line-height: 1.35;
+  transition: box-shadow 0.2s;
+}
+.container-input:has(> label, > .type-for-view, > .container-label) > input::placeholder,
+.container-input:has(> label, > .type-for-view, > .container-label) > textarea::placeholder,
+.container-input:has(> label, > .type-for-view, > .container-label) > select::placeholder,
+.container-input:has(> label, > .type-for-view, > .container-label) > .file-chosen::placeholder,
+.container-input:has(> label, > .type-for-view, > .container-label) > .user-password-input > input::placeholder,
+.container-input_froms_user > input::placeholder,
+.container-input_froms_user > textarea::placeholder,
+.container-input_froms_user > select::placeholder,
+.container-input_froms_user > .file-chosen::placeholder,
+.container-input_froms_user > .user-password-input > input::placeholder {
+  color: #C8C8C8;
+  font-weight: 500;
+}
+.container-input:has(> label, > .type-for-view, > .container-label) > textarea,
+.container-input_froms_user > textarea {
+  min-height: 110px;
+  resize: vertical;
+}
+.container-input:has(> label, > .type-for-view, > .container-label) > select,
+.container-input_froms_user > select {
+  appearance: none;
+  -webkit-appearance: none;
+  padding-right: 52px !important;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23DAB189' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 18px center;
+  background-size: 22px;
+  cursor: pointer;
+}
+.container-input:has(> label, > .type-for-view, > .container-label) > .file-chosen,
+.container-input_froms_user > .file-chosen {
+  cursor: pointer;
+}
+.container-input:has(> label, > .type-for-view, > .container-label) > input[type=date],
+.container-input:has(> label, > .type-for-view, > .container-label) > input[type=time],
+.container-input_froms_user > input[type=date],
+.container-input_froms_user > input[type=time] {
+  color-scheme: dark;
+}
+.container-input:has(> label, > .type-for-view, > .container-label) > .user-password-input,
+.container-input_froms_user > .user-password-input {
+  position: relative;
+  width: 100%;
+}
+.container-input:has(> label, > .type-for-view, > .container-label) > .user-password-input > input,
+.container-input_froms_user > .user-password-input > input {
+  padding-right: 56px !important;
+}
+.container-input:has(> label, > .type-for-view, > .container-label) > .user-password-input .change-password,
+.container-input_froms_user > .user-password-input .change-password {
+  top: 50%;
+  right: 20px;
+  transform: translateY(-50%);
+}
+.container-input:has(> label, > .type-for-view, > .container-label) > .checkbox-group,
+.container-input_froms_user > .checkbox-group {
+  box-sizing: border-box;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  gap: 6px 26px;
+  width: 100% !important;
+  margin: 0 !important;
+  padding: 10px 14px;
+  border-radius: 0 12px 12px 12px;
+  background-color: #EFE4D6;
+}
+.container-input:has(> label, > .type-for-view, > .container-label):focus-within > label,
+.container-input:has(> label, > .type-for-view, > .container-label):focus-within > .type-for-view,
+.container-input:has(> label, > .type-for-view, > .container-label):focus-within > .container-label > .type-for-view,
+.container-input_froms_user:focus-within > label,
+.container-input_froms_user:focus-within > .type-for-view,
+.container-input_froms_user:focus-within > .container-label > .type-for-view {
+  background-color: rgb(56, 94, 108);
+}
+.container-input:has(> label, > .type-for-view, > .container-label):focus-within > input,
+.container-input:has(> label, > .type-for-view, > .container-label):focus-within > textarea,
+.container-input:has(> label, > .type-for-view, > .container-label):focus-within > select,
+.container-input:has(> label, > .type-for-view, > .container-label):focus-within > .user-password-input > input,
+.container-input_froms_user:focus-within > input,
+.container-input_froms_user:focus-within > textarea,
+.container-input_froms_user:focus-within > select,
+.container-input_froms_user:focus-within > .user-password-input > input {
+  outline: none;
+  box-shadow: inset 0 -4px 0 #DAB189, 0 8px 18px rgba(56, 94, 108, 0.18) !important;
+}
+.container-input:has(> label, > .type-for-view, > .container-label):has(.is-invalid) > label,
+.container-input:has(> label, > .type-for-view, > .container-label):has(.is-invalid) > .type-for-view,
+.container-input:has(> label, > .type-for-view, > .container-label):has(.is-invalid) > .container-label > .type-for-view,
+.container-input_froms_user:has(.is-invalid) > label,
+.container-input_froms_user:has(.is-invalid) > .type-for-view,
+.container-input_froms_user:has(.is-invalid) > .container-label > .type-for-view {
+  background-color: #DF4545;
+}
+.container-input:has(> label, > .type-for-view, > .container-label):has(.is-invalid) > input,
+.container-input:has(> label, > .type-for-view, > .container-label):has(.is-invalid) > textarea,
+.container-input:has(> label, > .type-for-view, > .container-label):has(.is-invalid) > select,
+.container-input:has(> label, > .type-for-view, > .container-label):has(.is-invalid) > .user-password-input > input,
+.container-input_froms_user:has(.is-invalid) > input,
+.container-input_froms_user:has(.is-invalid) > textarea,
+.container-input_froms_user:has(.is-invalid) > select,
+.container-input_froms_user:has(.is-invalid) > .user-password-input > input {
+  box-shadow: inset 0 -4px 0 #DF4545 !important;
+}
+.container-input:has(> label, > .type-for-view, > .container-label):has(> input:disabled, > textarea:disabled, > select:disabled) > label,
+.container-input:has(> label, > .type-for-view, > .container-label):has(> input:disabled, > textarea:disabled, > select:disabled) > .type-for-view,
+.container-input:has(> label, > .type-for-view, > .container-label):has(> input:disabled, > textarea:disabled, > select:disabled) > .container-label > .type-for-view,
+.container-input_froms_user:has(> input:disabled, > textarea:disabled, > select:disabled) > label,
+.container-input_froms_user:has(> input:disabled, > textarea:disabled, > select:disabled) > .type-for-view,
+.container-input_froms_user:has(> input:disabled, > textarea:disabled, > select:disabled) > .container-label > .type-for-view {
+  background-color: #B5B6BB;
+}
+.container-input:has(> label, > .type-for-view, > .container-label):has(> input:disabled, > textarea:disabled, > select:disabled) > input,
+.container-input:has(> label, > .type-for-view, > .container-label):has(> input:disabled, > textarea:disabled, > select:disabled) > textarea,
+.container-input:has(> label, > .type-for-view, > .container-label):has(> input:disabled, > textarea:disabled, > select:disabled) > select,
+.container-input_froms_user:has(> input:disabled, > textarea:disabled, > select:disabled) > input,
+.container-input_froms_user:has(> input:disabled, > textarea:disabled, > select:disabled) > textarea,
+.container-input_froms_user:has(> input:disabled, > textarea:disabled, > select:disabled) > select {
+  background-color: #8E9097 !important;
+  color: #ECECEE;
+  cursor: not-allowed;
+}
+@media (max-width: 800px) {
+  .container-input:has(> label, > .type-for-view, > .container-label) > label,
+  .container-input:has(> label, > .type-for-view, > .container-label) > .type-for-view,
+  .container-input:has(> label, > .type-for-view, > .container-label) > .container-label > .type-for-view,
+  .container-input_froms_user > label,
+  .container-input_froms_user > .type-for-view,
+  .container-input_froms_user > .container-label > .type-for-view {
+    padding: 9px 14px 8px !important;
+    font-size: 15px;
+  }
+  .container-input:has(> label, > .type-for-view, > .container-label) > input,
+  .container-input:has(> label, > .type-for-view, > .container-label) > textarea,
+  .container-input:has(> label, > .type-for-view, > .container-label) > select,
+  .container-input:has(> label, > .type-for-view, > .container-label) > .file-chosen,
+  .container-input:has(> label, > .type-for-view, > .container-label) > .user-password-input > input,
+  .container-input_froms_user > input,
+  .container-input_froms_user > textarea,
+  .container-input_froms_user > select,
+  .container-input_froms_user > .file-chosen,
+  .container-input_froms_user > .user-password-input > input {
+    font-size: 16px !important;
+  }
+  .container-input:has(> label, > .type-for-view, > .container-label) > textarea,
+  .container-input_froms_user > textarea {
+    min-height: 100px;
+  }
+}
+
+.validate-error {
+  display: block;
+  margin: 2px 0 6px;
+  font-size: 14px;
+}
+
+.block_input_field,
+.fields-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 22px 26px;
+  align-items: start;
+}
+.block_input_field > *,
+.fields-grid > * {
+  margin: 0 !important;
+}
+.block_input_field .container-input,
+.fields-grid .container-input {
+  margin-bottom: 0;
+}
+.block_input_field > :has(textarea),
+.block_input_field > .container-global-form-edit,
+.fields-grid > :has(textarea),
+.fields-grid > .container-global-form-edit {
+  grid-column: 1/-1;
+}
+@media (max-width: 1200px) {
+  .block_input_field,
+  .fields-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 18px;
+  }
+}
+
 /*# sourceMappingURL=style.css.map */

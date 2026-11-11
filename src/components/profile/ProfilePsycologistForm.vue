@@ -6,7 +6,7 @@
       </p>
     </div>
     <div>
-      <form class="name-update-form" @submit.prevent="submitUserProfile">
+      <form class="name-update-form fields-grid" @submit.prevent="submitUserProfile">
         <!-- Поле для введення імені -->
         <div class="input-field-text">
           <div class="container-input user-profile">
