@@ -21,12 +21,12 @@
             <div class="type-for-view">
               <label for="CoupleClient">Оберіть партнера клієнта</label>
             </div>
-            <select id="CoupleClient" v-model="selectedPartnerId">
+            <BaseSelect id="CoupleClient" v-model="selectedPartnerId">
               <option disabled value="">Будь ласка, оберіть партнера</option>
               <option v-for="partner in availablePartners" :key="partner.id" :value="partner.id">
                 {{ partner.name }}, {{ partner.phone }}
               </option>
-            </select>
+            </BaseSelect>
           </div>
         </div>
         <div class="container-global-form-edit submit-coupe-partner">
@@ -61,10 +61,10 @@
                   v-model="field.value"
                   :placeholder="'Введіть ' + field.field_name"
               >
-              <select v-else-if="field.field_type === 'select_v2'" :id="field.field_name" v-model="field.value">
+              <BaseSelect v-else-if="field.field_type === 'select_v2'" :id="field.field_name" v-model="field.value">
                 <option disabled value="">Оберіть варіант</option>
                 <option v-for="variant in field.variants" :key="variant">{{ variant }}</option>
-              </select>
+              </BaseSelect>
             </div>
           </div>
         </div>

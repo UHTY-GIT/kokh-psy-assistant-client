@@ -22,28 +22,28 @@
           </div>
           <div class="chosen-templates select-field">
             <div class="container-input">
-              <select v-model="selectedClientId">
+              <BaseSelect v-model="selectedClientId">
                 <option disabled value="">Будь ласка, виберіть клієнта</option>
                 <option v-for="client in clients" :key="client.id" :value="client.id">{{ client.name }}, {{ client.phone }}</option>
-              </select>
+              </BaseSelect>
             </div>
           </div>
           <div class="chosen-templates select-field">
             <div class="container-input">
-              <select v-model="selectedOriginType" :disabled="!selectedClientId">
+              <BaseSelect v-model="selectedOriginType" :disabled="!selectedClientId">
                 <option disabled value="">Будь ласка, виберіть тип консультації</option>
                 <option v-for="type in availableConsultationTypes" :key="type.value" :value="type.value">
                   {{ type.label }}
                 </option>
-              </select>
+              </BaseSelect>
             </div>
           </div>
           <div class="chosen-templates select-field">
             <div class="container-input">
-              <select v-model="selectedTemplateId" :disabled="!selectedOriginType">
+              <BaseSelect v-model="selectedTemplateId" :disabled="!selectedOriginType">
                 <option disabled value="">Будь ласка, виберіть шаблон</option>
                 <option v-for="template in availableTemplates" :value="template.id" :key="template.id">{{ template.title }}</option>
-              </select>
+              </BaseSelect>
             </div>
           </div>
           <div class="modal-btn">

@@ -9,10 +9,10 @@
         <p>Виберіть шаблон для відправки</p>
         <div class="chosen-templates select-field">
           <div class="container-input">
-            <select v-model="selectedTemplateId">
+            <BaseSelect v-model="selectedTemplateId">
               <option disabled value="">Будь ласка, виберіть шаблон</option>
               <option v-for="template in filteredTemplates" :value="template.id" :key="template.id">{{ template.title }}</option>
-            </select>
+            </BaseSelect>
           </div>
           
           <!-- Поле для введення назви кейсу (Title) -->

@@ -256,10 +256,10 @@
               <label :for="`field-${index}`">{{ field.field_name }}</label>
 
               <!-- Інтеграція поля select_v2 -->
-              <select v-if="field.field_type === 'select_v2'" :id="`field-${index}`" v-model="field.value" required>
+              <BaseSelect v-if="field.field_type === 'select_v2'" :id="`field-${index}`" v-model="field.value" required>
                 <option disabled :value="undefined" selected>Оберіть варіант</option>
                 <option v-for="variant in field.variants" :key="variant" :value="variant">{{ variant }}</option>
-              </select>
+              </BaseSelect>
 
               <!-- Поле для введення тексту -->
               <textarea v-else-if="field.field_type === 'text'" :id="`field-${index}`" v-model="field.value" required placeholder="Ваша відповідь"></textarea>
@@ -679,10 +679,10 @@
               <label :for="`field-${index}`">{{ field.field_name }}</label>
 
               <!-- Інтеграція поля select_v2 -->
-              <select v-if="field.field_type === 'select_v2'" :id="`field-${index}`" v-model="field.value" required>
+              <BaseSelect v-if="field.field_type === 'select_v2'" :id="`field-${index}`" v-model="field.value" required>
                 <option disabled :value="undefined" selected>Оберіть варіант</option>
                 <option v-for="variant in field.variants" :key="variant" :value="variant">{{ variant }}</option>
-              </select>
+              </BaseSelect>
 
               <!-- Поле для введення тексту -->
               <textarea v-else-if="field.field_type === 'text'" :id="`field-${index}`" v-model="field.value" required placeholder="Ваша відповідь"></textarea>
@@ -759,10 +759,10 @@
               <label :for="`field-${index}`">{{ field.field_name }}</label>
 
               <!-- Інтеграція поля select_v2 -->
-              <select v-if="field.field_type === 'select_v2'" :id="`field-${index}`" v-model="field.value" required>
+              <BaseSelect v-if="field.field_type === 'select_v2'" :id="`field-${index}`" v-model="field.value" required>
                 <option disabled :value="undefined" selected>Оберіть варіант</option>
                 <option v-for="variant in field.variants" :key="variant" :value="variant">{{ variant }}</option>
-              </select>
+              </BaseSelect>
 
               <!-- Поле для введення тексту -->
               <textarea v-else-if="field.field_type === 'text'" :id="`field-${index}`" v-model="field.value" required placeholder="Ваша відповідь"></textarea>
@@ -842,10 +842,10 @@
               <label :for="`field-${index}`">{{ field.field_name }}</label>
 
               <!-- Інтеграція поля select_v2 -->
-              <select v-if="field.field_type === 'select_v2'" :id="`field-${index}`" v-model="field.value" required>
+              <BaseSelect v-if="field.field_type === 'select_v2'" :id="`field-${index}`" v-model="field.value" required>
                 <option disabled :value="undefined" selected>Оберіть варіант</option>
                 <option v-for="variant in field.variants" :key="variant" :value="variant">{{ variant }}</option>
-              </select>
+              </BaseSelect>
 
               <!-- Поле для введення тексту -->
               <textarea v-else-if="field.field_type === 'text'" :id="`field-${index}`" v-model="field.value" required placeholder="Ваша відповідь"></textarea>

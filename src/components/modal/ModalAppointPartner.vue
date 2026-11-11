@@ -12,12 +12,12 @@
             <div class="forms-name-add">
               <div class="container-input">
                 <label for="CoupleClient">Оберіть партнера клієнта</label>
-                <select id="CoupleClient" v-model="selectedPartnerId">
+                <BaseSelect id="CoupleClient" v-model="selectedPartnerId">
                   <option disabled value="">Будь ласка, оберіть партнера</option>
                   <option v-for="partner in availablePartners" :key="partner.id" :value="partner.id">
                     {{ partner.name }}, {{ partner.phone }}
                   </option>
-                </select>
+                </BaseSelect>
               </div>
             </div>
             <div class="container-global-form-edit submit-coupe-partner">

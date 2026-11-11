@@ -14,7 +14,7 @@
       <div class="forms-name-add">
         <div class="container-input">
           <label for="formType">Виберіть тип шаблону</label>
-          <select id="formType" v-model="form.formType">
+          <BaseSelect id="formType" v-model="form.formType">
             <option disabled value="">Будь ласка, виберіть шаблон</option>
             <option value="consent_individual">Інформована згода індивідуальна</option>
             <option value="consent_couple">Інформована згода парна</option>
@@ -23,7 +23,7 @@
             <option value="individual_consultation">Індивідуальна консультація</option>
             <option value="couple_consultation">Парна консультація</option>
 <!--            <option value="reviews">Відгук клієнта</option>-->
-          </select>
+          </BaseSelect>
         </div>
       </div>
       <div class="forms-name-add">
@@ -77,7 +77,7 @@
           <div class="forms-name-add">
             <div class="container-input">
               <label for="Typefield">Виберіть тип поля</label>
-              <select
+              <BaseSelect
                   id="Typefield"
                   v-model="item.field_type"
               >
@@ -86,7 +86,7 @@
                 <option value="boolean">Так / Ні</option>
                 <option value="ranking1to5">Ранжування від 1 до 5</option>
                 <option value="ranking1to10">Ранжування від 1 до 10</option>
-              </select>
+              </BaseSelect>
             </div>
           </div>
 

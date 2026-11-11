@@ -55,14 +55,14 @@
                     v-model="field.value"
                     :placeholder="'Введіть ' + field.field_name"
                 >
-                <select v-else-if="field.field_type === 'select_v2'" :id="field.field_name" v-model="field.value">
+                <BaseSelect v-else-if="field.field_type === 'select_v2'" :id="field.field_name" v-model="field.value">
                   <option disabled value="">Оберіть варіант</option>
                   <option v-for="variant in field.variants" :key="variant">{{ variant }}</option>
-                </select>
-                <select v-else-if="field.field_type === 'range'" :id="field.field_name" v-model="field.value">
+                </BaseSelect>
+                <BaseSelect v-else-if="field.field_type === 'range'" :id="field.field_name" v-model="field.value">
                   <option disabled value="">Оберіть оцінку</option>
                   <option v-for="variant in field.variants" :key="variant" :value="variant">{{ variant }}</option>
-                </select>
+                </BaseSelect>
               </div>
             </div>
           </div>

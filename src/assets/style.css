@@ -2713,12 +2713,14 @@ Statistic styles
 .container-input:has(> label, > .type-for-view, > .container-label) > .file-chosen,
 .container-input:has(> label, > .type-for-view, > .container-label) > .user-password-input > input,
 .container-input:has(> label, > .type-for-view, > .container-label) > .date-picker .date-picker__input,
+.container-input:has(> label, > .type-for-view, > .container-label) > .base-select .base-select__trigger,
 .container-input_froms_user > input,
 .container-input_froms_user > textarea,
 .container-input_froms_user > select,
 .container-input_froms_user > .file-chosen,
 .container-input_froms_user > .user-password-input > input,
-.container-input_froms_user > .date-picker .date-picker__input {
+.container-input_froms_user > .date-picker .date-picker__input,
+.container-input_froms_user > .base-select .base-select__trigger {
   display: flex;
   align-items: center;
   box-sizing: border-box !important;
@@ -2745,14 +2747,20 @@ Statistic styles
 .container-input:has(> label, > .type-for-view, > .container-label) > .file-chosen::placeholder,
 .container-input:has(> label, > .type-for-view, > .container-label) > .user-password-input > input::placeholder,
 .container-input:has(> label, > .type-for-view, > .container-label) > .date-picker .date-picker__input::placeholder,
+.container-input:has(> label, > .type-for-view, > .container-label) > .base-select .base-select__trigger::placeholder,
 .container-input_froms_user > input::placeholder,
 .container-input_froms_user > textarea::placeholder,
 .container-input_froms_user > select::placeholder,
 .container-input_froms_user > .file-chosen::placeholder,
 .container-input_froms_user > .user-password-input > input::placeholder,
-.container-input_froms_user > .date-picker .date-picker__input::placeholder {
+.container-input_froms_user > .date-picker .date-picker__input::placeholder,
+.container-input_froms_user > .base-select .base-select__trigger::placeholder {
   color: #C8C8C8;
   font-weight: 500;
+}
+.container-input:has(> label, > .type-for-view, > .container-label) > .base-select .base-select__trigger,
+.container-input_froms_user > .base-select .base-select__trigger {
+  padding-right: 16px !important;
 }
 .container-input:has(> label, > .type-for-view, > .container-label) > textarea,
 .container-input_froms_user > textarea {
@@ -2807,10 +2815,15 @@ Statistic styles
 }
 .container-input:has(> label, > .type-for-view, > .container-label):focus-within > label,
 .container-input:has(> label, > .type-for-view, > .container-label):focus-within > .type-for-view,
-.container-input:has(> label, > .type-for-view, > .container-label):focus-within > .container-label > .type-for-view,
+.container-input:has(> label, > .type-for-view, > .container-label):focus-within > .container-label > .type-for-view, .container-input:has(> label, > .type-for-view, > .container-label):has(> .base-select.is-open) > label,
+.container-input:has(> label, > .type-for-view, > .container-label):has(> .base-select.is-open) > .type-for-view,
+.container-input:has(> label, > .type-for-view, > .container-label):has(> .base-select.is-open) > .container-label > .type-for-view,
 .container-input_froms_user:focus-within > label,
 .container-input_froms_user:focus-within > .type-for-view,
-.container-input_froms_user:focus-within > .container-label > .type-for-view {
+.container-input_froms_user:focus-within > .container-label > .type-for-view,
+.container-input_froms_user:has(> .base-select.is-open) > label,
+.container-input_froms_user:has(> .base-select.is-open) > .type-for-view,
+.container-input_froms_user:has(> .base-select.is-open) > .container-label > .type-for-view {
   background-color: rgb(56, 94, 108);
 }
 .container-input:has(> label, > .type-for-view, > .container-label):focus-within > input,
@@ -2818,11 +2831,24 @@ Statistic styles
 .container-input:has(> label, > .type-for-view, > .container-label):focus-within > select,
 .container-input:has(> label, > .type-for-view, > .container-label):focus-within > .user-password-input > input,
 .container-input:has(> label, > .type-for-view, > .container-label):focus-within > .date-picker .date-picker__input,
+.container-input:has(> label, > .type-for-view, > .container-label):focus-within > .base-select .base-select__trigger, .container-input:has(> label, > .type-for-view, > .container-label):has(> .base-select.is-open) > input,
+.container-input:has(> label, > .type-for-view, > .container-label):has(> .base-select.is-open) > textarea,
+.container-input:has(> label, > .type-for-view, > .container-label):has(> .base-select.is-open) > select,
+.container-input:has(> label, > .type-for-view, > .container-label):has(> .base-select.is-open) > .user-password-input > input,
+.container-input:has(> label, > .type-for-view, > .container-label):has(> .base-select.is-open) > .date-picker .date-picker__input,
+.container-input:has(> label, > .type-for-view, > .container-label):has(> .base-select.is-open) > .base-select .base-select__trigger,
 .container-input_froms_user:focus-within > input,
 .container-input_froms_user:focus-within > textarea,
 .container-input_froms_user:focus-within > select,
 .container-input_froms_user:focus-within > .user-password-input > input,
-.container-input_froms_user:focus-within > .date-picker .date-picker__input {
+.container-input_froms_user:focus-within > .date-picker .date-picker__input,
+.container-input_froms_user:focus-within > .base-select .base-select__trigger,
+.container-input_froms_user:has(> .base-select.is-open) > input,
+.container-input_froms_user:has(> .base-select.is-open) > textarea,
+.container-input_froms_user:has(> .base-select.is-open) > select,
+.container-input_froms_user:has(> .base-select.is-open) > .user-password-input > input,
+.container-input_froms_user:has(> .base-select.is-open) > .date-picker .date-picker__input,
+.container-input_froms_user:has(> .base-select.is-open) > .base-select .base-select__trigger {
   outline: none;
   box-shadow: 0 4px 0 #DAB189, 0 10px 18px rgba(56, 94, 108, 0.18) !important;
 }
@@ -2839,11 +2865,13 @@ Statistic styles
 .container-input:has(> label, > .type-for-view, > .container-label):has(.is-invalid) > select,
 .container-input:has(> label, > .type-for-view, > .container-label):has(.is-invalid) > .user-password-input > input,
 .container-input:has(> label, > .type-for-view, > .container-label):has(.is-invalid) > .date-picker .date-picker__input,
+.container-input:has(> label, > .type-for-view, > .container-label):has(.is-invalid) > .base-select .base-select__trigger,
 .container-input_froms_user:has(.is-invalid) > input,
 .container-input_froms_user:has(.is-invalid) > textarea,
 .container-input_froms_user:has(.is-invalid) > select,
 .container-input_froms_user:has(.is-invalid) > .user-password-input > input,
-.container-input_froms_user:has(.is-invalid) > .date-picker .date-picker__input {
+.container-input_froms_user:has(.is-invalid) > .date-picker .date-picker__input,
+.container-input_froms_user:has(.is-invalid) > .base-select .base-select__trigger {
   box-shadow: 0 4px 0 #DF4545 !important;
 }
 .container-input:has(> label, > .type-for-view, > .container-label):has(> input:disabled, > textarea:disabled, > select:disabled) > label,
@@ -2880,12 +2908,14 @@ Statistic styles
   .container-input:has(> label, > .type-for-view, > .container-label) > .file-chosen,
   .container-input:has(> label, > .type-for-view, > .container-label) > .user-password-input > input,
   .container-input:has(> label, > .type-for-view, > .container-label) > .date-picker .date-picker__input,
+  .container-input:has(> label, > .type-for-view, > .container-label) > .base-select .base-select__trigger,
   .container-input_froms_user > input,
   .container-input_froms_user > textarea,
   .container-input_froms_user > select,
   .container-input_froms_user > .file-chosen,
   .container-input_froms_user > .user-password-input > input,
-  .container-input_froms_user > .date-picker .date-picker__input {
+  .container-input_froms_user > .date-picker .date-picker__input,
+  .container-input_froms_user > .base-select .base-select__trigger {
     font-size: 16px !important;
   }
   .container-input:has(> label, > .type-for-view, > .container-label) > textarea,

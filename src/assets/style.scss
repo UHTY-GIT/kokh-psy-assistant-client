@@ -2845,7 +2845,8 @@ $field-chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg
   > select,
   > .file-chosen,
   > .user-password-input > input,
-  > .date-picker .date-picker__input {
+  > .date-picker .date-picker__input,
+  > .base-select .base-select__trigger {
     display: flex;
     align-items: center;
     box-sizing: border-box !important; // Materialize ставить content-box текстовим полям
@@ -2870,6 +2871,10 @@ $field-chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg
       color: #C8C8C8;
       font-weight: 500;
     }
+  }
+
+  > .base-select .base-select__trigger {
+    padding-right: 16px !important;
   }
 
   > textarea {
@@ -2924,8 +2929,10 @@ $field-chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg
     background-color: $field-sand;
   }
 
-  // фокус: корінець темнішає, під полем — золота смуга «зараз тут» (зовні, щоб не з'їдати місце в полі)
-  &:focus-within {
+  // фокус: корінець темнішає, під полем — золота смуга «зараз тут» (зовні, щоб не з'їдати місце в полі);
+  // відкритий випадний список (його шар живе окремо в body) теж тримає поле «у фокусі»
+  &:focus-within,
+  &:has(> .base-select.is-open) {
     > label,
     > .type-for-view,
     > .container-label > .type-for-view {
@@ -2936,7 +2943,8 @@ $field-chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg
     > textarea,
     > select,
     > .user-password-input > input,
-    > .date-picker .date-picker__input {
+    > .date-picker .date-picker__input,
+    > .base-select .base-select__trigger {
       outline: none;
       box-shadow: 0 4px 0 $button-color, 0 10px 18px rgba(56, 94, 108, .18) !important;
     }
@@ -2954,7 +2962,8 @@ $field-chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg
     > textarea,
     > select,
     > .user-password-input > input,
-    > .date-picker .date-picker__input {
+    > .date-picker .date-picker__input,
+    > .base-select .base-select__trigger {
       box-shadow: 0 4px 0 $tab-red !important;
     }
   }
@@ -2989,7 +2998,8 @@ $field-chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg
     > select,
     > .file-chosen,
     > .user-password-input > input,
-    > .date-picker .date-picker__input {
+    > .date-picker .date-picker__input,
+    > .base-select .base-select__trigger {
       font-size: 16px !important; // 16px — iOS не збільшує сторінку при фокусі
     }
 

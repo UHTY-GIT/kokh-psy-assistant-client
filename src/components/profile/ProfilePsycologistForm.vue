@@ -60,9 +60,9 @@
             <div class="type-for-view">
               <label for="timezone">Встановити тайм-зону</label>
             </div>
-            <select id="timezone" v-model="profile.timezone">
+            <BaseSelect id="timezone" v-model="profile.timezone">
               <option v-for="zone in timezones" :key="zone" :value="zone">{{ zone }}</option>
-            </select>
+            </BaseSelect>
           </div>
         </div>
 

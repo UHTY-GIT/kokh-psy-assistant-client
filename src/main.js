@@ -7,5 +7,7 @@ import router from './router'
 import store from './store'
 import messagePlugin from "@/utils/message.plugin";
 import 'materialize-css/dist/js/materialize.min'
+import BaseSelect from '@/components/ui/BaseSelect.vue'
 
-createApp(App).use(store).use(router).use(useVuelidate).use(required).use(email).use(messagePlugin).mount('#app')
+// випадний список у стилі CRM — доступні в усіх шаблонах як <BaseSelect>
+createApp(App).component('BaseSelect', BaseSelect).use(store).use(router).use(useVuelidate).use(required).use(email).use(messagePlugin).mount('#app')
