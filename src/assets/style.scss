@@ -71,15 +71,26 @@ body {
 
 //user login styles
 .background-login {
+  position: relative;
+  min-height: 100vh;
+  min-height: 100dvh;
+  overflow: hidden; // декоративні плями не дають горизонтальної прокрутки
   background-color: $base-color;
 }
 
 .empty-layout {
   display: grid;
-  width: 700px;
-  height: 100vh;
+  width: min(700px, calc(100% - 32px));
+  min-height: 100vh;
+  min-height: 100dvh;
   margin: 0 auto;
+  padding: 24px 0;
+  box-sizing: border-box;
   align-items: center;
+}
+
+.auth-card {
+  z-index: 1;
 }
 
 .card {
@@ -3771,6 +3782,47 @@ textarea::-webkit-scrollbar-thumb {
 
 textarea::-webkit-scrollbar-corner {
   background: transparent;
+}
+
+
+// ============================================================
+// Вхід: на планшетах і телефонах картка займає ширину екрана з відступами, плями зменшуються пропорційно
+// ============================================================
+@media (max-width: 760px) {
+  .elipse_login_1 {
+    left: 4vw;
+    top: 3vh;
+    width: min(340px, 64vw);
+    height: calc(min(340px, 64vw) * 397 / 340);
+  }
+
+  .elipse_login_2 {
+    right: 2vw;
+    top: auto;
+    bottom: 3vh;
+    width: min(355px, 66vw);
+    height: calc(min(355px, 66vw) * 354 / 355);
+  }
+
+  .auth-card .card-content {
+    padding: 22px 20px 0;
+  }
+
+  .auth-card .card-action {
+    padding: 0 20px 24px;
+  }
+
+  .auth-card .card-title {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 26px;
+  }
+
+  .butt_login button {
+    width: 100%;
+    padding: 12px 20px;
+    font-size: 20px;
+  }
 }
 
 // ============================================================
