@@ -10,9 +10,16 @@
         <Loader />
       </div>
       <form v-else @submit.prevent="openModal">
-        <div v-for="(subGroups, categoryTitle) in categorizedFields" :key="categoryTitle">
-          <div class="titte_field">
+        <!-- навігація розділами: липка панель з лічильником заповнених полів -->
+        <FormSectionsNav :sections="sectionNav" />
+
+        <div v-for="(subGroups, categoryTitle, sectionIndex) in categorizedFields" :key="categoryTitle" :id="`form-section-${sectionIndex}`" class="form-section">
+          <div class="titte_field form-section__head">
+            <span class="form-section__num">{{ String(sectionIndex + 1).padStart(2, '0') }}</span>
             <p>{{ categoryTitle }}</p>
+            <span v-if="sectionNav[sectionIndex]" class="form-section__progress" :class="{ 'is-done': sectionNav[sectionIndex].filled >= sectionNav[sectionIndex].total }">
+              {{ sectionNav[sectionIndex].filled }} / {{ sectionNav[sectionIndex].total }}
+            </span>
           </div>
 
           <div v-for="(fields, subCategoryTitle) in subGroups" :key="subCategoryTitle">
@@ -87,10 +94,11 @@ import { useRoute, useRouter } from "vue-router";
 import { computed, onMounted, ref } from "vue";
 import M from "materialize-css";
 import apiService from "@/services/apiService";
+import FormSectionsNav from "@/components/ui/FormSectionsNav.vue";
 
 export default {
   name: "EditCaseDescription",
-  components: { ModalEditCaseConfirm, Loader },
+  components: { FormSectionsNav, ModalEditCaseConfirm, Loader },
   setup() {
     const route = useRoute();
     const router = useRouter();
@@ -225,6 +233,13 @@ export default {
 
     onMounted(fetchCaseData);
 
+    // розділи для навігації: скільки полів заповнено в кожному
+    const isFilled = (value) => value !== null && value !== undefined && String(value).trim() !== '';
+    const sectionNav = computed(() => Object.entries(categorizedFields.value).map(([title, subGroups], index) => {
+      const sectionFields = Object.values(subGroups).flat();
+      return { id: `form-section-${index}`, title, total: sectionFields.length, filled: sectionFields.filter((f) => isFilled(f.text_answer)).length };
+    }));
+
     return {
       formData,
       clientId,
@@ -234,6 +249,7 @@ export default {
       openModal,
       submitEditedSession,
       categorizedFields,
+      sectionNav,
       loading,
       version
     };

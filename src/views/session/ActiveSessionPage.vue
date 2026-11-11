@@ -13,9 +13,16 @@
   </div>
   <div class="block_active_session">
     <form @submit.prevent="openModal">
-      <div v-for="(subGroups, category) in categorizedFields" :key="category">
-        <div class="titte_field">
+      <!-- навігація розділами: липка панель з лічильником заповнених полів -->
+      <FormSectionsNav :sections="sectionNav" />
+
+      <div v-for="(subGroups, category, sectionIndex) in categorizedFields" :key="category" :id="`form-section-${sectionIndex}`" class="form-section">
+        <div class="titte_field form-section__head">
+          <span class="form-section__num">{{ String(sectionIndex + 1).padStart(2, '0') }}</span>
           <p>{{ category }}</p>
+          <span v-if="sectionNav[sectionIndex]" class="form-section__progress" :class="{ 'is-done': sectionNav[sectionIndex].filled >= sectionNav[sectionIndex].total }">
+            {{ sectionNav[sectionIndex].filled }} / {{ sectionNav[sectionIndex].total }}
+          </span>
         </div>
         
         <div v-for="(fields, subCategory) in subGroups" :key="subCategory">
@@ -87,11 +94,12 @@
 import { ref, computed, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import apiService from "@/services/apiService";
+import FormSectionsNav from "@/components/ui/FormSectionsNav.vue";
 import ModalSessionSuccess from "@/components/modal/ModalSessionSuccess.vue";
 import M from "materialize-css";
 
 export default {
-  components: {
+  components: { FormSectionsNav,
     ModalSessionSuccess
   },
   setup() {
@@ -241,6 +249,13 @@ export default {
 
     onMounted(fetchFormData);
 
+    // розділи для навігації: скільки полів заповнено в кожному
+    const isFilled = (value) => value !== null && value !== undefined && String(value).trim() !== '';
+    const sectionNav = computed(() => Object.entries(categorizedFields.value).map(([title, subGroups], index) => {
+      const sectionFields = Object.values(subGroups).flat();
+      return { id: `form-section-${index}`, title, total: sectionFields.length, filled: sectionFields.filter((f) => isFilled(f.value)).length };
+    }));
+
     return {
       formData,
       clientId,
@@ -255,6 +270,7 @@ export default {
       openModal,
       submitForm,
       categorizedFields,
+      sectionNav,
       formattedDate,
       clientsOriginType
     };

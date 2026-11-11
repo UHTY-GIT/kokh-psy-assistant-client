@@ -3200,5 +3200,117 @@ Statistic styles
     font-size: 15px;
   }
 }
+.form-section {
+  position: relative;
+  margin: 0 0 28px;
+  padding: 22px 26px 28px;
+  border: 2px solid #EFE4D6;
+  border-radius: 22px;
+  background: #FFFDFA;
+  box-shadow: 0 4px 0 #EFE4D6;
+  scroll-margin-top: 84px;
+  animation: form-section-in 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.form-section .form-section__head {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 0 0 22px !important;
+  padding: 0 0 16px;
+  border-bottom: 2px dashed #EFE4D6;
+}
+.form-section .form-section__head p {
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+  color: #494B55;
+  font-family: "Nunito", sans-serif;
+  font-size: 22px;
+  font-weight: 800;
+  line-height: 1.25;
+}
+.form-section .sub-category-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 28px 0 16px;
+}
+.form-section .sub-category-title::before {
+  content: "";
+  flex: none;
+  width: 6px;
+  height: 22px;
+  border-radius: 3px;
+  background: #72A8BA;
+}
+.form-section .sub-category-title p {
+  margin: 0 !important;
+  padding: 0 !important;
+  color: rgb(56, 94, 108) !important;
+  font-family: "Nunito", sans-serif;
+  font-size: 17px !important;
+  font-weight: 800 !important;
+}
+.form-section .form-section__head + div > .sub-category-title {
+  margin-top: 0;
+}
+
+.form-section__num {
+  flex: none;
+  color: #DAB189;
+  font-family: "Anton", sans-serif;
+  font-size: 30px;
+  line-height: 1;
+  letter-spacing: 0.02em;
+}
+
+.form-section__progress {
+  flex: none;
+  padding: 7px 12px 6px;
+  border-radius: 10px;
+  background: #EFE4D6;
+  color: #7E8089;
+  font: 800 13px/1 "Nunito", sans-serif;
+  white-space: nowrap;
+  transition: background-color 0.3s, color 0.3s;
+}
+.form-section__progress.is-done {
+  background: #DAB189;
+  color: #fff;
+}
+
+@keyframes form-section-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@media (max-width: 760px) {
+  .form-section {
+    margin-bottom: 20px;
+    padding: 16px 14px 20px;
+    border-radius: 18px;
+  }
+  .form-section .form-section__head {
+    gap: 10px;
+    margin-bottom: 16px !important;
+    padding-bottom: 12px;
+  }
+  .form-section .form-section__head p {
+    font-size: 18px;
+  }
+  .form-section__num {
+    font-size: 24px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .form-section {
+    animation: none;
+  }
+}
 
 /*# sourceMappingURL=style.css.map */
