@@ -722,7 +722,7 @@ $smooth: cubic-bezier(.22, 1, .36, 1);
   color: #fff;
   font: 700 17px/1 "Nunito", sans-serif;
   text-decoration: none;
-  animation: island-sub-rise .5s $spring both;
+  animation: island-sub-rise .5s $spring backwards; // не both: інакше анімація перекриває підйом при наведенні
   animation-delay: calc(.08s + var(--i) * .07s);
   transition: transform .35s $spring, box-shadow .35s $smooth;
 
