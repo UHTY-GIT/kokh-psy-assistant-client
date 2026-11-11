@@ -2367,41 +2367,6 @@ button:focus {
   width: 22px;
 }
 
-.container-all-session-client {
-  display: flex;
-  flex-wrap: wrap;
-}
-.container-all-session-client .block_one_consultation {
-  background-color: rgb(73, 75, 85);
-  border-radius: 12px;
-  padding: 13px 17px;
-  min-width: 400px;
-  margin: 10px 10px 0 0;
-}
-.container-all-session-client .block_one_consultation .session-block-link {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-.container-all-session-client .block_one_consultation .session-block-link div {
-  display: flex;
-  align-items: center;
-}
-.container-all-session-client .block_one_consultation .session-block-link div p {
-  font-weight: 600;
-  font-size: 18px;
-  color: #FFFFFF;
-  margin: 0;
-}
-.container-all-session-client .block_one_consultation .session-block-link div p span:nth-child(2) {
-  padding: 0 0 0 10px;
-}
-.container-all-session-client .block_one_consultation .session-block-link div img {
-  width: 20px;
-  height: 20px;
-  margin: 0 0 0 10px;
-}
-
 /*
 Statistic styles
 */
@@ -3397,6 +3362,226 @@ Statistic styles
     animation: none;
   }
 }
+.client-sessions {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
+  gap: 14px;
+  margin: 0 30px 30px 0;
+}
+@media (max-width: 760px) {
+  .client-sessions {
+    margin-right: 16px;
+  }
+}
+
+.client-session {
+  --cs-ease: cubic-bezier(.22, 1, .36, 1);
+  --cs-time: .6s;
+  position: relative;
+  display: flex;
+  align-items: stretch;
+  min-width: 0;
+  min-height: 68px;
+  padding: 0;
+  border: none;
+  border-radius: 14px;
+  overflow: hidden;
+  background: #494B55;
+  color: #fff;
+  font-family: "Nunito", sans-serif;
+  text-align: left;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  box-shadow: 0 0 0 #DAB189, 0 6px 16px -16px rgba(56, 94, 108, 0);
+  animation: list-card-in 0.5s var(--cs-ease) backwards;
+  animation-delay: calc(var(--i, 0) * 45ms);
+  transition: transform var(--cs-time) var(--cs-ease), box-shadow var(--cs-time) var(--cs-ease);
+}
+.client-session::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(110deg, transparent 30%, rgba(255, 255, 255, 0.08) 48%, rgba(255, 255, 255, 0.02) 56%, transparent 70%);
+  opacity: 0;
+  transform: translateX(-100%);
+  transition: transform 0s linear 0.6s, opacity 0.4s ease;
+  pointer-events: none;
+}
+.client-session:focus {
+  background: #494B55;
+  outline: none;
+}
+.client-session:hover, .client-session:focus-visible {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 0 #DAB189, 0 16px 26px -16px rgba(56, 94, 108, 0.55);
+}
+.client-session:hover::after, .client-session:focus-visible::after {
+  opacity: 1;
+  transform: translateX(100%);
+  transition: transform 1.4s cubic-bezier(0.45, 0, 0.2, 1), opacity 0.3s ease;
+}
+.client-session:hover .client-session__n, .client-session:focus-visible .client-session__n {
+  transform: translateY(-2px) scale(1.06);
+}
+.client-session:hover .client-session__title,
+.client-session:hover .client-session__state, .client-session:focus-visible .client-session__title,
+.client-session:focus-visible .client-session__state {
+  transform: translateX(3px);
+}
+.client-session:hover .client-session__open, .client-session:focus-visible .client-session__open {
+  background: #DAB189;
+  color: #fff;
+  transform: scale(1.04);
+}
+.client-session:hover .client-session__open svg, .client-session:focus-visible .client-session__open svg {
+  animation: session-arrow-loop 0.9s cubic-bezier(0.65, 0, 0.35, 1);
+}
+.client-session:active {
+  transform: translateY(-1px) scale(0.99);
+  transition-duration: 0.2s;
+}
+
+.client-session--done:hover .client-session__num,
+.client-session--done:focus-visible .client-session__num {
+  background: rgb(56, 94, 108);
+}
+
+@keyframes session-arrow-loop {
+  0% {
+    opacity: 1;
+    transform: translate(0, 0);
+  }
+  42% {
+    opacity: 0;
+    transform: translate(9px, -9px);
+  }
+  43% {
+    opacity: 0;
+    transform: translate(-9px, 9px);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(0, 0);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .client-session,
+  .client-session::after,
+  .client-session__n,
+  .client-session__open svg {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+.client-session__num {
+  display: flex;
+  flex: none;
+  align-items: baseline;
+  justify-content: center;
+  gap: 2px;
+  width: 64px;
+  padding-top: 20px;
+  box-sizing: border-box;
+  background: #72A8BA;
+  color: #fff;
+  font: 400 24px/1 "Anton", sans-serif;
+  letter-spacing: 0.02em;
+  transition: background-color var(--cs-time) var(--cs-ease);
+}
+.client-session__num .client-session__n {
+  display: inline-block;
+  transition: transform var(--cs-time) var(--cs-ease);
+}
+.client-session__num small {
+  font: 800 13px/1 "Nunito", sans-serif;
+  opacity: 0.8;
+}
+
+.client-session--planned .client-session__num,
+.client-session--live .client-session__num {
+  background: #EFE4D6;
+  color: #494B55;
+}
+
+.client-session__body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: center;
+  gap: 4px;
+  min-width: 0;
+  padding: 10px 14px;
+}
+
+.client-session__title {
+  overflow: hidden;
+  transition: transform var(--cs-time) var(--cs-ease);
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1.25;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.client-session__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 10px;
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.client-session__state {
+  transition: transform var(--cs-time) 0.04s var(--cs-ease);
+  padding: 2px 8px;
+  border-radius: 7px;
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+  font-size: 12.5px;
+  font-weight: 800;
+}
+
+.client-session--done .client-session__state {
+  background: rgba(114, 168, 186, 0.35);
+}
+
+.client-session--live .client-session__state {
+  background: rgba(218, 177, 137, 0.45);
+}
+
+.client-session__open {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  align-self: center;
+  width: 40px;
+  height: 40px;
+  margin: 0 14px 0 4px;
+  overflow: hidden;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  transition: background-color 0.45s ease, color 0.45s ease, transform var(--cs-time) var(--cs-ease);
+}
+.client-session__open svg {
+  width: 19px;
+  height: 19px;
+}
+
+.client-session--planned .client-session__open,
+.client-session--live .client-session__open {
+  opacity: 0.55;
+}
+
+.client-sessions__empty {
+  margin: 0 0 30px;
+  color: #8A8C94;
+  font: 700 16px/1.4 "Nunito", sans-serif;
+}
+
 textarea::-webkit-scrollbar {
   width: 12px;
 }

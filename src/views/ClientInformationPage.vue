@@ -300,28 +300,28 @@
             Сесії клієнта
           </p>
         </div>
-        <div class="container-all-session-client">
-          <div
-              v-for="consultation in consultations" :key="consultation.id" class="block_one_consultation"
+        <div v-if="clientSessions.length" class="client-sessions">
+          <button
+              v-for="(consultation, index) in clientSessions"
+              :key="consultation.id"
+              type="button"
+              class="client-session"
+              :class="`client-session--${sessionState(consultation.status).key}`"
+              :style="{ '--i': Math.min(index, 12) }"
+              @click="handleSessionClick(consultation)"
           >
-            <div class="session-block-link" @click="handleSessionClick(consultation)"
-                         style="cursor: pointer;"
-                         v-if="consultation && consultation.id">
-              <div>
-                <p>
-                  <span>№{{ consultation.number }}</span>
-                  <span>{{ truncateText(consultation.title, 18) }}</span>
-                </p>
-              </div>
-              <div>
-                <p class="date-consultation-client">
-                  {{ formatDate(consultation.consultation_date) }}
-                </p>
-                <img src="@/assets/icons/share.svg" alt="View consultation client">
-              </div>
-            </div>
-          </div>
+            <span class="client-session__num"><small>№</small><span class="client-session__n">{{ consultation.number }}</span></span>
+            <span class="client-session__body">
+              <span class="client-session__title">{{ consultation.title || 'Сесія' }}</span>
+              <span class="client-session__meta">
+                {{ formatDate(consultation.consultation_date) }}
+                <span class="client-session__state">{{ sessionState(consultation.status).label }}</span>
+              </span>
+            </span>
+            <span class="client-session__open" aria-hidden="true"><IconArrowUpRight /></span>
+          </button>
         </div>
+        <p v-else class="client-sessions__empty">Сесій поки немає</p>
       </div>
     </div>
   </section>
@@ -626,6 +626,17 @@ export default {
     });
 
     // Додає крапки якшо багато символів у назві
+    // сесії клієнта для списку (без порожніх записів) і зрозумілий стан кожної
+    const clientSessions = computed(() => (Array.isArray(consultations.value) ? consultations.value : [])
+        .filter((consultation) => consultation && consultation.id));
+
+    const SESSION_STATES = {
+      done: { key: 'done', label: 'проведена' },
+      start_now: { key: 'live', label: 'триває' },
+      waiting_for_start: { key: 'planned', label: 'запланована' },
+    };
+    const sessionState = (status) => SESSION_STATES[status] || SESSION_STATES.waiting_for_start;
+
     const truncateText = (text, maxLength) => {
       if (!text) return '';
       return text.length > maxLength ? text.slice(0, maxLength) + '...' : text;
@@ -682,6 +693,8 @@ export default {
       showAppointPartnerModal,
       partnerName,
       truncateText,
+      clientSessions,
+      sessionState,
       isPrimaryPollOpen,
       isConsultationOpen,
       isEfctSkillsOpen,
