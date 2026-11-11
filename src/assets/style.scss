@@ -3031,3 +3031,146 @@ $field-chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg
     gap: 18px;
   }
 }
+
+
+// ============================================================
+// Планшети й телефони (до 1023px): компактна шапка, без сайдбару, навігація — «Острів» знизу.
+// Десктоп (від 1024px) лишається як був.
+// ============================================================
+$ease-smooth: cubic-bezier(.22, 1, .36, 1);
+
+.background-navbar,
+.navbar-title,
+.user-photo,
+.main-section {
+  transition: height .4s $ease-smooth, padding .4s $ease-smooth, margin .4s $ease-smooth,
+      font-size .4s $ease-smooth, width .4s $ease-smooth;
+}
+
+@media (max-width: 1023px) {
+  .background-navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    height: 120px;
+    padding: 0 44px;
+    box-sizing: border-box;
+  }
+
+  .navbar-title {
+    position: static;
+    width: auto;
+    white-space: nowrap;
+  }
+
+  .container-user-photo {
+    position: static;
+    flex: none;
+    width: auto;
+    height: auto;
+
+    a {
+      display: flex;
+      flex-direction: row-reverse;
+      align-items: center;
+      gap: 14px;
+      text-decoration: none;
+
+      &:hover .user-photo {
+        transform: scale(1.06);
+        box-shadow: 0 8px 18px rgba(56, 94, 108, .3);
+      }
+
+      &:active .user-photo {
+        transform: scale(.96);
+      }
+    }
+  }
+
+  .user-photo {
+    flex: none;
+    box-sizing: border-box;
+    width: 64px;
+    height: 64px;
+    border: 3px solid rgba(255, 255, 255, .85);
+    transition: width .4s $ease-smooth, height .4s $ease-smooth, transform .4s cubic-bezier(.34, 1.56, .64, 1), box-shadow .3s ease;
+
+    img {
+      border-radius: 50%;
+    }
+  }
+
+  .container-user-name {
+    max-width: 320px;
+    overflow: hidden;
+    color: #fff;
+    font-weight: 800;
+    text-shadow: 0 2px 0 rgba(0, 0, 0, .15), 0 2px 10px rgba(0, 0, 0, .25);
+    white-space: nowrap;
+    transition: opacity .3s ease, max-width .4s $ease-smooth;
+  }
+
+  // контент на всю ширину; знизу місце під «Острів»
+  .main-section {
+    display: block;
+    margin: 34px 0 0;
+    padding-bottom: 140px;
+  }
+
+  .site-content {
+    max-width: 1440px;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 760px) {
+  .background-navbar {
+    height: 92px;
+    padding: 0 24px;
+  }
+
+  .navbar-title {
+    font-size: 26px;
+  }
+
+  .user-photo {
+    width: 52px;
+    height: 52px;
+  }
+
+  .main-section {
+    margin-top: 24px;
+    padding-bottom: 120px;
+  }
+}
+
+@media (max-width: 560px) {
+  .background-navbar {
+    height: 72px;
+    padding: 0 16px;
+  }
+
+  .navbar-title {
+    font-size: 21px;
+    letter-spacing: 2px;
+  }
+
+  .user-photo {
+    width: 44px;
+    height: 44px;
+  }
+
+  // на телефоні ім'я ховається, лишається аватар
+  .container-user-name {
+    max-width: 0;
+    opacity: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .main-section {
+    margin-top: 16px;
+    padding-bottom: 100px;
+  }
+}

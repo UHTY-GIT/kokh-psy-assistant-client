@@ -3,7 +3,7 @@
   Перекидний годинник CRM: години й хвилини на блакитних плитках, день тижня на плитці хвилин.
   Плитка складається з чотирьох половинок: під клапанами вже нове значення,
   старий верх падає вниз на білій лінії, новий низ відкидається з легким відскоком.
-  Використання: <FlipClock timezone="Europe/Kyiv" />  (size: 'full' | 'mini' | 'column')
+  Використання: <FlipClock timezone="Europe/Kyiv" />  (size: 'full' | 'mini' | 'column' | 'island')
 -->
 <template>
   <time class="fclock" :class="`fclock--${size}`" :datetime="`${now.hours}:${now.minutes}`" :aria-label="label">
@@ -54,7 +54,7 @@ export default {
   name: 'FlipClock',
   props: {
     timezone: { type: String, default: 'Europe/Kyiv' },
-    size: { type: String, default: 'full', validator: (value) => ['full', 'mini', 'column'].includes(value) },
+    size: { type: String, default: 'full', validator: (value) => ['full', 'mini', 'column', 'island'].includes(value) },
   },
   setup(props) {
     const now = reactive(readTime(props.timezone));
@@ -170,15 +170,25 @@ export default {
 };
 </script>
 
+<style lang="scss">
+// Зареєстровані змінні можна анімувати: при зміні розміру екрана годинник плавно стискається
+@property --fclock-w { syntax: "<length>"; inherits: true; initial-value: 124px; }
+@property --fclock-h { syntax: "<length>"; inherits: true; initial-value: 156px; }
+@property --fclock-font { syntax: "<length>"; inherits: true; initial-value: 85px; }
+</style>
+
 <style scoped lang="scss">
 $blue: #72A8BA;
 
 .fclock {
-  --w: 124px;
-  --h: 156px;
+  --fclock-w: 124px;
+  --fclock-h: 156px;
+  --fclock-font: 85px;
+  --w: var(--fclock-w);
+  --h: var(--fclock-h);
+  --font: var(--fclock-font);
   --gap: 6px;
   --radius: 8px;
-  --font: 85px;
   --track: 6px;
   --weekday: 17px;
   --line: 5px;
@@ -187,6 +197,8 @@ $blue: #72A8BA;
   display: inline-flex;
   gap: var(--gap);
   vertical-align: top;
+  transition: --fclock-w .4s cubic-bezier(.22, 1, .36, 1), --fclock-h .4s cubic-bezier(.22, 1, .36, 1),
+      --fclock-font .4s cubic-bezier(.22, 1, .36, 1), gap .4s cubic-bezier(.22, 1, .36, 1);
 
   // одна біла лінія через обидві плитки, як і раніше; вона ж «петля», навколо якої падає клапан
   &::after {
@@ -204,20 +216,20 @@ $blue: #72A8BA;
 }
 
 .fclock--mini {
-  --w: 62px;
-  --h: 78px;
+  --fclock-w: 62px;
+  --fclock-h: 78px;
+  --fclock-font: 42px;
   --gap: 4px;
-  --font: 42px;
   --track: 3px;
   --weekday: 10px;
   --line: 2px;
 }
 
 .fclock--column {
-  --w: 60px;
-  --h: 58px;
+  --fclock-w: 60px;
+  --fclock-h: 58px;
+  --fclock-font: 34px;
   --gap: 4px;
-  --font: 34px;
   --track: 2px;
   --weekday: 9px;
   --line: 2px;
@@ -238,6 +250,39 @@ $blue: #72A8BA;
     height: var(--line);
     margin-top: calc(var(--line) / -2);
     background: #fff;
+  }
+}
+
+.fclock--island {
+  --fclock-w: 38px;
+  --fclock-h: 48px;
+  --fclock-font: 27px;
+  --gap: 3px;
+  --radius: 7px;
+  --track: 1.5px;
+  --weekday: 8px;
+  --line: 1px; // на малих плитках «Острова» тонша лінія
+
+  @media (max-width: 760px) {
+    --fclock-w: 32px;
+    --fclock-h: 42px;
+    --fclock-font: 23px;
+    --track: 1px;
+  }
+
+  @media (max-width: 480px) {
+    --fclock-w: 26px;
+    --fclock-h: 34px;
+    --fclock-font: 19px;
+    --gap: 2px;
+    --radius: 6px;
+  }
+
+  @media (max-width: 380px) {
+    --fclock-w: 23px;
+    --fclock-h: 30px;
+    --fclock-font: 17px;
+    --track: .5px;
   }
 }
 

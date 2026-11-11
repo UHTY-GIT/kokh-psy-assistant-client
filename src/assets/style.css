@@ -2929,4 +2929,118 @@ Statistic styles
   }
 }
 
+.background-navbar,
+.navbar-title,
+.user-photo,
+.main-section {
+  transition: height 0.4s cubic-bezier(0.22, 1, 0.36, 1), padding 0.4s cubic-bezier(0.22, 1, 0.36, 1), margin 0.4s cubic-bezier(0.22, 1, 0.36, 1), font-size 0.4s cubic-bezier(0.22, 1, 0.36, 1), width 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@media (max-width: 1023px) {
+  .background-navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    height: 120px;
+    padding: 0 44px;
+    box-sizing: border-box;
+  }
+  .navbar-title {
+    position: static;
+    width: auto;
+    white-space: nowrap;
+  }
+  .container-user-photo {
+    position: static;
+    flex: none;
+    width: auto;
+    height: auto;
+  }
+  .container-user-photo a {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    gap: 14px;
+    text-decoration: none;
+  }
+  .container-user-photo a:hover .user-photo {
+    transform: scale(1.06);
+    box-shadow: 0 8px 18px rgba(56, 94, 108, 0.3);
+  }
+  .container-user-photo a:active .user-photo {
+    transform: scale(0.96);
+  }
+  .user-photo {
+    flex: none;
+    box-sizing: border-box;
+    width: 64px;
+    height: 64px;
+    border: 3px solid rgba(255, 255, 255, 0.85);
+    transition: width 0.4s cubic-bezier(0.22, 1, 0.36, 1), height 0.4s cubic-bezier(0.22, 1, 0.36, 1), transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
+  }
+  .user-photo img {
+    border-radius: 50%;
+  }
+  .container-user-name {
+    max-width: 320px;
+    overflow: hidden;
+    color: #fff;
+    font-weight: 800;
+    text-shadow: 0 2px 0 rgba(0, 0, 0, 0.15), 0 2px 10px rgba(0, 0, 0, 0.25);
+    white-space: nowrap;
+    transition: opacity 0.3s ease, max-width 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .main-section {
+    display: block;
+    margin: 34px 0 0;
+    padding-bottom: 140px;
+  }
+  .site-content {
+    max-width: 1440px;
+    margin: 0 auto;
+  }
+}
+@media (max-width: 760px) {
+  .background-navbar {
+    height: 92px;
+    padding: 0 24px;
+  }
+  .navbar-title {
+    font-size: 26px;
+  }
+  .user-photo {
+    width: 52px;
+    height: 52px;
+  }
+  .main-section {
+    margin-top: 24px;
+    padding-bottom: 120px;
+  }
+}
+@media (max-width: 560px) {
+  .background-navbar {
+    height: 72px;
+    padding: 0 16px;
+  }
+  .navbar-title {
+    font-size: 21px;
+    letter-spacing: 2px;
+  }
+  .user-photo {
+    width: 44px;
+    height: 44px;
+  }
+  .container-user-name {
+    max-width: 0;
+    opacity: 0;
+  }
+}
+@media (max-width: 480px) {
+  .main-section {
+    margin-top: 16px;
+    padding-bottom: 100px;
+  }
+}
+
 /*# sourceMappingURL=style.css.map */

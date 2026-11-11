@@ -36,7 +36,7 @@
 </template>
 
 <script>
-import { ref, onMounted } from 'vue';
+import { ref, watch, onMounted } from 'vue';
 import apiService from '@/services/apiService';
 import ModalNotesAdd from "@/components/modal/ModalNotesAdd.vue";
 import ModalNotesDelete from "@/components/modal/ModalNotesDelete.vue";
@@ -47,8 +47,11 @@ export default {
     ModalNotesAdd,
     ModalNotesDelete
   },
-  setup() {
+  emits: ['count'],
+  setup(props, { emit }) {
     const notes = ref([]);
+    // кількість нотаток для лічильника на панелі навігації
+    watch(() => (Array.isArray(notes.value) ? notes.value.length : 0), (count) => emit('count', count), { immediate: true });
     const showModalNotes = ref(false);
     const showDeleteNotes = ref(false);
     const idNotes = ref(null);
