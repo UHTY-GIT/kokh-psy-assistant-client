@@ -2803,7 +2803,8 @@ $field-chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg
     align-self: flex-start;
     gap: 8px;
     width: auto !important;
-    max-width: 100%;
+    // не на всю ширину: інакше квадратний кут мітки впирається в заокруглений кут поля
+    max-width: calc(100% - 28px);
     margin: 0 !important;
     padding: 10px 18px 9px !important;
     border-radius: 12px 12px 0 0 !important;
@@ -2820,7 +2821,11 @@ $field-chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg
   > .container-label {
     display: flex;
     align-self: flex-start;
-    max-width: 100%;
+    max-width: calc(100% - 28px);
+
+    > .type-for-view {
+      max-width: 100%;
+    }
   }
 
   > .type-for-view label,

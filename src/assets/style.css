@@ -2671,7 +2671,7 @@ Statistic styles
   align-self: flex-start;
   gap: 8px;
   width: auto !important;
-  max-width: 100%;
+  max-width: calc(100% - 28px);
   margin: 0 !important;
   padding: 10px 18px 9px !important;
   border-radius: 12px 12px 0 0 !important;
@@ -2688,6 +2688,10 @@ Statistic styles
 .container-input_froms_user > .container-label {
   display: flex;
   align-self: flex-start;
+  max-width: calc(100% - 28px);
+}
+.container-input:has(> label, > .type-for-view, > .container-label) > .container-label > .type-for-view,
+.container-input_froms_user > .container-label > .type-for-view {
   max-width: 100%;
 }
 .container-input:has(> label, > .type-for-view, > .container-label) > .type-for-view label,
