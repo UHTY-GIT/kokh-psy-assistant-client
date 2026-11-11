@@ -238,7 +238,7 @@ export default {
 <style>
 .modal-window {
   position: fixed;
-  z-index: 3 !important;
+  z-index: 1500 !important; /* над «Островом» і попапами календаря */
   left: 0;
   top: 0;
   width: 100%;

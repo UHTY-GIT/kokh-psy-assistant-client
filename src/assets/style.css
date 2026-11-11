@@ -3810,4 +3810,8 @@ textarea::-webkit-scrollbar-corner {
   margin: 8px 0;
 }
 
+body .modal-window {
+  z-index: 1500 !important;
+}
+
 /*# sourceMappingURL=style.css.map */

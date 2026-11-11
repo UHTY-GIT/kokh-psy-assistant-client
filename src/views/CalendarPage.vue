@@ -19,6 +19,8 @@
       :allDay="showAllDay"
       @close="closeCreateModal"
   />
+  <!-- «+ще N» у місяці: свій попап із сесіями дня замість стандартного з FullCalendar -->
+  <CalendarDayPopover ref="dayPopover" @select="handleEventClick" />
   <ModalDeleteCalendar
       v-if="showDeleteModal"
       :showModal="showDeleteModal"
@@ -38,6 +40,7 @@ import interactionPlugin from '@fullcalendar/interaction';
 import ukLocale from '@fullcalendar/core/locales/uk';
 import ModalCalendar from "@/components/modal/ModalCalendar.vue";
 import ModalDeleteCalendar from "@/components/modal/ModalDeleteCalendar.vue";
+import CalendarDayPopover from "@/components/calendar/CalendarDayPopover.vue";
 import apiService from "@/services/apiService";
 import M from "materialize-css";
 import { useRouter } from "vue-router";
@@ -46,7 +49,8 @@ export default defineComponent({
   components: {
     FullCalendar,
     ModalCalendar,
-    ModalDeleteCalendar
+    ModalDeleteCalendar,
+    CalendarDayPopover
   },
   setup() {
     const showCreateModal = ref(false);
@@ -62,6 +66,18 @@ export default defineComponent({
 
     const calendarRef = ref(null);
     const calendarBox = ref(null);
+    const dayPopover = ref(null);
+
+    // «+ще N»: відкриваємо свій попап; повернене true не дає FullCalendar показати стандартний
+    function openDayPopover(info) {
+      if (dayPopover.value) dayPopover.value.show(info);
+      return true;
+    }
+
+    // перемкнули місяць чи вигляд — попап дня вже не про те, закриваємо
+    function closeDayPopover() {
+      if (dayPopover.value) dayPopover.value.close();
+    }
 
     // ---------- Адаптивність ----------
     // десктоп (від 1024px) — як і був; планшет — висота під екран; телефон (до 767px) — «3 дні» замість тижня
@@ -157,6 +173,8 @@ export default defineComponent({
       selectable: true,
       selectMirror: true,
       dayMaxEvents: true,
+      moreLinkClick: openDayPopover,
+      datesSet: closeDayPopover,
       weekends: true,
       events: events.value,
       select: handleDateSelect,
@@ -269,6 +287,7 @@ export default defineComponent({
     return {
       calendarRef,
       calendarBox,
+      dayPopover,
       showCreateModal,
       showDeleteModal,
       showStart,
@@ -279,7 +298,8 @@ export default defineComponent({
       calendarOptions,
       closeCreateModal,
       closeDeleteModal,
-      deleteSession
+      deleteSession,
+      handleEventClick
     };
   }
 });
