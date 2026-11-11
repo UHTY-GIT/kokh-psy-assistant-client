@@ -3915,4 +3915,142 @@ body .modal-window {
   transform: rotate(90deg);
 }
 
+.client-insights {
+  display: grid;
+  gap: 14px;
+  margin: 0 30px 34px 0;
+}
+@media (max-width: 760px) {
+  .client-insights {
+    margin-right: 16px;
+  }
+}
+
+.insight-quotes {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.insight-quote {
+  position: relative;
+  padding: 14px 16px 14px 48px;
+  border-radius: 14px;
+  background: #F7F0E7;
+  list-style: none;
+}
+
+.insight-quote__mark {
+  position: absolute;
+  top: 15px;
+  left: 18px;
+  width: 18px;
+  height: 18px;
+  color: #DAB189;
+}
+
+.insight-quote__text {
+  margin: 0;
+  color: #494B55;
+  font: 700 16px/1.5 "Nunito", sans-serif;
+  white-space: pre-line;
+  overflow-wrap: anywhere;
+}
+.insight-quote__text.is-clamped {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 5;
+}
+
+.insight-quote__more {
+  margin: 8px 0 0;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: rgb(56, 94, 108);
+  font: 800 14px/1.2 "Nunito", sans-serif;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+.insight-quote__more:focus {
+  background: transparent;
+}
+
+.insight-empty {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0;
+  padding: 14px 16px;
+  border: 2px dashed #E3D3BF;
+  border-radius: 14px;
+  color: #7E8089;
+  font: 700 15px/1.45 "Nunito", sans-serif;
+}
+
+.insight-empty__icon {
+  flex: none;
+  width: 24px;
+  height: 24px;
+  color: #BA9571;
+}
+
+.insight-loading {
+  display: grid;
+  gap: 10px;
+}
+.insight-loading span {
+  height: 18px;
+  border-radius: 9px;
+  background: linear-gradient(90deg, #F2E9DD 25%, #FBF6EF 50%, #F2E9DD 75%);
+  background-size: 200% 100%;
+  animation: insight-shimmer 1.2s ease-in-out infinite;
+}
+.insight-loading span:nth-child(2) {
+  width: 82%;
+}
+.insight-loading span:nth-child(3) {
+  width: 64%;
+}
+
+@keyframes insight-shimmer {
+  from {
+    background-position: 100% 0;
+  }
+  to {
+    background-position: -100% 0;
+  }
+}
+.efct-trend {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 9px;
+}
+.efct-trend svg {
+  width: 20px;
+  height: 20px;
+}
+
+.efct-trend--up {
+  background: #E3F4E1;
+  color: #3E9B46;
+}
+
+.efct-trend--down {
+  background: #FCE4E4;
+  color: #DF4545;
+}
+
+.efct-trend--middle {
+  background: #EFEFF1;
+  color: #7E8089;
+}
+
 /*# sourceMappingURL=style.css.map */

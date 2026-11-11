@@ -162,101 +162,103 @@
             </div>
           </div>
 
-          <!-- Причина звернення до психолога -->
-          <div v-if="client.origin_type !== 'individual_supervision'" class="statistic-dropdown-container">
-            <button class="dropdown-toggle" @click="toggleDropdown('primaryPoll')">
-              <span class="dropdown-text">Причина звернення до психолога</span>
-              <img
-                  src="@/assets/icons/plus.png"
-                  alt="Іконка"
-                  class="dropdown-icon"
-                  :class="{ rotated: isPrimaryPollOpen }"
-              />
-            </button>
+        </div>
 
-            <transition name="slide-fade">
-              <ul v-show="isPrimaryPollOpen" class="dropdown-menu-statistic">
-                <li v-if="!primaryPollData || primaryPollData.length === 0">Даних для відображення немає</li>
-                <li v-if="isPrimaryPollLoading">Завантаження...</li>
-                <li v-for="(item, index) in primaryPollData" :key="'primary-' + index">
-                  <img src="@/assets/icons/chat-bubble.png" alt="Icon" class="dropdown-item-icon" />
-                  <p>{{ item }}</p>
+        <!-- Зведення з анкет і сесій — окремим розділом, щоб не змішувалися з полями -->
+        <div class="titte_field">
+          <p>Аналітика клієнта</p>
+        </div>
+        <div class="client-insights">
+          <template v-if="client.origin_type !== 'individual_supervision'">
+            <InsightAccordion
+                title="Причина звернення до психолога"
+                hint="З первинного опитування"
+                icon="IconMessageQuestion"
+                :count="primaryPollData.length"
+            >
+              <ul v-if="primaryPollData.length" class="insight-quotes">
+                <li v-for="(item, index) in primaryPollData" :key="'primary-' + index" class="insight-quote">
+                  <IconQuote class="insight-quote__mark" />
+                  <p class="insight-quote__text" :class="{ 'is-clamped': isLongQuote(item) && !expandedQuotes['p' + index] }">{{ item }}</p>
+                  <button v-if="isLongQuote(item)" type="button" class="insight-quote__more" @click="toggleQuote('p' + index)">
+                    {{ expandedQuotes['p' + index] ? 'Згорнути' : 'Показати повністю' }}
+                  </button>
                 </li>
               </ul>
-            </transition>
-          </div>
-          <!-- Дубльований блок для Карта навичок (EFCT Growth Index), порожній -->
-          <div class="statistic-dropdown-container" v-if="client.origin_type == 'individual_supervision'">
-            <button class="dropdown-toggle" @click="toggleDropdown('EfctSkills')">
-              <span class="dropdown-text">Карта навичок (EFCT Growth Index)</span>
-              <img
-                  src="@/assets/icons/plus.png"
-                  alt="Іконка"
-                  class="dropdown-icon"
-                  :class="{ rotated: isEfctSkillsOpen }"
-              />
-            </button>
-            <transition name="slide-fade">
-              <div v-show="isEfctSkillsOpen" class="dropdown-menu-statistic" style="padding: 10px 0;">
-                  <div v-if="isEfctSkillsLoading" style="text-align: center; padding: 10px;">Завантаження...</div>
-                  <div v-else-if="!processedEfctTable || processedEfctTable.rows.length === 0" style="padding: 10px;">Даних немає</div>
-                  
-                  <div v-else class="table-responsive">
-                    <table class="efct-growth-index-table">
-                        <thead>
-                            <tr>
-                                <th>Навичка</th>
-                                <th class="left-dashed-border" v-for="(header, index) in processedEfctTable.headers" :key="index">
-                                    {{ header }}
-                                </th>
-                                <th class="left-dashed-border">Прогрес</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr v-for="(row, rIndex) in processedEfctTable.rows" :key="rIndex">
-                                <td>{{ row.title }}</td>
-                                <td class="left-dashed-border" v-for="(score, cIndex) in row.scores" :key="cIndex">
-                                    {{ score }}
-                                </td>
-                                <td class="left-dashed-border">
-                                    <img v-if="row.trend === 'up'" src="@/assets/icons/growth-index-up.svg" alt="Up">
-                                    <img v-else-if="row.trend === 'down'" src="@/assets/icons/growth-index-down.svg" alt="Down">
-                                    <img v-else src="@/assets/icons/growth-index-middle.svg" alt="Middle">
-                                </td>
-                            </tr>
+              <p v-else class="insight-empty">
+                <IconMessageQuestion class="insight-empty__icon" />
+                <span>{{ client.primary_poll_complete
+                  ? 'У відповідях первинного опитування причину звернення не вказано.'
+                  : 'Клієнт ще не пройшов первинне опитування — причина звернення з’явиться тут після нього.' }}</span>
+              </p>
+            </InsightAccordion>
 
-                        </tbody>
-                    </table>
-                  </div>
-              </div>
-            </transition>
-          </div>
-
-          <!-- Патерн самозахисту (не для супервізійної) -->
-          <template v-if="client.origin_type !== 'individual_supervision'">
-            <div class="statistic-dropdown-container">
-              <button class="dropdown-toggle" @click="toggleDropdown('consultation')">
-                <span class="dropdown-text">Патерн самозахисту</span>
-                <img
-                    src="@/assets/icons/plus.png"
-                    alt="Іконка"
-                    class="dropdown-icon"
-                    :class="{ rotated: isConsultationOpen }"
-                />
-              </button>
-
-              <transition name="slide-fade">
-                <ul v-show="isConsultationOpen" class="dropdown-menu-statistic">
-                  <li v-if="!consultationData || consultationData.length === 0">Даних для відображення немає</li>
-                  <li v-if="isConsultationLoading">Завантаження...</li>
-                  <li v-for="(item, index) in consultationData" :key="'consult-' + index">
-                    <img src="@/assets/icons/chat-bubble.png" alt="Icon" class="dropdown-item-icon" />
-                    <p>{{ item }}</p>
-                  </li>
-                </ul>
-              </transition>
-            </div>
+            <InsightAccordion
+                title="Патерн самозахисту"
+                hint="Із записів сесій"
+                icon="IconShield"
+                :count="consultationData.length"
+            >
+              <ul v-if="consultationData.length" class="insight-quotes">
+                <li v-for="(item, index) in consultationData" :key="'consult-' + index" class="insight-quote">
+                  <IconQuote class="insight-quote__mark" />
+                  <p class="insight-quote__text" :class="{ 'is-clamped': isLongQuote(item) && !expandedQuotes['c' + index] }">{{ item }}</p>
+                  <button v-if="isLongQuote(item)" type="button" class="insight-quote__more" @click="toggleQuote('c' + index)">
+                    {{ expandedQuotes['c' + index] ? 'Згорнути' : 'Показати повністю' }}
+                  </button>
+                </li>
+              </ul>
+              <p v-else class="insight-empty">
+                <IconShield class="insight-empty__icon" />
+                <span>Патерн самозахисту ще не зафіксовано в жодній сесії. Він з’явиться тут, щойно його запишуть у формі сесії.</span>
+              </p>
+            </InsightAccordion>
           </template>
+
+          <!-- Карта навичок (EFCT Growth Index) — лише для супервізантів; дані вантажимо при першому відкритті -->
+          <InsightAccordion
+              v-else
+              title="Карта навичок"
+              hint="EFCT Growth Index · оцінки по сесіях"
+              icon="IconTrendUp"
+              :count="efctCount"
+              :forms="['навичка', 'навички', 'навичок']"
+              @open="fetchEfctSkills"
+          >
+            <div v-if="isEfctSkillsLoading" class="insight-loading" aria-label="Завантаження">
+              <span></span><span></span><span></span>
+            </div>
+            <p v-else-if="!processedEfctTable || processedEfctTable.rows.length === 0" class="insight-empty">
+              <IconTrendUp class="insight-empty__icon" />
+              <span>Оцінок навичок ще немає. Вони з’являться після першої сесії з картою навичок.</span>
+            </p>
+            <div v-else class="table-responsive">
+              <table class="efct-growth-index-table">
+                <thead>
+                  <tr>
+                    <th>Навичка</th>
+                    <th class="left-dashed-border" v-for="(header, index) in processedEfctTable.headers" :key="index">
+                      {{ header }}
+                    </th>
+                    <th class="left-dashed-border">Прогрес</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="(row, rIndex) in processedEfctTable.rows" :key="rIndex">
+                    <td>{{ row.title }}</td>
+                    <td class="left-dashed-border" v-for="(score, cIndex) in row.scores" :key="cIndex">
+                      {{ score }}
+                    </td>
+                    <td class="left-dashed-border">
+                      <span class="efct-trend" :class="`efct-trend--${row.trend}`" :title="trendLabel(row.trend)">
+                        <component :is="row.trend === 'up' ? 'IconTrendUp' : row.trend === 'down' ? 'IconTrendDown' : 'IconTrendFlat'" />
+                      </span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </InsightAccordion>
         </div>
 
         <div class="titte_field">
@@ -305,13 +307,15 @@ import M from 'materialize-css';
 import ModalAppointPartner from "@/components/modal/ModalAppointPartner.vue";
 import { IconArrowUpRight, IconPlus, IconEye, IconUserPlus, IconPencil, IconGift } from "@/components/icons";
 import ActionMenu from "@/components/ui/ActionMenu.vue";
+import InsightAccordion from "@/components/ui/InsightAccordion.vue";
 
 export default {
   name: 'ClientInformation',
   components: {
     ModalAppointPartner,
     IconArrowUpRight,
-    ActionMenu
+    ActionMenu,
+    InsightAccordion
   },
   setup() {
     const route = useRoute();
@@ -324,10 +328,12 @@ export default {
 
     const primaryPollData = ref([]);
     const consultationData = ref([]);
-    const isPrimaryPollOpen = ref(false);
-    const isConsultationOpen = ref(false);
-    const isEfctSkillsOpen = ref(false);
-    const isCustomDropdown2Open = ref(false);
+    // довгі відповіді в зведеннях показуємо скорочено, з кнопкою «Показати повністю»
+    const expandedQuotes = ref({});
+    const isLongQuote = (text) => String(text || '').length > 280 || String(text || '').split('\n').length > 5;
+    const toggleQuote = (key) => {
+      expandedQuotes.value = { ...expandedQuotes.value, [key]: !expandedQuotes.value[key] };
+    };
 
     // EFCT Skills Table State
     const efctSkillsData = ref([]);
@@ -396,6 +402,12 @@ export default {
             rows
         };
     });
+
+    // скільки навичок у карті; до першого відкриття — невідомо (лічильник не показуємо)
+    const efctCount = computed(() => (hasFetchedEfctSkills.value
+        ? (processedEfctTable.value ? processedEfctTable.value.rows.length : 0)
+        : null));
+    const trendLabel = (trend) => ({ up: 'Зростає', down: 'Знижується' }[trend] || 'Без змін');
 
     const fetchEfctSkills = async () => {
         if (hasFetchedEfctSkills.value) return;
@@ -622,20 +634,6 @@ export default {
       return text.length > maxLength ? text.slice(0, maxLength) + '...' : text;
     };
 
-    const toggleDropdown = (type) => {
-      if (type === 'primaryPoll') {
-        isPrimaryPollOpen.value = !isPrimaryPollOpen.value;
-      } else if (type === 'consultation') {
-        isConsultationOpen.value = !isConsultationOpen.value;
-      } else if (type === 'EfctSkills') {
-        isEfctSkillsOpen.value = !isEfctSkillsOpen.value;
-        if (isEfctSkillsOpen.value) {
-            fetchEfctSkills();
-        }
-      } else if (type === 'customDropdown2') {
-        isCustomDropdown2Open.value = !isCustomDropdown2Open.value;
-      }
-    };
 
     const handleSessionClick = (consultation) => {
       if (consultation.status === 'done') {
@@ -663,7 +661,6 @@ export default {
       goToViewCaseDescription,
       goToEditCaseDescription,
       goToAddBonusForCouple,
-      toggleDropdown,
       clientMenu,
       consultations,
       formatDate,
@@ -674,15 +671,17 @@ export default {
       truncateText,
       clientSessions,
       sessionState,
-      isPrimaryPollOpen,
-      isConsultationOpen,
-      isEfctSkillsOpen,
-      isCustomDropdown2Open,
       fetchClientInfo,
       primaryPollData,
       consultationData,
       isEfctSkillsLoading,
       processedEfctTable,
+      efctCount,
+      trendLabel,
+      fetchEfctSkills,
+      expandedQuotes,
+      isLongQuote,
+      toggleQuote,
       handleSessionClick
     };
   }
