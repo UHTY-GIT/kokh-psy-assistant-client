@@ -3272,20 +3272,16 @@ $ease-smooth: cubic-bezier(.22, 1, .36, 1);
   transition: transform .3s cubic-bezier(.34, 1.56, .64, 1);
 }
 
-// у картці клієнта короткі значення — у дві колонки, як у профілі
+// у картці клієнта поля одне під одним, на всю ширину
 .container-info-output {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: minmax(0, 1fr);
   gap: 0 26px;
   align-items: start;
   margin-right: 30px; // справа той самий відступ, що й зліва
 
   @media (max-width: 760px) {
     margin-right: 16px;
-  }
-
-  @media (max-width: 1200px) {
-    grid-template-columns: minmax(0, 1fr);
   }
 }
 
