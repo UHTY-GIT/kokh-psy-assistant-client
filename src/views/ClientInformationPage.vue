@@ -173,7 +173,6 @@
             <InsightAccordion
                 title="Причина звернення до психолога"
                 hint="З первинного опитування"
-                icon="IconMessageQuestion"
                 :count="primaryPollData.length"
             >
               <ul v-if="primaryPollData.length" class="insight-quotes">
@@ -196,7 +195,6 @@
             <InsightAccordion
                 title="Патерн самозахисту"
                 hint="Із записів сесій"
-                icon="IconShield"
                 :count="consultationData.length"
             >
               <ul v-if="consultationData.length" class="insight-quotes">
@@ -220,7 +218,6 @@
               v-else
               title="Карта навичок"
               hint="EFCT Growth Index · оцінки по сесіях"
-              icon="IconTrendUp"
               :count="efctCount"
               :forms="['навичка', 'навички', 'навичок']"
               @open="fetchEfctSkills"

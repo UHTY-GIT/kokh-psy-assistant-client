@@ -2,7 +2,7 @@
 <!--
   Розгортний блок для зведень у картці клієнта: іконка теми, назва, звідки дані, лічильник записів.
   Лічильник видно й у згорнутому стані — одразу зрозуміло, чи є що відкривати.
-  <InsightAccordion title="Патерн самозахисту" icon="IconShield" hint="Із записів сесій" :count="3" @open="load">…</InsightAccordion>
+  <InsightAccordion title="Патерн самозахисту" hint="Із записів сесій" :count="3" @open="load">…</InsightAccordion>
 -->
 <template>
   <section class="insight" :class="{ 'is-open': open, 'is-empty': count === 0 }">
@@ -14,7 +14,6 @@
         :aria-controls="bodyId"
         @click="toggle"
     >
-      <span class="insight__icon"><component :is="icon" /></span>
       <span class="insight__titles">
         <span class="insight__title">{{ title }}</span>
         <span v-if="hint" class="insight__hint">{{ hint }}<span v-if="countText" class="insight__count-inline"> · {{ countText }}</span></span>
@@ -46,7 +45,6 @@ export default {
   props: {
     title: { type: String, required: true },
     hint: { type: String, default: '' },
-    icon: { type: [String, Object], required: true },
     // кількість записів; null — невідомо (ще не завантажено)
     count: { type: Number, default: null },
     // слова для лічильника: «1 запис», «2 записи», «5 записів»
@@ -109,7 +107,7 @@ $ease: cubic-bezier(.22, 1, .36, 1);
   gap: 14px;
   width: 100%;
   min-height: 72px;
-  padding: 12px 16px 12px 14px;
+  padding: 14px 16px 14px 20px;
   box-sizing: border-box;
   border: none;
   border-radius: 18px;
@@ -135,28 +133,7 @@ $ease: cubic-bezier(.22, 1, .36, 1);
   }
 }
 
-.insight__icon {
-  display: flex;
-  flex: none;
-  align-items: center;
-  justify-content: center;
-  width: 44px;
-  height: 44px;
-  border-radius: 13px;
-  background: $blue;
-  box-shadow: 0 3px 0 $teal;
-  color: #fff;
 
-  :deep(svg) {
-    width: 22px;
-    height: 22px;
-  }
-}
-
-.is-empty .insight__icon {
-  background: #B9C9CF;
-  box-shadow: 0 3px 0 #94A7AE;
-}
 
 .insight__titles {
   display: flex;
@@ -256,10 +233,6 @@ $ease: cubic-bezier(.22, 1, .36, 1);
     padding: 10px 12px;
   }
 
-  .insight__icon {
-    width: 40px;
-    height: 40px;
-  }
 
   .insight__title {
     font-size: 16px;
