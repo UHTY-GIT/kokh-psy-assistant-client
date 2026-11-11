@@ -30,13 +30,13 @@ export default {
   },
   computed: {
     fullUserPhotoUrl() {
-      // Якщо userPhoto не null і містить шлях, який не починається з 'http', додаємо baseImageUrl
-      return this.userPhoto && !this.userPhoto.startsWith('https') ? `${this.baseImageUrl}${this.userPhoto}` : this.userPhoto;
+      // Відносний шлях із сервера доповнюємо адресою; картинку за замовчуванням (наш файл) — ні
+      if (!this.userPhoto || this.userPhoto === defaultUserPhoto) return defaultUserPhoto;
+      return this.userPhoto.startsWith('https') ? this.userPhoto : `${this.baseImageUrl}${this.userPhoto}`;
     },
     fullBackgroundImageUrl() {
-      // Якщо backgroundImage містить шлях, який не починається з 'http', додаємо baseImageUrl
-      // В іншому випадку, повертаємо сам backgroundImage або defaultBackgroundImage, якщо перший null
-      return this.backgroundImage && !this.backgroundImage.startsWith('https') ? `${this.baseImageUrl}${this.backgroundImage}` : (this.backgroundImage || defaultBackgroundImage);
+      if (!this.backgroundImage || this.backgroundImage === defaultBackgroundImage) return defaultBackgroundImage;
+      return this.backgroundImage.startsWith('https') ? this.backgroundImage : `${this.baseImageUrl}${this.backgroundImage}`;
     }
   },
   async mounted() {
