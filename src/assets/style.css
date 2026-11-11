@@ -2758,11 +2758,13 @@ Statistic styles
 .container-input:has(> label, > .type-for-view, > .container-label) > select,
 .container-input:has(> label, > .type-for-view, > .container-label) > .file-chosen,
 .container-input:has(> label, > .type-for-view, > .container-label) > .user-password-input > input,
+.container-input:has(> label, > .type-for-view, > .container-label) > .date-picker .date-picker__input,
 .container-input_froms_user > input,
 .container-input_froms_user > textarea,
 .container-input_froms_user > select,
 .container-input_froms_user > .file-chosen,
-.container-input_froms_user > .user-password-input > input {
+.container-input_froms_user > .user-password-input > input,
+.container-input_froms_user > .date-picker .date-picker__input {
   display: flex;
   align-items: center;
   box-sizing: border-box !important;
@@ -2788,11 +2790,13 @@ Statistic styles
 .container-input:has(> label, > .type-for-view, > .container-label) > select::placeholder,
 .container-input:has(> label, > .type-for-view, > .container-label) > .file-chosen::placeholder,
 .container-input:has(> label, > .type-for-view, > .container-label) > .user-password-input > input::placeholder,
+.container-input:has(> label, > .type-for-view, > .container-label) > .date-picker .date-picker__input::placeholder,
 .container-input_froms_user > input::placeholder,
 .container-input_froms_user > textarea::placeholder,
 .container-input_froms_user > select::placeholder,
 .container-input_froms_user > .file-chosen::placeholder,
-.container-input_froms_user > .user-password-input > input::placeholder {
+.container-input_froms_user > .user-password-input > input::placeholder,
+.container-input_froms_user > .date-picker .date-picker__input::placeholder {
   color: #C8C8C8;
   font-weight: 500;
 }
@@ -2816,11 +2820,9 @@ Statistic styles
 .container-input_froms_user > .file-chosen {
   cursor: pointer;
 }
-.container-input:has(> label, > .type-for-view, > .container-label) > input[type=date],
-.container-input:has(> label, > .type-for-view, > .container-label) > input[type=time],
-.container-input_froms_user > input[type=date],
-.container-input_froms_user > input[type=time] {
-  color-scheme: dark;
+.container-input:has(> label, > .type-for-view, > .container-label) > .date-picker .date-picker__input,
+.container-input_froms_user > .date-picker .date-picker__input {
+  padding-right: 56px !important;
 }
 .container-input:has(> label, > .type-for-view, > .container-label) > .user-password-input,
 .container-input_froms_user > .user-password-input {
@@ -2861,12 +2863,14 @@ Statistic styles
 .container-input:has(> label, > .type-for-view, > .container-label):focus-within > textarea,
 .container-input:has(> label, > .type-for-view, > .container-label):focus-within > select,
 .container-input:has(> label, > .type-for-view, > .container-label):focus-within > .user-password-input > input,
+.container-input:has(> label, > .type-for-view, > .container-label):focus-within > .date-picker .date-picker__input,
 .container-input_froms_user:focus-within > input,
 .container-input_froms_user:focus-within > textarea,
 .container-input_froms_user:focus-within > select,
-.container-input_froms_user:focus-within > .user-password-input > input {
+.container-input_froms_user:focus-within > .user-password-input > input,
+.container-input_froms_user:focus-within > .date-picker .date-picker__input {
   outline: none;
-  box-shadow: inset 0 -4px 0 #DAB189, 0 8px 18px rgba(56, 94, 108, 0.18) !important;
+  box-shadow: 0 4px 0 #DAB189, 0 10px 18px rgba(56, 94, 108, 0.18) !important;
 }
 .container-input:has(> label, > .type-for-view, > .container-label):has(.is-invalid) > label,
 .container-input:has(> label, > .type-for-view, > .container-label):has(.is-invalid) > .type-for-view,
@@ -2880,11 +2884,13 @@ Statistic styles
 .container-input:has(> label, > .type-for-view, > .container-label):has(.is-invalid) > textarea,
 .container-input:has(> label, > .type-for-view, > .container-label):has(.is-invalid) > select,
 .container-input:has(> label, > .type-for-view, > .container-label):has(.is-invalid) > .user-password-input > input,
+.container-input:has(> label, > .type-for-view, > .container-label):has(.is-invalid) > .date-picker .date-picker__input,
 .container-input_froms_user:has(.is-invalid) > input,
 .container-input_froms_user:has(.is-invalid) > textarea,
 .container-input_froms_user:has(.is-invalid) > select,
-.container-input_froms_user:has(.is-invalid) > .user-password-input > input {
-  box-shadow: inset 0 -4px 0 #DF4545 !important;
+.container-input_froms_user:has(.is-invalid) > .user-password-input > input,
+.container-input_froms_user:has(.is-invalid) > .date-picker .date-picker__input {
+  box-shadow: 0 4px 0 #DF4545 !important;
 }
 .container-input:has(> label, > .type-for-view, > .container-label):has(> input:disabled, > textarea:disabled, > select:disabled) > label,
 .container-input:has(> label, > .type-for-view, > .container-label):has(> input:disabled, > textarea:disabled, > select:disabled) > .type-for-view,
@@ -2919,11 +2925,13 @@ Statistic styles
   .container-input:has(> label, > .type-for-view, > .container-label) > select,
   .container-input:has(> label, > .type-for-view, > .container-label) > .file-chosen,
   .container-input:has(> label, > .type-for-view, > .container-label) > .user-password-input > input,
+  .container-input:has(> label, > .type-for-view, > .container-label) > .date-picker .date-picker__input,
   .container-input_froms_user > input,
   .container-input_froms_user > textarea,
   .container-input_froms_user > select,
   .container-input_froms_user > .file-chosen,
-  .container-input_froms_user > .user-password-input > input {
+  .container-input_froms_user > .user-password-input > input,
+  .container-input_froms_user > .date-picker .date-picker__input {
     font-size: 16px !important;
   }
   .container-input:has(> label, > .type-for-view, > .container-label) > textarea,

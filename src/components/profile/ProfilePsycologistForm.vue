@@ -72,11 +72,13 @@
             <div class="type-for-view">
               <label for="birthdate">Дата народження</label>
             </div>
-            <input
+            <DatePicker
                 id="birthdate"
-                type="date"
                 v-model="profile.birthdate"
-            >
+                min="1900-01-01"
+                :max="todayIso"
+                :invalid="v$.profile.birthdate.$dirty && v$.profile.birthdate.required.$invalid"
+            />
           </div>
           <span class="validate-error" v-if="v$.profile.birthdate.$dirty && v$.profile.birthdate.required.$invalid">Це поле не може бути пустим</span>
         </div>
@@ -90,7 +92,7 @@
             <div class="checkbox-group">
               <label class="custom-checkbox">
                 <input type="checkbox" v-model="profile.workType" value="individual" />
-                <span class="checkmark" @click="toggleWorkType('individual')">
+                <span class="checkmark">
                   <svg class="svg-checkmark" xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 35 35" fill="none">
                     <path class="checkmark-path" d="M5.83301 18.9585L13.1247 26.2502L29.1663 10.2085" stroke="white" stroke-width="3" stroke-linecap="round" stroke-dasharray="32.99833297729492" stroke-dashoffset="32.99833297729492"/>
                   </svg>
@@ -101,7 +103,7 @@
               </label>
               <label class="custom-checkbox">
                 <input type="checkbox" v-model="profile.workType" value="couple"/>
-                <span class="checkmark" @click="toggleWorkType('couple')">
+                <span class="checkmark">
                   <svg class="svg-checkmark" xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 35 35" fill="none">
                     <path class="checkmark-path" d="M5.83301 18.9585L13.1247 26.2502L29.1663 10.2085" stroke="white" stroke-width="3" stroke-linecap="round" stroke-dasharray="32.99833297729492" stroke-dashoffset="32.99833297729492"/>
                   </svg>
@@ -112,7 +114,7 @@
               </label>
               <label class="custom-checkbox">
                 <input type="checkbox" v-model="profile.workType" value="family" />
-                <span class="checkmark" @click="toggleWorkType('family')">
+                <span class="checkmark">
                   <svg class="svg-checkmark" xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 35 35" fill="none">
                     <path class="checkmark-path" d="M5.83301 18.9585L13.1247 26.2502L29.1663 10.2085" stroke="white" stroke-width="3" stroke-linecap="round" stroke-dasharray="32.99833297729492" stroke-dashoffset="32.99833297729492"/>
                   </svg>
@@ -157,8 +159,12 @@ import { required } from '@vuelidate/validators';
 import { timezoneNames } from '@progress/kendo-date-math';
 import '@progress/kendo-date-math/tz/all';
 import apiService from "@/services/apiService";
+import DatePicker from "@/components/ui/DatePicker.vue";
 
 export default {
+  components: {
+    DatePicker
+  },
   setup() {
     const profile = ref({
       name: '',
@@ -171,6 +177,8 @@ export default {
       qualification: '',
     });
     const v$ = useVuelidate(); // Визначено тут для спрощення
+    const now = new Date();
+    const todayIso = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
     const fileInputAvatar = ref(null);
     const fileInputBackPhoto = ref(null);
     const timezones = ref([]);
@@ -237,18 +245,6 @@ export default {
       fileInputBackPhoto.value.click(); // Використовуємо реф для активації кліку на input
     }
 
-    // Функція для перемикання типу роботи
-    const toggleWorkType = (value) => {
-      const index = profile.value.workType.indexOf(value);
-      if (index === -1) {
-        // Якщо значення не знайдено у масиві, додаємо його
-        profile.value.workType.push(value);
-      } else {
-        // Якщо значення знайдено, видаляємо його
-        profile.value.workType.splice(index, 1);
-      }
-    };
-
     // Завантажуємо часові пояси і налаштовуємо метод натискання
     onMounted(async () => {
       timezones.value = timezoneNames()
@@ -277,7 +273,7 @@ export default {
       triggerFileInputAvatar,
       triggerFileInputBackPhoto,
       timezones,
-      toggleWorkType,
+      todayIso,
     };
   },
   validations() {
