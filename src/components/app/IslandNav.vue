@@ -239,7 +239,9 @@ export default {
 
     function onDocumentPointer(event) {
       if (!openPanel.value) return;
-      const inside = [island.value, notesPanel.value].some((el) => el && el.contains(event.target));
+      // вікна приміток (додати / видалити) живуть окремим шаром — клік у них не закриває панель
+      const inside = [island.value, notesPanel.value].some((el) => el && el.contains(event.target))
+          || (event.target instanceof Element && !!event.target.closest('.base-dialog'));
       // модалки нотаток рендеряться всередині панелі, тож клік у них теж «всередині»
       if (!inside) closePanels();
     }
@@ -781,16 +783,12 @@ $smooth: cubic-bezier(.22, 1, .36, 1);
   }
 
   :deep(.title-notification .menu-icon) {
-    width: 28px;
+    width: 30px;
+    height: 30px;
   }
 
-  :deep(.button-add-notf) {
-    margin: 0 16px 14px;
-  }
-
-  :deep(.block-notification) {
-    margin: 0 16px 12px;
-    animation: island-sub-in .4s $spring both;
+  :deep(.notes) {
+    --notes-pad: 16px;
   }
 }
 

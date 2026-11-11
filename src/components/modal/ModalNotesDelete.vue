@@ -1,28 +1,39 @@
 <!-- src/components/modal/ModalNotesDelete.vue -->
+<!-- Підтвердження видалення примітки: показуємо саму примітку, щоб було видно, що саме зникне -->
 <template>
-  <div :class="{ 'modal-window': true, 'is-active': showModal }" @click="closeModal">
-    <div class="modal-content" @click.stop>
-      <div class="modal-close-butt">
-        <img src="@/assets/icons/close-modal.svg" alt="close" @click="closeModal">
-      </div>
-      <div class="modal-content-all">
-        <p>Ви дійсно хочете видалити нотатку?</p>
-        <div>
-          <div class="modal-btn">
-            <button class="btn-send-templates btn-margin-modal" @click="closeModal">Ні</button>
-            <button class="btn-send-templates" @click="confirm">Так</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+  <BaseDialog
+      :show="showModal"
+      title="Видалити примітку?"
+      text="Її не можна буде відновити."
+      tone="danger"
+      @close="closeModal"
+  >
+    <template #icon><IconTrash /></template>
+
+    <blockquote v-if="noteText" class="note-quote">
+      <IconQuote class="note-quote__mark" />
+      <span>{{ noteText }}</span>
+    </blockquote>
+
+    <template #actions>
+      <button type="button" class="base-dialog__btn is-secondary" data-autofocus @click="closeModal">Залишити</button>
+      <button type="button" class="base-dialog__btn is-danger" @click="confirm">
+        <IconTrash /> Видалити
+      </button>
+    </template>
+  </BaseDialog>
 </template>
 
 <script>
+import BaseDialog from '@/components/ui/BaseDialog.vue';
+import { IconTrash, IconQuote } from '@/components/icons';
+
 export default {
+  components: { BaseDialog, IconTrash, IconQuote },
   props: {
     showModal: Boolean,
-    idNotes: String,
+    idNotes: [String, Number],
+    noteText: { type: String, default: '' },
   },
   emits: ['close', 'confirm'],
   setup(props, { emit }) {
@@ -43,56 +54,30 @@ export default {
 </script>
 
 <style scoped>
-.modal-window {
-  position: fixed;
-  z-index: 3;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  overflow: auto;
-  background-color: rgb(56 94 108 / 43%);
-  align-items: center;
-  justify-content: center;
-  display: none;
-}
-
-.modal-window.is-active {
-  display: flex;
-}
-
-.modal-content {
-  background-color: #FDF8F3;
-  margin: auto;
-  padding: 20px;
-  border-radius: 10px;
-  width: 600px;
-  color: #494B55;
-}
-.modal-content-all p {
-  font-family: "Nunito", sans-serif;
-  font-style: normal;
-  font-weight: 500;
-  font-size: 20px;
-  margin: 10px 0 20px;
-  text-align: center;
-}
-.modal-close-butt {
-  display: flex;
-  justify-content: flex-end;
-}
-.modal-close-butt img {
-  cursor: pointer;
-}
-.modal-window.is-active {
-  display: flex;
-}
-.chosen-templates .container-input select,
-.enter-name .container-input input {
-  width: 100%;
-  height: auto !important;
+/* примітка як цитата: лапка зверху зліва, без смужки збоку */
+.note-quote {
+  position: relative;
   margin: 0;
-  line-height: normal;
-  max-width: none;
+  padding: 16px 18px 16px 50px;
+  border: none;
+  border-radius: 14px;
+  background: #F7F0E7;
+  color: #494B55;
+  font: 700 15px/1.5 "Nunito", sans-serif;
+  text-align: left;
+  overflow-wrap: anywhere;
+
+  span {
+    white-space: pre-line; /* переноси рядків у примітці зберігаються */
+  }
+}
+
+.note-quote__mark {
+  position: absolute;
+  top: 14px;
+  left: 18px;
+  width: 19px;
+  height: 30px;
+  color: #DAB189;
 }
 </style>

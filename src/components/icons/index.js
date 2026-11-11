@@ -18,3 +18,6 @@ export { default as IconEye } from './IconEye.vue';
 export { default as IconUserPlus } from './IconUserPlus.vue';
 export { default as IconPencil } from './IconPencil.vue';
 export { default as IconGift } from './IconGift.vue';
+export { default as IconTrash } from './IconTrash.vue';
+export { default as IconStickyNote } from './IconStickyNote.vue';
+export { default as IconQuote } from './IconQuote.vue';
