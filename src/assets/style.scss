@@ -1513,7 +1513,7 @@ button:focus {
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    height: auto !important;
+    height: auto;
     margin: 0 0 0 15px !important;
     line-height: normal;
     max-width: stretch;
@@ -2781,6 +2781,9 @@ Statistic styles
 $tab-red: #DF4545;
 $tab-disabled: #B5B6BB;
 $field-sand: #EFE4D6;
+// тримач для розтягування textarea: дві риски, як «ручка» шторки
+$textarea-grip: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 6' preserveAspectRatio='none'%3E%3Crect x='0' y='0' width='40' height='2' rx='1' fill='%23C8C8C8' fill-opacity='.55'/%3E%3Crect x='8' y='4' width='24' height='2' rx='1' fill='%23C8C8C8' fill-opacity='.55'/%3E%3C/svg%3E");
+$textarea-grip-active: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 6' preserveAspectRatio='none'%3E%3Crect x='0' y='0' width='40' height='2' rx='1' fill='%23DAB189'/%3E%3Crect x='8' y='4' width='24' height='2' rx='1' fill='%23DAB189'/%3E%3C/svg%3E");
 $field-chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23DAB189' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
 
 // Поле з міткою: label, .type-for-view або .container-label прямо всередині контейнера.
@@ -2857,7 +2860,6 @@ $field-chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg
     box-sizing: border-box !important; // Materialize ставить content-box текстовим полям
     width: 100% !important;
     max-width: none !important;
-    height: auto !important;
     min-height: 54px;
     margin: 0 !important;
     padding: 14px 18px !important;
@@ -2878,13 +2880,41 @@ $field-chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg
     }
   }
 
+  > input,
+  > select,
+  > .file-chosen,
+  > .user-password-input > input,
+  > .date-picker .date-picker__input,
+  > .base-select .base-select__trigger {
+    height: auto !important;
+  }
+
   > .base-select .base-select__trigger {
     padding-right: 16px !important;
   }
 
+  // висоту textarea тягне користувач (див. utils/textareaResize.js), тож тут без !important
   > textarea {
+    height: auto;
     min-height: 110px;
-    resize: vertical;
+    resize: none; // замість системного кутика — свій тримач по центру знизу
+    padding-bottom: 26px !important;
+    background-image: $textarea-grip !important;
+    background-repeat: no-repeat !important;
+    background-position: center bottom 7px !important;
+    background-size: 40px 6px !important;
+    transition: box-shadow .2s, background-size .25s cubic-bezier(.34, 1.56, .64, 1);
+
+    &.is-grip-hover {
+      background-image: $textarea-grip-active !important;
+      background-size: 48px 6px !important;
+    }
+
+    &.is-resizing {
+      background-image: $textarea-grip-active !important;
+      background-size: 56px 6px !important;
+      transition: box-shadow .2s;
+    }
   }
 
   > select {

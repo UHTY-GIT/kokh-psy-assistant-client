@@ -1570,7 +1570,7 @@ button:focus {
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  height: auto !important;
+  height: auto;
   margin: 0 0 0 15px !important;
   line-height: normal;
   max-width: stretch;
@@ -2730,7 +2730,6 @@ Statistic styles
   box-sizing: border-box !important;
   width: 100% !important;
   max-width: none !important;
-  height: auto !important;
   min-height: 54px;
   margin: 0 !important;
   padding: 14px 18px !important;
@@ -2762,14 +2761,46 @@ Statistic styles
   color: #C8C8C8;
   font-weight: 500;
 }
+.container-input:has(> label, > .type-for-view, > .container-label) > input,
+.container-input:has(> label, > .type-for-view, > .container-label) > select,
+.container-input:has(> label, > .type-for-view, > .container-label) > .file-chosen,
+.container-input:has(> label, > .type-for-view, > .container-label) > .user-password-input > input,
+.container-input:has(> label, > .type-for-view, > .container-label) > .date-picker .date-picker__input,
+.container-input:has(> label, > .type-for-view, > .container-label) > .base-select .base-select__trigger,
+.container-input_froms_user > input,
+.container-input_froms_user > select,
+.container-input_froms_user > .file-chosen,
+.container-input_froms_user > .user-password-input > input,
+.container-input_froms_user > .date-picker .date-picker__input,
+.container-input_froms_user > .base-select .base-select__trigger {
+  height: auto !important;
+}
 .container-input:has(> label, > .type-for-view, > .container-label) > .base-select .base-select__trigger,
 .container-input_froms_user > .base-select .base-select__trigger {
   padding-right: 16px !important;
 }
 .container-input:has(> label, > .type-for-view, > .container-label) > textarea,
 .container-input_froms_user > textarea {
+  height: auto;
   min-height: 110px;
-  resize: vertical;
+  resize: none;
+  padding-bottom: 26px !important;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 6' preserveAspectRatio='none'%3E%3Crect x='0' y='0' width='40' height='2' rx='1' fill='%23C8C8C8' fill-opacity='.55'/%3E%3Crect x='8' y='4' width='24' height='2' rx='1' fill='%23C8C8C8' fill-opacity='.55'/%3E%3C/svg%3E") !important;
+  background-repeat: no-repeat !important;
+  background-position: center bottom 7px !important;
+  background-size: 40px 6px !important;
+  transition: box-shadow 0.2s, background-size 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.container-input:has(> label, > .type-for-view, > .container-label) > textarea.is-grip-hover,
+.container-input_froms_user > textarea.is-grip-hover {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 6' preserveAspectRatio='none'%3E%3Crect x='0' y='0' width='40' height='2' rx='1' fill='%23DAB189'/%3E%3Crect x='8' y='4' width='24' height='2' rx='1' fill='%23DAB189'/%3E%3C/svg%3E") !important;
+  background-size: 48px 6px !important;
+}
+.container-input:has(> label, > .type-for-view, > .container-label) > textarea.is-resizing,
+.container-input_froms_user > textarea.is-resizing {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 6' preserveAspectRatio='none'%3E%3Crect x='0' y='0' width='40' height='2' rx='1' fill='%23DAB189'/%3E%3Crect x='8' y='4' width='24' height='2' rx='1' fill='%23DAB189'/%3E%3C/svg%3E") !important;
+  background-size: 56px 6px !important;
+  transition: box-shadow 0.2s;
 }
 .container-input:has(> label, > .type-for-view, > .container-label) > select,
 .container-input_froms_user > select {
