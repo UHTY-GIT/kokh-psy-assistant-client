@@ -3814,4 +3814,105 @@ body .modal-window {
   z-index: 1500 !important;
 }
 
+.btn-icon {
+  display: block;
+  flex: none;
+  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.container-global-form-edit button .btn-icon {
+  width: 24px;
+  height: 24px;
+  margin-right: 8px;
+  color: #fff;
+}
+
+.container-global-form-edit button:hover .btn-icon {
+  transform: rotate(-8deg) scale(1.08);
+}
+
+.btn-refresh .btn-icon,
+.btn-statistic .btn-icon,
+.btn-archive .btn-icon,
+.btn-search .btn-icon,
+.btn-editing .btn-icon {
+  width: 22px;
+  height: 22px;
+  color: #fff;
+}
+
+.btn-refresh:hover .btn-icon {
+  transform: rotate(180deg);
+  transition-duration: 0.7s;
+}
+
+.btn-refresh:active .btn-icon {
+  transform: rotate(360deg);
+}
+
+.btn-search:hover .btn-icon,
+.btn-statistic:hover .btn-icon,
+.btn-archive:hover .btn-icon,
+.btn-editing:hover .btn-icon {
+  transform: scale(1.1);
+}
+
+.btn-action > svg {
+  display: block;
+  width: 20px;
+  height: 20px;
+  color: #fff;
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.2s;
+}
+.btn-action:hover:not(:disabled) > svg {
+  transform: scale(1.12);
+}
+.btn-action:disabled > svg {
+  opacity: 0.4;
+}
+
+.btn-action > .status-icon {
+  width: 22px;
+  height: 22px;
+}
+
+.status-icon--waiting_for_start {
+  color: #fff !important;
+}
+
+.status-icon--start_now {
+  color: #FFD36E !important;
+}
+
+.status-icon--done {
+  color: #9BEA8F !important;
+}
+
+.modal-close-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  padding: 0;
+  border: none;
+  border-radius: 12px;
+  background: transparent;
+  color: #494B55;
+  cursor: pointer;
+  transition: background-color 0.25s, transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.modal-close-icon svg {
+  width: 28px;
+  height: 28px;
+}
+.modal-close-icon:focus {
+  background: transparent;
+  outline: none;
+}
+.modal-close-icon:hover, .modal-close-icon:focus-visible {
+  background: #EFE4D6;
+  transform: rotate(90deg);
+}
+
 /*# sourceMappingURL=style.css.map */

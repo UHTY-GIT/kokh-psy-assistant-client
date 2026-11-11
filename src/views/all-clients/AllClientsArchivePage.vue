@@ -27,10 +27,10 @@
 <!--            <td>{{ client.primary_poll_complete ? 'так' : 'ні' }}</td>-->
             <td class="all-butt-management">
               <button class="btn-action" data-tooltip="Переглянути" @click="viewClientInfo(client.id)">
-                <img src="@/assets/icons/visible-client.svg" alt="Переглянути">
+                <IconEye />
               </button>
               <button class="btn-action" data-tooltip="Розархівувати" @click="RemoveFromTheArchive(client.id)">
-                <img src="@/assets/icons/archive-personal.png" alt="Розархівувати">
+                <IconArchiveOut />
               </button>
             </td>
 

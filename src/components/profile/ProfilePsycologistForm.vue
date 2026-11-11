@@ -144,7 +144,7 @@
         </div>
         <div class="container-global-form-edit">
           <button class="global-form-edit" type="submit">
-            <img src="@/assets/icons/edit-form.svg" alt="Edit Button">
+            <IconRefresh class="btn-icon" />
             <span class="edit-link">Оновити</span>
           </button>
         </div>

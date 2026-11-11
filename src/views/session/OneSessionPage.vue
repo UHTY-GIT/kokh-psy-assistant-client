@@ -12,7 +12,7 @@
         <template #actions>
           <div class="block-btn-view-session">
             <button class="btn-editing" title="Редагувати сесію" @click="openEditSession">
-              <img src="../../assets/icons/edit-form.svg" alt="Редагування полів форми">
+              <IconPencil class="btn-icon" />
             </button>
           </div>
         </template>

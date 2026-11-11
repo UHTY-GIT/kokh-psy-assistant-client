@@ -84,7 +84,7 @@
         </div>
         <div class="container-global-form-edit">
           <button class="password-form-edit" type="submit">
-            <img src="@/assets/icons/edit-form.svg" alt="Edit Button">
+            <IconKey class="btn-icon" />
             <span class="edit-link">Змінити пароль</span>
           </button>
         </div>

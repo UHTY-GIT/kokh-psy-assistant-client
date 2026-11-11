@@ -110,7 +110,7 @@
         </div>
         <div class="container-global-form-edit">
           <button class="global-form-edit" type="submit">
-            <img src="@/assets/icons/edit-form.svg" alt="Edit Button">
+            <IconCalendarCheck class="btn-icon" />
             <span class="edit-link">Вибрати</span>
           </button>
         </div>

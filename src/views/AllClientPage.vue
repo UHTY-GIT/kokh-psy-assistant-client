@@ -7,19 +7,19 @@
       </button>
       <div class="group-button-all-client">
         <button class="btn-refresh">
-          <img src="@/assets/icons/refresh.svg" alt="Оновити">
+          <IconRefresh class="btn-icon" />
         </button>
         <button class="btn-statistic" @click="OpenStatistic">
-          <img src="@/assets/icons/chart-histogram.png" alt="Статистика">
+          <IconChartBar class="btn-icon" />
         </button>
         <button class="btn-archive" @click="OpenArchive">
-          <img src="@/assets/icons/archive-view.png" alt="Архів клієнтів">
+          <IconArchive class="btn-icon" />
         </button>
       </div>
     </div>
     <div class="search">
       <button class="btn-search" @click="handleSearch">
-        <img src="@/assets/icons/search-icon.svg" alt="Пошук">
+        <IconSearch class="btn-icon" />
       </button>
       <input type="text" class="search-input" placeholder="Пошук" v-model="searchQuery" @keyup.enter="handleSearch">
     </div>
@@ -47,16 +47,16 @@
           <td data-label="Первинне опитування">{{ client.primary_poll_complete ? 'так' : 'ні' }}</td>
           <td class="all-butt-management">
             <button class="btn-action" data-tooltip="Надіслати повідомлення" @click="openModal(client.id, client.telegram_id, client.was_agreed, client.primary_poll_complete)">
-              <img src="@/assets/icons/send-template-white.svg" alt="Надіслати повідомлення">
+              <IconSend />
             </button>
             <button class="btn-action" data-tooltip="Переглянути" @click="viewClientInfo(client.id)">
-              <img src="@/assets/icons/visible-client.svg" alt="Переглянути">
+              <IconEye />
             </button>
             <button class="btn-action" data-tooltip="Редагувати">
-              <img src="@/assets/icons/edit-client.svg" alt="Редагувати">
+              <IconPencil />
             </button>
             <button class="btn-action" data-tooltip="Архівувати" @click="AddToArchive(client)">
-              <img src="@/assets/icons/archive-personal.png" alt="Архівувати">
+              <IconArchiveIn />
             </button>
           </td>
 

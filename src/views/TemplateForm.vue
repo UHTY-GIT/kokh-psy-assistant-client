@@ -38,7 +38,7 @@
       <!--      <button type="submit" class="btn-submit">Задати назву</button>-->
       <div class="container-global-form-edit">
         <button class="global-form-edit" type="submit">
-          <img src="@/assets/icons/edit-form.svg" alt="Send name form">
+          <IconPencil class="btn-icon" />
           <span class="edit-link">Задати назву</span>
         </button>
       </div>
@@ -87,7 +87,7 @@
 
           <div class="container-global-form-edit">
             <button class="global-form-edit" type="button" @click="removeFormItem(index)">
-              <img src="@/assets/icons/form-minus-white.svg" alt="delete name form">
+              <IconTrash class="btn-icon" />
               <span class="edit-link">Видалити поле</span>
             </button>
           </div>
@@ -97,14 +97,14 @@
         <!-- Кнопка для додавання нового елементу форми -->
         <div class="container-global-form-edit">
           <button class="global-form-edit" type="button" @click="addFormItem">
-            <img src="@/assets/icons/more.svg" alt="Add name form">
+            <IconPlus class="btn-icon" />
             <span class="edit-link">Додати поле</span>
           </button>
         </div>
         <!-- Кнопка для фінального створення шаблону форми -->
         <div class="container-global-form-edit create-template">
           <button class="global-form-edit" type="button" @click="submitFormItems">
-            <img src="@/assets/icons/form-check-white.svg" alt="Check name form">
+            <IconCheck class="btn-icon" />
             <span class="edit-link">Створити шаблон</span>
           </button>
         </div>

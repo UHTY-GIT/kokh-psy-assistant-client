@@ -3,7 +3,7 @@
   <div :class="{ 'modal-window': true, 'is-active': showModal }" @click="closeModal">
     <div class="modal-content" @click.stop>
       <div class="modal-close-butt">
-        <img src="@/assets/icons/close-modal.svg" alt="close" @click="closeModal">
+        <button type="button" class="modal-close-icon" aria-label="Закрити" @click="closeModal"><IconCloseCircle /></button>
       </div>
       <div class="modal-content-all">
         <p>Заповніть поля форми щоб створити консультацію</p>

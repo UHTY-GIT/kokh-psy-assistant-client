@@ -38,17 +38,17 @@
           </td>
           <td class="all-butt-management">
             <button class="btn-action" :data-tooltip="getStatusTooltip(consultation.status)">
-              <img :src="getStatusIcon(consultation.status)" alt="Статус">
+              <component :is="getStatusIcon(consultation.status)" class="status-icon" :class="`status-icon--${consultation.status || 'waiting_for_start'}`" />
             </button>
             <button class="btn-action" data-tooltip="Переглянути дані сесії" @click="openViewSession(consultation.id, consultation.status)">
-              <img src="@/assets/icons/visible-client.svg" alt="Переглянути">
+              <IconEye />
             </button>
             <button
                 class="btn-action"
                 data-tooltip="Видалити сесію"
                 @click="openDeleteSessionModal(consultation)"
             >
-              <img src="@/assets/icons/trash-client.svg" alt="Видалити сесію">
+              <IconTrash />
             </button>
             <button
                 class="btn-action"
@@ -56,7 +56,7 @@
                 @click="openModal(consultation)"
                 :disabled="consultation.status === 'done'"
             >
-              <img src="@/assets/icons/share.svg" alt="Почати сесію">
+              <IconPlay />
             </button>
           </td>
         </tr>
@@ -242,16 +242,15 @@ export default {
     };
 
     // Функція для зміни іконки в залежності від статусу сесії
+    // статус сесії — SVG-іконка: очікує початку (пунктир із годинником), розпочата (половина кола), завершена (галочка)
     const getStatusIcon = (status) => {
       switch (status) {
         case "done":
-          return require('@/assets/icons/status-green.svg');
-        case "waiting_for_start":
-          return require('@/assets/icons/status.svg');
+          return 'IconStatusDone';
         case "start_now":
-          return require('@/assets/icons/status-yellow.svg');
+          return 'IconStatusLive';
         default:
-          return require('@/assets/icons/status.svg'); // Стандартна іконка за замовчуванням
+          return 'IconStatusPlanned';
       }
     };
 

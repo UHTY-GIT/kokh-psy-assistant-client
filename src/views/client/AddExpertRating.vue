@@ -27,7 +27,7 @@
           </div>
           <div class="container-global-form-edit active_session_button cycle_button_submit">
             <button class="global-form-edit" type="submit">
-              <img src="../../assets/icons/share.svg" alt="Send name form">
+              <IconSend class="btn-icon" />
               <span class="edit-link">
                 {{ client.origin_type === 'individual_supervision' ? 'Надіслати feedback' : 'Надіслати оцінку' }}
               </span>

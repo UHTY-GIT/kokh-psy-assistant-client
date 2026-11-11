@@ -6,7 +6,7 @@
         Додати шаблон
       </button>
       <button class="btn-refresh" @click="fetchAllForms">
-        <img src="@/assets/icons/refresh.svg" alt="Оновити">
+        <IconRefresh class="btn-icon" />
       </button>
     </div>
 
@@ -34,13 +34,13 @@
               <td data-label="Назва шаблону">{{ form.title }}</td>
               <td class="all-butt-management">
                 <button class="btn-action" data-tooltip="Переглянути шаблон" @click="viewTemplate(form.id)">
-                  <img src="@/assets/icons/visible-client.svg" alt="Переглянути">
+                  <IconEye />
                 </button>
                 <button class="btn-action" data-tooltip="Редагувати">
-                  <img src="@/assets/icons/edit-client.svg" alt="Редагувати">
+                  <IconPencil />
                 </button>
                 <button class="btn-action" data-tooltip="Видалити">
-                  <img src="@/assets/icons/trash-client.svg" alt="Видалити">
+                  <IconTrash />
                 </button>
               </td>
             </tr>

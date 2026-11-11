@@ -3,7 +3,7 @@
   <div :class="{ 'modal-window': true, 'is-active': showModal }" @click="$emit('close')">
     <div class="modal-content modal-appoint-partner" @click.stop>
       <div class="modal-close-butt">
-        <img src="@/assets/icons/close-modal.svg" alt="close" @click="$emit('close')" />
+        <button type="button" class="modal-close-icon" aria-label="Закрити" @click="$emit('close')"><IconCloseCircle /></button>
       </div>
       <div class="modal-content-all">
         <p>Оберіть партнера</p>
@@ -22,7 +22,7 @@
             </div>
             <div class="container-global-form-edit submit-coupe-partner">
               <button class="global-form-edit" type="submit">
-                <img src="../../assets/icons/form-check-white.svg" alt="Check name form">
+                <IconUserPlus class="btn-icon" />
                 <span class="edit-link">Назначити парнером</span>
               </button>
             </div>

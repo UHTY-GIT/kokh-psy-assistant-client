@@ -26,7 +26,7 @@
         </div>
         <div class="container-global-form-edit submit-coupe-partner">
           <button class="global-form-edit" type="submit">
-            <img src="../../assets/icons/form-check-white.svg" alt="Check name form">
+            <IconUserPlus class="btn-icon" />
             <span class="edit-link">Назначити парнером</span>
           </button>
         </div>
@@ -65,7 +65,7 @@
         </div>
         <div class="container-global-form-edit active_session_button cycle_button_submit">
           <button class="global-form-edit" type="submit">
-            <img src="../../assets/icons/share.svg" alt="Send name form">
+            <IconSend class="btn-icon" />
             <span class="edit-link">Надіслати цикл пари</span>
           </button>
         </div>

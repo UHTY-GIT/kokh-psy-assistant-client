@@ -76,7 +76,7 @@
         </div>
         <div class="container-global-form-edit active_session_button">
           <button class="global-form-edit" type="submit">
-            <img src="../../assets/icons/share.svg" alt="Send name form">
+            <IconPencil class="btn-icon" />
             <span class="edit-link">Редагувати сесію</span>
           </button>
         </div>
