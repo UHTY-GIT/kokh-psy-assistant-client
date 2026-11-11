@@ -25,8 +25,8 @@
         <tbody>
         <!-- Приклад рядка таблиці -->
         <tr>
-          <td>Супервізія</td>
-          <td>18.02.2024</td>
+          <td data-label="Тип підтримки">Супервізія</td>
+          <td data-label="Дата проведення">18.02.2024</td>
           <td class="all-butt-management">
             <button class="btn-action">
               <img src="@/assets/icons/visible-client.svg" alt="Переглянути">
@@ -40,8 +40,8 @@
           </td>
         </tr>
         <tr>
-          <td>Інтервізія</td>
-          <td>01.03.2024</td>
+          <td data-label="Тип підтримки">Інтервізія</td>
+          <td data-label="Дата проведення">01.03.2024</td>
           <td class="all-butt-management">
             <button class="btn-action">
               <img src="@/assets/icons/visible-client.svg" alt="Переглянути">

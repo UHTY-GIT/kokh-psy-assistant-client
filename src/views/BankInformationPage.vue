@@ -31,7 +31,7 @@
             </thead>
             <tbody>
             <tr v-for="form in paginatedForms" :key="form.id">
-              <td>{{ form.title }}</td>
+              <td data-label="Назва шаблону">{{ form.title }}</td>
               <td class="all-butt-management">
                 <button class="btn-action" data-tooltip="Переглянути шаблон" @click="viewTemplate(form.id)">
                   <img src="@/assets/icons/visible-client.svg" alt="Переглянути">

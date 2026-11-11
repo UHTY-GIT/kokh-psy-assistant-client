@@ -39,9 +39,9 @@
         </thead>
         <tbody>
         <tr v-for="client in clients" :key="client.telegram_id">
-          <td>{{ client.name }}</td>
-          <td>{{ client.phone }}</td>
-          <td>{{ client.case_description_can_be_shown ? 'так' : 'ні' }}</td>
+          <td data-label="Ім'я">{{ client.name }}</td>
+          <td data-label="Номер телефону">{{ client.phone }}</td>
+          <td data-label="Опис кейсу">{{ client.case_description_can_be_shown ? 'так' : 'ні' }}</td>
           <td class="all-butt-management">
             <button class="btn-action" data-tooltip="Надіслати повідомлення" @click="openModal(client.id, client.telegram_id, client.case_description_can_be_shown, client.origin_type)">
               <img src="../../assets/icons/send-template-white.svg" alt="Надіслати повідомлення">

@@ -26,8 +26,8 @@
           <tbody>
           <tr v-for="client in paginatedClients" :key="client.telegram_id">
             <!--          Якщо змінити ключ на client.id тоді зміниться порядок клієнтів-->
-            <td>{{ client.first_name }}</td>
-            <td>{{ client.phone }}</td>
+            <td data-label="Ім'я">{{ client.first_name }}</td>
+            <td data-label="Номер телефону">{{ client.phone }}</td>
 <!--            <td>{{ client.was_agreed ? 'так' : 'ні' }}</td>-->
 <!--            <td>{{ client.primary_poll_complete ? 'так' : 'ні' }}</td>-->
             <td class="all-butt-management">

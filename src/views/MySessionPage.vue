@@ -22,10 +22,10 @@
         </thead>
         <tbody>
         <tr v-for="consultation in paginatedConsultations" :key="consultation.id">
-          <td>{{ consultation.number }}</td>
-          <td>{{ formatTime(consultation.consultation_date) }}</td>
-          <td>{{ formatDate(consultation.consultation_date) }}</td>
-          <td @click="viewClientInfo(consultation.client.id)" class="client-name-link">
+          <td data-label="Номер сесії">{{ consultation.number }}</td>
+          <td data-label="Час початку">{{ formatTime(consultation.consultation_date) }}</td>
+          <td data-label="Дата сесії">{{ formatDate(consultation.consultation_date) }}</td>
+          <td data-label="Клієнт" @click="viewClientInfo(consultation.client.id)" class="client-name-link">
             {{ consultation.client.first_name }}
             <span
                 v-if="getSessionRole(consultation)"

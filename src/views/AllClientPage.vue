@@ -41,10 +41,10 @@
         <tbody>
         <tr v-for="client in clients" :key="client.telegram_id">
 <!--          Якщо змінити ключ на client.id тоді зміниться порядок клієнтів-->
-          <td>{{ client.name }}</td>
-          <td>{{ client.phone }}</td>
-          <td>{{ client.was_agreed ? 'так' : 'ні' }}</td>
-          <td>{{ client.primary_poll_complete ? 'так' : 'ні' }}</td>
+          <td data-label="Ім'я">{{ client.name }}</td>
+          <td data-label="Номер телефону">{{ client.phone }}</td>
+          <td data-label="Інформована згода">{{ client.was_agreed ? 'так' : 'ні' }}</td>
+          <td data-label="Первинне опитування">{{ client.primary_poll_complete ? 'так' : 'ні' }}</td>
           <td class="all-butt-management">
             <button class="btn-action" data-tooltip="Надіслати повідомлення" @click="openModal(client.id, client.telegram_id, client.was_agreed, client.primary_poll_complete)">
               <img src="@/assets/icons/send-template-white.svg" alt="Надіслати повідомлення">
