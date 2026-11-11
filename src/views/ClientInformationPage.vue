@@ -89,13 +89,10 @@
                   <p>Інформована згода</p>
                 </div>
                 <div class="type-of-answers">
-                  <p v-if="client.was_agreed" class="link-in-page">
-                    <router-link :to="{ name: 'ViewInformationConsent', params: { id: clientId } }">
-                      Прийняв
-                      <img src="@/assets/icons/share.svg" alt="icon">
-                    </router-link>
-                  </p>
-                  <p v-else>Не прийняв</p>
+                  <p>{{ client.was_agreed ? 'Прийняв' : 'Не прийняв' }}</p>
+                  <router-link v-if="client.was_agreed" class="view-field-link" :to="{ name: 'ViewInformationConsent', params: { id: clientId } }">
+                    Відкрити <IconArrowUpRight class="view-field-link__icon" />
+                  </router-link>
                 </div>
               </div>
             </div>
@@ -105,13 +102,10 @@
                   <p>Первинне опитування</p>
                 </div>
                 <div class="type-of-answers">
-                  <p v-if="client.primary_poll_complete" class="link-in-page">
-                    <router-link :to="{ name: 'ViewPrimaryPoll', params: { id: clientId } }">
-                      Пройшов
-                      <img src="@/assets/icons/share.svg" alt="icon">
-                    </router-link>
-                  </p>
-                  <p v-else>Не пройшов</p>
+                  <p>{{ client.primary_poll_complete ? 'Пройшов' : 'Не пройшов' }}</p>
+                  <router-link v-if="client.primary_poll_complete" class="view-field-link" :to="{ name: 'ViewPrimaryPoll', params: { id: clientId } }">
+                    Відкрити <IconArrowUpRight class="view-field-link__icon" />
+                  </router-link>
                 </div>
               </div>
             </div>
@@ -175,12 +169,10 @@
                   <p>Партнер</p>
                 </div>
                 <div class="type-of-answers">
-                  <p v-if="partnerName" class="link-in-page">
-                    <router-link :to="{ name: 'ClientInformation', params: { id: client.partner_id } }">
-                      {{ partnerName }}
-                      <img src="@/assets/icons/share.svg" alt="icon">
-                    </router-link>
-                  </p>
+                  <p v-if="partnerName">{{ partnerName }}</p>
+                  <router-link v-if="partnerName" class="view-field-link" :to="{ name: 'ClientInformation', params: { id: client.partner_id } }">
+                    Відкрити <IconArrowUpRight class="view-field-link__icon" />
+                  </router-link>
                 </div>
               </div>
             </div>
@@ -347,11 +339,13 @@ import { useRoute, useRouter } from 'vue-router';
 import apiService from '@/services/apiService';
 import M from 'materialize-css';
 import ModalAppointPartner from "@/components/modal/ModalAppointPartner.vue";
+import { IconArrowUpRight } from "@/components/icons";
 
 export default {
   name: 'ClientInformation',
   components: {
-    ModalAppointPartner
+    ModalAppointPartner,
+    IconArrowUpRight
   },
   setup() {
     const route = useRoute();
@@ -667,6 +661,7 @@ export default {
 
     return {
       client,
+      clientId,
       formatOriginType,
       formatServiceType,
       goToAddCoupleCycle,

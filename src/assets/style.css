@@ -3049,5 +3049,155 @@ Statistic styles
     padding-bottom: 100px;
   }
 }
+.template-container-for-view,
+.block_info_client {
+  margin: 0 0 18px;
+}
+
+.template-container-for-view .text-template-for-view,
+.block_info_client .text-template-for-view {
+  position: relative;
+  display: flex !important;
+  flex-direction: column;
+  align-items: stretch;
+  max-width: none;
+}
+.template-container-for-view .text-template-for-view > .type-for-view,
+.block_info_client .text-template-for-view > .type-for-view {
+  display: inline-flex !important;
+  align-items: center;
+  align-self: flex-start;
+  gap: 8px;
+  box-sizing: border-box;
+  width: auto !important;
+  max-width: calc(100% - 28px);
+  min-height: 0;
+  margin: 0 !important;
+  padding: 10px 18px 9px !important;
+  border-radius: 12px 12px 0 0 !important;
+  background-color: #72A8BA;
+  color: #fff;
+  font-family: "Nunito", sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.25;
+}
+.template-container-for-view .text-template-for-view > .type-for-view p,
+.block_info_client .text-template-for-view > .type-for-view p {
+  display: inline !important;
+  width: auto !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  color: inherit !important;
+  font: inherit !important;
+  text-align: left;
+}
+.template-container-for-view .text-template-for-view > .type-of-answers,
+.block_info_client .text-template-for-view > .type-of-answers {
+  display: block !important;
+}
+.template-container-for-view .text-template-for-view > .type-of-answers p,
+.block_info_client .text-template-for-view > .type-of-answers p {
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0 !important;
+  min-height: 54px;
+  margin: 0 !important;
+  padding: 14px 18px !important;
+  border-radius: 0 12px 12px 12px !important;
+  background-color: #494B55;
+  color: #fff;
+  font-family: "Nunito", sans-serif;
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 1.4;
+  white-space: pre-line;
+  overflow-wrap: anywhere;
+}
+.template-container-for-view .text-template-for-view > .type-of-answers p a,
+.block_info_client .text-template-for-view > .type-of-answers p a {
+  color: #fff;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.template-container-for-view .text-template-for-view > .type-of-answers,
+.block_info_client .text-template-for-view > .type-of-answers {
+  position: relative;
+}
+.template-container-for-view .text-template-for-view > .type-of-answers:has(> .view-field-link) > p,
+.block_info_client .text-template-for-view > .type-of-answers:has(> .view-field-link) > p {
+  border-top-right-radius: 0 !important;
+}
+
+.text-template-for-view:has(> .type-of-answers > .view-field-link) > .type-for-view {
+  max-width: calc(100% - 128px);
+}
+
+.view-field-link {
+  position: absolute;
+  right: 0;
+  bottom: 100%;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  height: 32px;
+  padding: 0 12px 0 14px;
+  border-radius: 12px 12px 0 0;
+  background: #EFE4D6;
+  color: #494B55;
+  font: 800 14px/1 "Nunito", sans-serif;
+  text-decoration: none;
+  transition: background-color 0.25s, color 0.25s, height 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.view-field-link:hover, .view-field-link:focus-visible {
+  height: 36px;
+  background: rgb(56, 94, 108);
+  color: #fff;
+  outline: none;
+}
+.view-field-link:hover .view-field-link__icon, .view-field-link:focus-visible .view-field-link__icon {
+  transform: translate(2px, -2px);
+}
+
+.view-field-link__icon {
+  width: 17px;
+  height: 17px;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.container-info-output {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 26px;
+  align-items: start;
+  margin-right: 30px;
+}
+@media (max-width: 760px) {
+  .container-info-output {
+    margin-right: 16px;
+  }
+}
+@media (max-width: 1200px) {
+  .container-info-output {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 800px) {
+  .template-container-for-view .text-template-for-view > .type-of-answers p,
+  .block_info_client .text-template-for-view > .type-of-answers p {
+    font-size: 16px;
+  }
+  .template-container-for-view .text-template-for-view > .type-for-view,
+  .block_info_client .text-template-for-view > .type-for-view {
+    padding: 9px 14px 8px !important;
+    font-size: 15px;
+  }
+}
 
 /*# sourceMappingURL=style.css.map */

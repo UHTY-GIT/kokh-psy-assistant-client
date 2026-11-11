@@ -10,3 +10,4 @@ export { default as IconUsers } from './IconUsers.vue';
 export { default as IconUser } from './IconUser.vue';
 export { default as IconSpeechBubble } from './IconSpeechBubble.vue';
 export { default as IconHelp } from './IconHelp.vue';
+export { default as IconArrowUpRight } from './IconArrowUpRight.vue';
