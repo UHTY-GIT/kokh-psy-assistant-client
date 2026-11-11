@@ -497,12 +497,13 @@ Main styles
 */
 .site-content {
   flex-grow: 1;
+  min-width: 0; // широкий вміст (таблиці, панелі) не розпирає сторінку за межі екрана
 }
 
 .main-section {
   margin: 85px 0px 20px;
   display: grid;
-  grid-template-columns: 300px 1fr;
+  grid-template-columns: 300px minmax(0, 1fr);
 }
 
 .calendar-width {
