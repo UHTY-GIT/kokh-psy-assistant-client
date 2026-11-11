@@ -5,39 +5,8 @@
       <PageHeader eyebrow="Інформація про клієнта" :title="client.name || 'Клієнт'" />
     </div>
     <div class="block_button_client_page">
-      <div class="dropdown">
-        <button class="btn-dropdown" @click="toggleDropdown">
-          <img src="@/assets/icons/more.png" alt="Menu" />
-        </button>
-        <div v-if="isDropdownOpen" class="dropdown-menu">
-          <!-- Кнопки для роботи з парними консультаціями, не для супервізійної -->
-          <template v-if="client.origin_type !== 'individual_supervision'">
-            <div v-if="client.origin_type !== 'individual'">
-              <button @click.prevent="openAppointPartnerModal">Назначити партнера</button>
-              <button @click.prevent="goToAddCoupleCycle">Додати цикл пари</button>
-              <button @click.prevent="goToViewCoupleCycle">Переглянути цикл пари</button>
-            </div>
-            <div>
-              <button @click.prevent="goToAddDigest">Додати дайджест психотерапевтичних думок</button>
-              <button @click.prevent="goToViewDigest">Переглянути дайджест психотерапевтичних думок</button>
-            </div>
-          </template>
-          <div>
-            <button @click.prevent="goToAddExpertRating">
-              {{ client.origin_type === 'individual_supervision' ? 'Додати feedback супервізора' : 'Додати оцінку експерта' }}
-            </button>
-            <button @click.prevent="goToViewExpertRating">
-              {{ client.origin_type === 'individual_supervision' ? 'Переглянути feedback супервізора' : 'Переглянути оцінку експерта' }}
-            </button>
-            
-            <template v-if="client.origin_type === 'individual_supervision'">
-              <button @click.prevent="goToEditCaseDescription">Відредагувати опис кейсу</button>
-              <button @click.prevent="goToViewCaseDescription">Переглянути опис кейсу</button>
-              <button @click.prevent="goToAddBonusForCouple">Бонус для пари</button>
-            </template>
-          </div>
-        </div>
-      </div>
+      <!-- дії з клієнтом: кнопка «Дії» з меню, розбитим на розділи -->
+      <ActionMenu :groups="clientMenu" label="Дії" />
     </div>
     <div>
       <div class="Block_client">
@@ -329,25 +298,26 @@
 </template>
 
 <script>
-import { ref, onMounted, watch, onBeforeUnmount, computed } from 'vue';
+import { ref, onMounted, watch, computed, markRaw } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import apiService from '@/services/apiService';
 import M from 'materialize-css';
 import ModalAppointPartner from "@/components/modal/ModalAppointPartner.vue";
-import { IconArrowUpRight } from "@/components/icons";
+import { IconArrowUpRight, IconPlus, IconEye, IconUserPlus, IconPencil, IconGift } from "@/components/icons";
+import ActionMenu from "@/components/ui/ActionMenu.vue";
 
 export default {
   name: 'ClientInformation',
   components: {
     ModalAppointPartner,
-    IconArrowUpRight
+    IconArrowUpRight,
+    ActionMenu
   },
   setup() {
     const route = useRoute();
     const client = ref({});
     const clientId = ref(route.params.id)
     const router = useRouter();
-    const isDropdownOpen = ref(false);
     const consultations = ref([]);
     const showAppointPartnerModal = ref(false);
     const partnerName = ref("");
@@ -592,32 +562,47 @@ export default {
       router.push({ name: 'AddBonusForCouple', params: { id: clientId.value } });
     };
 
-    // const toggleDropdown = () => {
-    //   isDropdownOpen.value = !isDropdownOpen.value;
-    // };
-
-    const closeDropdown = (event) => {
-      if (!event.target.closest('.dropdown')) {
-        isDropdownOpen.value = false;
-      }
-    };
-
     const formatDate = (date) => {
       if (!date) return '';
       const d = new Date(date);
       return d.toLocaleDateString('uk-UA', { year: 'numeric', month: '2-digit', day: '2-digit' });
     };
 
-    // Додаємо слухача події для закриття випадаючого списку при кліку поза його межами
     onMounted(() => {
       fetchClientInfo();
       fetchClientConsultations();
-      document.addEventListener('click', closeDropdown);
     });
 
-    // Видаляємо слухача події при знищенні компонента
-    onBeforeUnmount(() => {
-      document.removeEventListener('click', closeDropdown);
+    // меню «Дії»: розділи залежать від типу клієнта (парний, індивідуальний, супервізант)
+    const clientMenu = computed(() => {
+      const type = client.value.origin_type;
+      const isSupervision = type === 'individual_supervision';
+      const groups = [];
+      if (!isSupervision) {
+        if (type !== 'individual') {
+          groups.push({ title: 'Пара', items: [
+            { label: 'Назначити партнера', icon: markRaw(IconUserPlus), onSelect: openAppointPartnerModal },
+            { label: 'Додати цикл пари', icon: markRaw(IconPlus), onSelect: goToAddCoupleCycle },
+            { label: 'Переглянути цикл пари', icon: markRaw(IconEye), onSelect: goToViewCoupleCycle },
+          ] });
+        }
+        groups.push({ title: 'Дайджест думок', items: [
+          { label: 'Додати дайджест психотерапевтичних думок', icon: markRaw(IconPlus), onSelect: goToAddDigest },
+          { label: 'Переглянути дайджест психотерапевтичних думок', icon: markRaw(IconEye), onSelect: goToViewDigest },
+        ] });
+      }
+      groups.push({ title: isSupervision ? 'Feedback супервізора' : 'Оцінка експерта', items: [
+        { label: isSupervision ? 'Додати feedback супервізора' : 'Додати оцінку експерта', icon: markRaw(IconPlus), onSelect: goToAddExpertRating },
+        { label: isSupervision ? 'Переглянути feedback супервізора' : 'Переглянути оцінку експерта', icon: markRaw(IconEye), onSelect: goToViewExpertRating },
+      ] });
+      if (isSupervision) {
+        groups.push({ title: 'Супервізія', items: [
+          { label: 'Відредагувати опис кейсу', icon: markRaw(IconPencil), onSelect: goToEditCaseDescription },
+          { label: 'Переглянути опис кейсу', icon: markRaw(IconEye), onSelect: goToViewCaseDescription },
+          { label: 'Бонус для пари', icon: markRaw(IconGift), onSelect: goToAddBonusForCouple },
+        ] });
+      }
+      return groups;
     });
 
     // Додає крапки якшо багато символів у назві
@@ -650,7 +635,6 @@ export default {
       } else if (type === 'customDropdown2') {
         isCustomDropdown2Open.value = !isCustomDropdown2Open.value;
       }
-      isDropdownOpen.value = !isDropdownOpen.value;
     };
 
     const handleSessionClick = (consultation) => {
@@ -680,7 +664,7 @@ export default {
       goToEditCaseDescription,
       goToAddBonusForCouple,
       toggleDropdown,
-      isDropdownOpen,
+      clientMenu,
       consultations,
       formatDate,
       openAppointPartnerModal,
