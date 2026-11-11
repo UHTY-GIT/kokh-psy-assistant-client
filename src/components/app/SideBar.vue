@@ -2,22 +2,7 @@
   <div class="sidebar">
     <div class="upper-block">
       <div class="clock-block">
-        <div class="flip-clock">
-          <div class="flip-number" :key="time.hours">
-            <span class="time">
-              {{ time.hours }}
-            </span>
-          </div>
-          <div class="flip-number" :key="time.minutes">
-            <span class="time">
-              {{ time.minutes }}
-            </span>
-            <span class="day-clock">
-              {{ dayOfWeek }}
-            </span>
-          </div>
-          <div class="line-clock"></div>
-        </div>
+        <FlipClock :timezone="timezone" />
       </div>
       <div class="block-navigation">
         <div class="title-navigation">
@@ -100,16 +85,18 @@ import supportIcon from '@/assets/icons/handshake.svg';
 import bankInformationIcon from '@/assets/icons/info.svg';
 import userIcon from '@/assets/icons/Users-all-main.svg';
 import superviseeIcon from '@/assets/icons/Users-all-supervisant.svg';
-import { ref, computed, onMounted, onUnmounted } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import NotesComponent from "@/components/notes/NotesComponent.vue";
+import FlipClock from "@/components/ui/FlipClock.vue";
 import { useRoute, useRouter } from 'vue-router';
 
 export default {
   name: 'SideBar',
   components: {
-    NotesComponent
+    NotesComponent,
+    FlipClock
   },
-  setup(props) {
+  setup() {
     const route = useRoute();
     const router = useRouter();
     const links = ref([
@@ -127,27 +114,6 @@ export default {
       { title: 'Підтримка', url: '/support', exact: true, icon: supportIcon },
       { title: 'Банк інфомації', url: '/bank-info', exact: true, icon: bankInformationIcon },
     ]);
-
-    const currentTime = ref(new Date());
-
-    const updateClock = () => {
-      currentTime.value = new Date();
-    };
-
-    const time = computed(() => {
-      const options = { timeZone: props.timezone, hour: '2-digit', minute: '2-digit' };
-      const formatter = new Intl.DateTimeFormat('uk-UA', options);
-      const parts = formatter.formatToParts(currentTime.value);
-      const hours = parts.find(part => part.type === 'hour').value;
-      const minutes = parts.find(part => part.type === 'minute').value;
-      return { hours, minutes };
-    });
-
-    const dayOfWeek = computed(() => {
-      const options = { weekday: 'long' };
-      const formatter = new Intl.DateTimeFormat('uk-UA', options);
-      return formatter.format(currentTime.value);
-    });
 
     // Check if the parent menu should be highlighted
     const isClientRouteActive = computed(() => {
@@ -174,15 +140,9 @@ export default {
         const clientLink = links.value.find(l => l.title === 'Клієнти');
         if (clientLink) clientLink.expanded = true;
       }
-      intervalId = setInterval(updateClock, 1000);
     });
 
-    let intervalId;
-    onUnmounted(() => {
-      clearInterval(intervalId);
-    });
-
-    return { time, dayOfWeek, links, toggleExpand, isClientRouteActive, isChildActive, handleNavigate };
+    return { links, toggleExpand, isClientRouteActive, isChildActive, handleNavigate };
   },
   props: {
     timezone: {
