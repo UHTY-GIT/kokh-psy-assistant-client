@@ -1418,6 +1418,16 @@ Profile styles
 
 .bank-button-forms {
   display: flex;
+  flex-wrap: wrap;
+}
+@media (max-width: 760px) {
+  .bank-button-forms .container-global-form-edit {
+    flex: 1 1 100%;
+    margin: 8px 0;
+  }
+  .bank-button-forms .container-global-form-edit button {
+    width: 100%;
+  }
 }
 
 .no-template-message p {
@@ -3751,6 +3761,13 @@ textarea::-webkit-scrollbar-corner {
     animation: none !important;
     transition: none !important;
   }
+}
+.template-view {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 380px), 1fr));
+  gap: 0 26px;
+  align-items: start;
+  margin: 0 30px 40px;
 }
 
 /*# sourceMappingURL=style.css.map */

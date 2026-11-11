@@ -1345,6 +1345,18 @@ Profile styles
 
 .bank-button-forms {
   display: flex;
+  flex-wrap: wrap; // на вузькому екрані кнопки переносяться, а не вилазять за край
+
+  @media (max-width: 760px) {
+    .container-global-form-edit {
+      flex: 1 1 100%;
+      margin: 8px 0;
+
+      button {
+        width: 100%;
+      }
+    }
+  }
 }
 
 .no-template-message {
@@ -3949,4 +3961,17 @@ textarea::-webkit-scrollbar-corner {
     animation: none !important;
     transition: none !important;
   }
+}
+
+
+// ============================================================
+// Перегляд шаблону (банк інформації): поля з відступами як на інших сторінках,
+// гумова сітка — дві колонки на широкому екрані, одна на вузькому
+// ============================================================
+.template-view {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 380px), 1fr));
+  gap: 0 26px;
+  align-items: start;
+  margin: 0 30px 40px;
 }

@@ -4,8 +4,9 @@
     <div>
       <PageHeader eyebrow="Шаблон форми" :title="templateTitle" />
     </div>
-    <div v-for="item in formItems" :key="item.id">
-      <div class="template-container-for-view">
+    <!-- поля шаблону: ті самі відступи, що й на інших сторінках; на широкому екрані — у дві колонки -->
+    <div class="template-view">
+      <div v-for="item in formItems" :key="item.id" class="template-container-for-view">
         <div class="text-template-for-view">
           <div class="type-for-view">
             <p>{{ item.field_name }}</p>
@@ -16,7 +17,6 @@
             </p>
           </div>
         </div>
-
       </div>
     </div>
   </div>
