@@ -33,12 +33,7 @@
               <div class="type-for-view">
                 <p style="margin: 0;">{{ field.form_item.field_name }}</p>
 
-                <div v-if="field.form_item.help_text" class="help-icon-wrapper">
-                  <img src="@/assets/icons/circle_help.svg" alt="Info" class="help-icon">
-                  <div class="help-tooltip">
-                    {{ field.form_item.help_text }}
-                  </div>
-                </div>
+                <HelpTip v-if="field.form_item.help_text" :text="field.form_item.help_text" />
               </div>
               <div class="type-of-answers">
                 <p>

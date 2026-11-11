@@ -31,12 +31,7 @@
                     <div class="type-for-view">
                       <label :for="field.field_name" style="margin-bottom: 0;">{{ field.field_name }}</label>
 
-                      <div v-if="field.help_text" class="help-icon-wrapper">
-                        <img src="@/assets/icons/circle_help.svg" alt="Info" class="help-icon">
-                        <div class="help-tooltip">
-                          {{ field.help_text }}
-                        </div>
-                      </div>
+                      <HelpTip v-if="field.help_text" :text="field.help_text" />
                     </div>
                   </div>
 
