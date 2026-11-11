@@ -180,6 +180,8 @@ export default defineComponent({
       select: handleDateSelect,
       eventClick: handleEventClick,
       eventDrop: handleEventDrop,  // Подія для обробки drag-and-drop
+      // id на елементі події — щоб знайти її після повернення на місце й анімувати
+      eventDidMount: (info) => { info.el.dataset.eventId = info.event.id; },
       eventsSet: handleEvents
     });
 
@@ -228,6 +230,7 @@ export default defineComponent({
 
       if (!consultationId) {
         M.toast({ html: "До цієї події не прив’язана консультація" });
+        revertWithAnimation(dropInfo);
         return;
       }
 
@@ -243,7 +246,49 @@ export default defineComponent({
       } catch (error) {
         console.error("Помилка оновлення консультації:", error);
         M.toast({ html: "Не вдалося оновити консультацію" });
+        revertWithAnimation(dropInfo);
       }
+    }
+
+    // сесію не вдалося перенести — вона «відмовляється» (легке похитування) і плавно переповзає на своє місце
+    const eventElement = (id) => calendarBox.value
+        && calendarBox.value.querySelector(`.fc-event[data-event-id="${String(id).replace(/"/g, '')}"]`);
+
+    function revertWithAnimation(dropInfo) {
+      const id = dropInfo.event.id;
+      const dropped = eventElement(id) || dropInfo.el;
+      const from = dropped ? dropped.getBoundingClientRect() : null;
+      dropInfo.revert();
+      if (!from || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+      requestAnimationFrame(() => {
+        const el = eventElement(id);
+        if (!el || typeof el.animate !== 'function') return;
+        const to = el.getBoundingClientRect();
+        const dx = from.left - to.left;
+        const dy = from.top - to.top;
+        if (Math.abs(dx) < 1 && Math.abs(dy) < 1) return;
+
+        // поки повзе — над сусідніми подіями
+        const harness = el.closest('.fc-timegrid-event-harness, .fc-daygrid-event-harness') || el;
+        const prevZ = harness.style.zIndex;
+        harness.style.zIndex = '30';
+
+        const at = (x, y) => `translate(${x}px, ${y}px)`;
+        const glow = '0 0 0 3px rgba(223, 69, 69, .55), 0 14px 26px -12px rgba(56, 94, 108, .6)';
+        const animation = el.animate([
+          { transform: at(dx, dy), boxShadow: glow, offset: 0 },
+          { transform: at(dx - 7, dy), boxShadow: glow, offset: .08 },
+          { transform: at(dx + 7, dy), boxShadow: glow, offset: .16 },
+          { transform: at(dx - 4, dy), boxShadow: glow, offset: .23 },
+          { transform: at(dx, dy), boxShadow: glow, offset: .3, easing: 'cubic-bezier(.45, 0, .2, 1)' },
+          { transform: at(-dx * .04, -dy * .04), boxShadow: '0 0 0 0 rgba(223, 69, 69, 0), 0 8px 18px -12px rgba(56, 94, 108, .5)', offset: .88 },
+          { transform: at(0, 0), boxShadow: '0 0 0 0 rgba(223, 69, 69, 0), 0 0 0 0 rgba(56, 94, 108, 0)', offset: 1 },
+        ], { duration: 1100, easing: 'ease-out' });
+        const restore = () => { harness.style.zIndex = prevZ; };
+        animation.onfinish = restore;
+        animation.oncancel = restore;
+      });
     }
 
     async function deleteSession() {
