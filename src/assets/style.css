@@ -3239,10 +3239,11 @@ Statistic styles
 .form-section__num {
   flex: none;
   color: #DAB189;
-  font-family: "Anton", sans-serif;
-  font-size: 30px;
+  font-family: "Nunito", sans-serif;
+  font-size: 28px;
+  font-weight: 900;
   line-height: 1;
-  letter-spacing: 0.02em;
+  font-variant-numeric: tabular-nums;
 }
 
 .form-section__progress {
@@ -3500,8 +3501,8 @@ Statistic styles
   box-sizing: border-box;
   background: #72A8BA;
   color: #fff;
-  font: 400 24px/1 "Anton", sans-serif;
-  letter-spacing: 0.02em;
+  font: 900 22px/1 "Nunito", sans-serif;
+  font-variant-numeric: tabular-nums;
   transition: background-color var(--cs-time) var(--cs-ease);
 }
 .client-session__num .client-session__n {

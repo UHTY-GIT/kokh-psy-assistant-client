@@ -325,7 +325,7 @@ export default {
         resizeObserver = new ResizeObserver(onResize);
         resizeObserver.observe(itemsBox.value);
       }
-      // шрифт Anton/іконки можуть домалюватись пізніше
+      // шрифти й іконки можуть домалюватись пізніше
       if (document.fonts && document.fonts.ready) document.fonts.ready.then(placeIndicator);
     });
 

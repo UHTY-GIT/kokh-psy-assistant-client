@@ -337,8 +337,10 @@ $blue: #72A8BA;
   align-items: center;
   justify-content: center;
   color: #fff;
-  font-family: "Anton", sans-serif;
-  font-size: var(--font);
+  font-family: "Nunito", sans-serif;
+  font-size: calc(var(--font) * .84); // цифри Nunito ширші за вузький шрифт, тож трохи менші — з полями по краях картки
+  font-weight: 800;
+  font-variant-numeric: tabular-nums; // цифри однакової ширини — під час перегортання нічого не «стрибає»
   letter-spacing: var(--track);
   text-indent: var(--track);
   line-height: 1;

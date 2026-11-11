@@ -265,9 +265,10 @@ $spring: cubic-bezier(.34, 1.56, .64, 1);
 
 .sections-nav__num {
   color: $gold;
-  font-family: "Anton", sans-serif;
-  font-size: 16px;
-  letter-spacing: .02em;
+  font-family: "Nunito", sans-serif;
+  font-size: 15px;
+  font-weight: 900;
+  font-variant-numeric: tabular-nums;
 }
 
 .is-active .sections-nav__num {

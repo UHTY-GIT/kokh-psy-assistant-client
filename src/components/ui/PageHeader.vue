@@ -116,14 +116,14 @@ $spring: cubic-bezier(.34, 1.56, .64, 1);
 
   small {
     align-self: flex-end;
-    margin-bottom: 21px;
+    margin-bottom: 22px;
     font: 800 14px/1 "Nunito", sans-serif;
     opacity: .85;
   }
 
   span {
-    font: 400 34px/1 "Anton", sans-serif;
-    letter-spacing: .02em;
+    font: 900 30px/1 "Nunito", sans-serif;
+    font-variant-numeric: tabular-nums;
   }
 }
 
@@ -328,7 +328,7 @@ $spring: cubic-bezier(.34, 1.56, .64, 1);
     }
 
     span {
-      font-size: 28px;
+      font-size: 25px;
     }
   }
 

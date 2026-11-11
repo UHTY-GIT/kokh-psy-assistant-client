@@ -3366,10 +3366,11 @@ $ease-smooth: cubic-bezier(.22, 1, .36, 1);
 .form-section__num {
   flex: none;
   color: $button-color;
-  font-family: "Anton", sans-serif;
-  font-size: 30px;
+  font-family: "Nunito", sans-serif;
+  font-size: 28px;
+  font-weight: 900;
   line-height: 1;
-  letter-spacing: .02em;
+  font-variant-numeric: tabular-nums;
 }
 
 .form-section__progress {
@@ -3668,8 +3669,8 @@ $ease-smooth: cubic-bezier(.22, 1, .36, 1);
   box-sizing: border-box;
   background: $hover-color;
   color: #fff;
-  font: 400 24px/1 "Anton", sans-serif;
-  letter-spacing: .02em;
+  font: 900 22px/1 "Nunito", sans-serif;
+  font-variant-numeric: tabular-nums;
   transition: background-color var(--cs-time) var(--cs-ease);
 
   .client-session__n {
