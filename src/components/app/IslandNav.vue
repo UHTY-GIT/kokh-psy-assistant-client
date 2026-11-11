@@ -787,8 +787,11 @@ $smooth: cubic-bezier(.22, 1, .36, 1);
     height: 30px;
   }
 
+  // місце під смугу прокрутки — з обох боків однакове, тож картки стоять по центру панелі
+  scrollbar-gutter: stable both-edges;
+
   :deep(.notes) {
-    --notes-pad: 16px;
+    --notes-pad: 6px;
   }
 }
 

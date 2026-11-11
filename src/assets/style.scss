@@ -3975,3 +3975,42 @@ textarea::-webkit-scrollbar-corner {
   align-items: start;
   margin: 0 30px 40px;
 }
+
+// ============================================================
+// Прокрутка у спливних панелях і вікнах (примітки на «Острові», списки вибору, діалоги):
+// доріжка прозора й не заходить у заокруглені кути, повзунок тонкий, з відступом від краю
+// ============================================================
+.island-notes,
+.base-select__list,
+.base-dialog__card,
+.finish-dialog__card {
+  &::-webkit-scrollbar {
+    width: 12px;
+  }
+
+  &::-webkit-scrollbar-track {
+    margin: 18px 0;
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border: 3px solid transparent;
+    border-radius: 10px;
+    background-color: $button-color;
+    background-clip: padding-box;
+    transition: background-color .2s;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background-color: #C99C70;
+  }
+
+  &::-webkit-scrollbar-corner {
+    background: transparent;
+  }
+}
+
+// у списку вибору поле менше, тож і відступи доріжки менші
+.base-select__list::-webkit-scrollbar-track {
+  margin: 8px 0;
+}
