@@ -16,7 +16,16 @@
 <script>
 import apiService from '@/services/apiService';
 import defaultUserPhoto from '@/assets/photo/Potted Plant.svg';
-import defaultBackgroundImage from '@/assets/photo/back-users-1.png';
+import headerWinter from '@/assets/photo/header-winter.webp';
+import headerSpring from '@/assets/photo/header-spring.webp';
+import headerSummer from '@/assets/photo/header-summer.webp';
+import headerAutumn from '@/assets/photo/header-autumn.webp';
+
+// фон шапки за замовчуванням змінюється з порою року (усі чотири — у кольорах CRM):
+// грудень–лютий зима, березень–травень весна, червень–серпень літо, вересень–листопад осінь
+const SEASON_HEADERS = [headerWinter, headerWinter, headerSpring, headerSpring, headerSpring, headerSummer,
+  headerSummer, headerSummer, headerAutumn, headerAutumn, headerAutumn, headerWinter];
+const defaultBackgroundImage = SEASON_HEADERS[new Date().getMonth()];
 //import { mapState } from 'vuex';
 export default {
   name: 'NavBar',
