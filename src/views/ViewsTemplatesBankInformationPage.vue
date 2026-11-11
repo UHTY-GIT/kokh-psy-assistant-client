@@ -2,12 +2,7 @@
 <template>
   <div>
     <div>
-      <div class="profile_tittle">
-        <p>
-          Назва шаблону "{{ templateTitle }}"
-        </p>
-      </div>
-      <hr class="hr_profile">
+      <PageHeader eyebrow="Шаблон форми" :title="templateTitle" />
     </div>
     <div v-for="item in formItems" :key="item.id">
       <div class="template-container-for-view">

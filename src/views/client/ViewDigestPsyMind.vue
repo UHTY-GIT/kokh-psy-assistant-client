@@ -2,12 +2,7 @@
 <template>
   <div>
     <div>
-      <div class="profile_tittle">
-        <p>
-          Переглянути дайджест психотерапевтичних думок сесії, для клієнта {{ client.name }}
-        </p>
-      </div>
-      <hr class="hr_profile">
+      <PageHeader eyebrow="Дайджест психотерапевтичних думок · перегляд" :title="client.name" />
       <div class="block_active_session">
         <div v-if="digestPsyMinds.length === 0" class="data-null-error">
           <p>Даних про клієнта немає, спробуйте додати їх</p>

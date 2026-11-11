@@ -2,12 +2,7 @@
 <template>
   <div>
     <div>
-      <div class="profile_tittle">
-        <p>
-          Бонус для пари при супервізійній сесії, для клієнта {{ client.name }}
-        </p>
-      </div>
-      <hr class="hr_profile">
+      <PageHeader eyebrow="Бонус для пари при супервізійній сесії" :title="client.name" />
       <div class="Block_client">
         <form class="cycle_couple_form" @submit.prevent="submitBonusForPair">
           <div class="titte_field">

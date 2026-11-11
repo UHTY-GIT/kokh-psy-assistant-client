@@ -2,12 +2,7 @@
 <template>
   <div>
     <div>
-      <div class="profile_tittle">
-        <p>
-          Цикл пари, клієнт {{ client.name }}
-        </p>
-      </div>
-      <hr class="hr_profile">
+      <PageHeader eyebrow="Цикл пари · перегляд" :title="client.name" />
     </div>
     <div>
       <div class="block_active_session">

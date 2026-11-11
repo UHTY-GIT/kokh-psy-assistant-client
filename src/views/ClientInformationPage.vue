@@ -2,12 +2,7 @@
 <template>
   <section>
     <div>
-      <div class="profile_tittle">
-        <p>
-          Інформація про клієнта
-        </p>
-      </div>
-      <hr class="hr_profile">
+      <PageHeader eyebrow="Інформація про клієнта" :title="client.name || 'Клієнт'" />
     </div>
     <div class="block_button_client_page">
       <div class="dropdown">

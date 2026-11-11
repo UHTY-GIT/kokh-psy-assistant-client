@@ -2,12 +2,7 @@
 <template>
   <div>
     <div>
-      <div class="profile_tittle">
-        <p>
-          Дайджест психотерапевтичних думок сесії, для клієнта {{ client.name }}
-        </p>
-      </div>
-      <hr class="hr_profile">
+      <PageHeader eyebrow="Дайджест психотерапевтичних думок сесії" :title="client.name" />
       <div class="Block_client">
         <form class="cycle_couple_form" @submit.prevent="submitDigestPsyMind">
           <div class="titte_field">

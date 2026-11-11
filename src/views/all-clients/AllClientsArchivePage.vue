@@ -2,12 +2,7 @@
 <template>
   <section class="client-section">
     <div>
-      <div class="profile_tittle title-archive">
-        <p>
-          Архів клієнтів
-        </p>
-      </div>
-<!--      <hr class="hr_profile">-->
+      <PageHeader eyebrow="Клієнти" title="Архів клієнтів" />
     </div>
     <div>
       <div class="client-list">

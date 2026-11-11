@@ -1,12 +1,7 @@
 <template>
   <div>
     <div>
-      <div class="profile_tittle">
-        <p>
-          {{ client.origin_type === 'individual_supervision' ? 'Feedback супервізора' : 'Оцінка експерта' }}, для клієнта {{ client.name }}
-        </p>
-      </div>
-      <hr class="hr_profile">
+      <PageHeader :eyebrow="client.origin_type === 'individual_supervision' ? 'Feedback супервізора' : 'Оцінка експерта'" :title="client.name" />
       <div class="Block_client">
         <form class="cycle_couple_form" @submit.prevent="submitExpertAssessment">
           <div class="titte_field">

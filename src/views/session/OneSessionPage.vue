@@ -2,20 +2,21 @@
 <template>
   <div>
     <div>
-      <div class="profile_tittle">
-        <p>
-          Сесія №{{ numberConsultation }} "{{ consultationTitle }}", клієнт {{ clientName }}
-        </p>
-        <div class="block-btn-view-session">
-          <p>
-            {{ formattedDate }}
-          </p>
-          <button class="btn-editing" @click="openEditSession">
-            <img src="../../assets/icons/edit-form.svg" alt="Редагування полів форми">
-          </button>
-        </div>
-      </div>
-      <hr class="hr_profile">
+      <PageHeader
+          eyebrow="Сесія · перегляд"
+          :number="numberConsultation"
+          :title="clientName"
+          :subtitle="consultationTitle ? `«${consultationTitle}»` : ''"
+          :date="dateConsultation"
+      >
+        <template #actions>
+          <div class="block-btn-view-session">
+            <button class="btn-editing" title="Редагувати сесію" @click="openEditSession">
+              <img src="../../assets/icons/edit-form.svg" alt="Редагування полів форми">
+            </button>
+          </div>
+        </template>
+      </PageHeader>
     </div>
     <div v-for="(subGroups, categoryTitle) in categorizedFields" :key="categoryTitle">
       <div class="block_active_session">
@@ -136,6 +137,7 @@ export default {
       categorizedFields,
       numberConsultation,
       formattedDate,
+      dateConsultation,
       openEditSession,
     };
   },

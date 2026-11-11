@@ -2,10 +2,7 @@
 <template>
   <section class="statisctic-section">
     <div>
-      <div class="profile_tittle title-archive">
-        <p>Статистика клієнтів</p>
-      </div>
-      <hr class="hr_profile">
+      <PageHeader eyebrow="Клієнти" title="Статистика клієнтів" />
     </div>
 
     <div class="graphs">

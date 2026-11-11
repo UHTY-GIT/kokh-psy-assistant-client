@@ -1,11 +1,13 @@
 <!-- src/views/session/EditOneSessionPage.vue -->
 <template>
   <div>
-    <div class="profile_tittle">
-      <p>Сесія №{{ sessionNumber }}, клієнт {{ clientName }}</p>
-      <p>{{ formattedDate }}</p>
-    </div>
-    <hr class="hr_profile">
+    <PageHeader
+        eyebrow="Сесія · редагування"
+        :number="sessionNumber"
+        :title="clientName"
+        :title-to="clientId ? { name: 'ClientInformation', params: { id: clientId } } : null"
+        :date="dateConsultation"
+    />
     <div class="block_active_session">
       <form @submit.prevent="openModal">
         <!-- навігація розділами: липка панель з лічильником заповнених полів -->
@@ -297,6 +299,7 @@ export default {
       categorizedFields,
       sectionNav,
       formattedDate,
+      dateConsultation,
       // видалити
       // showDeleteModal,
       // itemToDeleteId,

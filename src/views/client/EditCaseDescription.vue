@@ -1,10 +1,7 @@
 <!-- src/views/client/EditCaseDescription.vue -->
 <template>
   <div>
-    <div class="profile_tittle">
-      <p>Опис кейсу, супервізант {{ clientName }}, версія змін - {{ version }}</p>
-    </div>
-    <hr class="hr_profile">
+    <PageHeader eyebrow="Опис кейсу · супервізант" :title="clientName" :subtitle="version ? `Версія змін — ${version}` : ''" />
     <div class="block_active_session">
       <div v-if="loading" class="loader-wrapper">
         <Loader />

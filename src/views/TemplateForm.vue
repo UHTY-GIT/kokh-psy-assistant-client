@@ -1,12 +1,7 @@
 <!--template form-->
 <template>
   <div>
-    <div class="profile_tittle">
-      <p>
-        Створити нову форму
-      </p>
-    </div>
-    <hr class="hr_profile">
+    <PageHeader eyebrow="Банк інформації" title="Створити нову форму" />
   </div>
   <div class="form-bank-info-container">
     <!-- Форма для створення шаблону -->

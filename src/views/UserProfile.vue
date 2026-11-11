@@ -1,15 +1,11 @@
 <template>
   <section class="profile-section">
     <div>
-      <div class="profile_tittle">
-        <p>
-          Мій профіль
-        </p>
-        <button @click.prevent="logout">
-          <span class="edit-link">Вийти з аккаунту</span>
-        </button>
-      </div>
-      <hr class="hr_profile">
+      <PageHeader eyebrow="Налаштування" title="Мій профіль">
+        <template #actions>
+          <button class="page-header__btn" @click.prevent="logout">Вийти з акаунту</button>
+        </template>
+      </PageHeader>
     </div>
     <div class="profile_block">
       <!--    Форма для зміни даних психолога-->

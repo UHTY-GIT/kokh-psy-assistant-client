@@ -2,20 +2,15 @@
 <template>
   <div>
     <div>
-      <div class="profile_tittle">
-        <p>
-          Опис кейсу, клієнт {{ clientName }}
-        </p>
-        <div class="block-btn-view-session">
-<!--          <p>-->
-<!--            Востаннє відредаговано: {{ formattedDate }}-->
-<!--          </p>-->
-          <button class="btn-editing" @click="openEditSession">
-            <img src="../../assets/icons/edit-form.svg" alt="Редагування полів форми">
-          </button>
-        </div>
-      </div>
-      <hr class="hr_profile">
+      <PageHeader eyebrow="Опис кейсу" :title="clientName">
+        <template #actions>
+          <div class="block-btn-view-session">
+            <button class="btn-editing" title="Редагувати опис кейсу" @click="openEditSession">
+              <img src="../../assets/icons/edit-form.svg" alt="Редагування полів форми">
+            </button>
+          </div>
+        </template>
+      </PageHeader>
     </div>
 
     <div v-if="loading" class="loader-wrapper">

@@ -2,12 +2,7 @@
 <template>
   <div>
     <div>
-      <div class="profile_tittle">
-        <p>
-          Інформована згода, клієнт {{ client.name }}
-        </p>
-      </div>
-      <hr class="hr_profile">
+      <PageHeader eyebrow="Інформована згода" :title="client.name" />
     </div>
     <div>
       <div class="block_active_session">
