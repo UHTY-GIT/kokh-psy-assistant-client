@@ -2999,6 +2999,51 @@ $field-chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg
   }
 }
 
+// Форми з шаблонів (сесія, опис кейсу, цикл пари): поля однієї пари стоять на одній лінії.
+// Кожне поле займає два рядки сітки — «мітка» і «поле» (subgrid), тож мітки в парі отримують однакову висоту,
+// а коротша мітка опускається й лишається прикріпленою до свого поля. Проміжок між парами — відступом знизу.
+@supports (grid-template-rows: subgrid) {
+  .block_input_field {
+    row-gap: 0;
+    margin-bottom: -22px; // відступ під останнім рядком полів — не потрібен
+
+    > .forms-name-add {
+      display: grid;
+      grid-row: span 2;
+      grid-template-rows: subgrid;
+      grid-template-columns: minmax(0, 1fr);
+      padding-bottom: 22px;
+    }
+
+    > .forms-name-add > .container-input {
+      display: grid !important;
+      grid-row: span 2;
+      grid-template-rows: subgrid;
+      grid-template-columns: minmax(0, 1fr);
+      justify-content: stretch;
+
+      > label,
+      > .type-for-view,
+      > .container-label {
+        align-self: end;
+        justify-self: start;
+      }
+
+      > :not(label, .type-for-view, .container-label) {
+        align-self: start;
+      }
+    }
+
+    @media (max-width: 1200px) {
+      margin-bottom: -18px;
+
+      > .forms-name-add {
+        padding-bottom: 18px;
+      }
+    }
+  }
+}
+
 
 // ============================================================
 // Планшети й телефони (до 1023px): компактна шапка, без сайдбару, навігація — «Острів» знизу.

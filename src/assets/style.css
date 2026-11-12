@@ -2923,6 +2923,43 @@ Statistic styles
   }
 }
 
+@supports (grid-template-rows: subgrid) {
+  .block_input_field {
+    row-gap: 0;
+    margin-bottom: -22px;
+  }
+  .block_input_field > .forms-name-add {
+    display: grid;
+    grid-row: span 2;
+    grid-template-rows: subgrid;
+    grid-template-columns: minmax(0, 1fr);
+    padding-bottom: 22px;
+  }
+  .block_input_field > .forms-name-add > .container-input {
+    display: grid !important;
+    grid-row: span 2;
+    grid-template-rows: subgrid;
+    grid-template-columns: minmax(0, 1fr);
+    justify-content: stretch;
+  }
+  .block_input_field > .forms-name-add > .container-input > label,
+  .block_input_field > .forms-name-add > .container-input > .type-for-view,
+  .block_input_field > .forms-name-add > .container-input > .container-label {
+    align-self: end;
+    justify-self: start;
+  }
+  .block_input_field > .forms-name-add > .container-input > :not(label, .type-for-view, .container-label) {
+    align-self: start;
+  }
+  @media (max-width: 1200px) {
+    .block_input_field {
+      margin-bottom: -18px;
+    }
+    .block_input_field > .forms-name-add {
+      padding-bottom: 18px;
+    }
+  }
+}
 .background-navbar,
 .navbar-title,
 .user-photo,
