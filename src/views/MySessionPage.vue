@@ -100,6 +100,7 @@
 import {ref, onMounted, computed} from 'vue';
 import apiService from "@/services/apiService";
 import { useRouter } from 'vue-router';
+import { usePageInUrl } from '@/utils/pageInUrl';
 import M from "materialize-css";
 import ModalStartSession from "@/components/modal/ModalStartSession.vue";
 import Loader from "@/components/app/Loader.vue";
@@ -120,9 +121,10 @@ export default {
     const isLoading = ref(false);
 
     // Пагінація
-    const currentPage = ref(1);
     const itemsPerPage = 10; // Кількість сесій на сторінку
     const totalPages = computed(() => Math.ceil(consultations.value.length / itemsPerPage));
+    // номер сторінки — в адресі (?page=3), тож після перезавантаження лишаємось на ній
+    const { currentPage, changePage } = usePageInUrl(totalPages);
 
     const fetchConsultations = async () => {
       isLoading.value = true;
@@ -282,12 +284,6 @@ export default {
       const end = start + itemsPerPage;
       return consultations.value.slice(start, end);
     });
-
-    const changePage = (step) => {
-      if (currentPage.value + step >= 1 && currentPage.value + step <= totalPages.value) {
-        currentPage.value += step;
-      }
-    };
 
     onMounted(fetchConsultations);
 

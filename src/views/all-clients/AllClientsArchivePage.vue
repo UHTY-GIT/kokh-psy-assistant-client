@@ -56,6 +56,7 @@ import apiService from "@/services/apiService";
 import M from "materialize-css";
 import { ref, onMounted, computed } from "vue";
 import { useRouter } from "vue-router";
+import { usePageInUrl } from "@/utils/pageInUrl";
 
 export default {
   name: "AllClientsArchivePage",
@@ -64,9 +65,10 @@ export default {
     const router = useRouter();
 
     // Пагінація
-    const currentPage = ref(1);
     const itemsPerPage = 10; // Кількість клієнтів на сторінку
     const totalPages = computed(() => Math.ceil(ArchiveClients.value.length / itemsPerPage));
+    // номер сторінки — в адресі (?page=3), тож після перезавантаження лишаємось на ній
+    const { currentPage, changePage } = usePageInUrl(totalPages);
 
     const fetchArchiveClients = async () => {
       try {
@@ -112,12 +114,6 @@ export default {
       const end = start + itemsPerPage;
       return ArchiveClients.value.slice(start, end);
     });
-
-    const changePage = (step) => {
-      if (currentPage.value + step >= 1 && currentPage.value + step <= totalPages.value) {
-        currentPage.value += step;
-      }
-    };
 
     onMounted(fetchArchiveClients); // Виклик fetchArchiveClients при завантаженні сторінки
 

@@ -64,6 +64,7 @@
 <script>
 import { ref, onMounted, computed } from 'vue';
 import { useRouter } from 'vue-router';
+import { usePageInUrl } from '@/utils/pageInUrl';
 import apiService from '@/services/apiService';
 import M from "materialize-css";
 import Loader from "@/components/app/Loader.vue";
@@ -79,9 +80,10 @@ export default {
     const isLoading = ref(false);
 
     // Пагінація
-    const currentPage = ref(1);
     const itemsPerPage = 10; // Кількість шаблонів на сторінку
     const totalPages = computed(() => Math.ceil(allforms.value.length / itemsPerPage));
+    // номер сторінки — в адресі (?page=3), тож після перезавантаження лишаємось на ній
+    const { currentPage, changePage } = usePageInUrl(totalPages);
 
     const fetchAllForms = async () => {
       isLoading.value = true;
@@ -114,12 +116,6 @@ export default {
       const end = start + itemsPerPage;
       return allforms.value.slice(start, end);
     });
-
-    const changePage = (step) => {
-      if (currentPage.value + step >= 1 && currentPage.value + step <= totalPages.value) {
-        currentPage.value += step;
-      }
-    };
 
     onMounted(() => {
       fetchAllForms();
