@@ -71,10 +71,11 @@
 import { ref } from 'vue';
 import useVuelidate from '@vuelidate/core'
 import { required, email, minLength } from '@vuelidate/validators'
-import {useRouter} from "vue-router";
+import {useRouter, useRoute} from "vue-router";
 import messages from "@/utils/messages";
 import apiService from '@/services/apiService';
 import M from 'materialize-css';
+import { safeRedirect, rememberReturn } from '@/utils/loginRedirect';
 
 export default {
   name: 'loginPage',
@@ -85,6 +86,7 @@ export default {
     const email = ref('');
     const password = ref('');
     const router = useRouter(); // Переміщено сюди з submitHandler
+    const route = useRoute();
     const v$ = useVuelidate(); // Визначено тут для спрощення
     const submitHandler = async () => {
       if (v$.value.$invalid) {
@@ -99,7 +101,11 @@ export default {
         // Додати перевірку на наявність response.data і response.data.data перед доступом до token
         if (response.data && response.data.token) {
           localStorage.setItem('token', response.data.token);
-          router.push('/');
+          // повертаємо на сторінку, з якої викинуло на вхід (якщо така є), інакше — на головну;
+          // replace — щоб кнопка «Назад» не вела знову на сторінку входу (вона скидає токен)
+          const back = safeRedirect(route.query.redirect);
+          if (back) rememberReturn(back);
+          router.replace(back || '/');
         }
       } catch (error) {
         console.error("Помилка під час спроби входу:", error);

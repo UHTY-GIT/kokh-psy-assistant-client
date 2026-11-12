@@ -1,5 +1,6 @@
 /* eslint-disable */
 import { createRouter, createWebHistory } from 'vue-router'
+import { safeRedirect, returnedJustNow } from '@/utils/loginRedirect'
 
 const routes = [
   {
@@ -215,6 +216,9 @@ const router = createRouter({
 //     next();
 //   }
 // })
+// Шлях, куди повернути після входу; головну не передаємо — туди й так ведуть після входу.
+const withRedirect = (query, path) => (path && path !== '/' ? { ...query, redirect: path } : query);
+
 router.beforeEach((to, from, next) => {
     if (to.matched.some(record => record.meta.requiresAuth)) {
         const token =
@@ -223,13 +227,28 @@ router.beforeEach((to, from, next) => {
                 : null;
 
         if (!token) {
-            next({ path: '/login?message=redirect' });
+            // без входу — на логін, а після входу назад на цю ж сторінку
+            next({ name: 'login', query: withRedirect({ message: 'redirect' }, to.fullPath) });
         } else {
             next();
         }
-    } else {
-        next();
+        return;
     }
+
+    // Сторінка викинула на логін (закінчився токен) — запам'ятовуємо, де користувач був.
+    // Свідомий вихід з акаунту (?message=logout) нікуди не повертає.
+    if (to.name === 'login' && !to.query.redirect && to.query.message !== 'logout') {
+        let back = null;
+        if (from.matched.some(record => record.meta.requiresAuth)) back = from.fullPath;
+        // кілька запитів упали разом і повторно ведуть на логін — шлях, який уже є, не губимо
+        else if (from.name === 'login') back = safeRedirect(from.query.redirect);
+
+        if (back && back !== '/' && !returnedJustNow(back)) {
+            next({ name: 'login', query: withRedirect(to.query, back), hash: to.hash });
+            return;
+        }
+    }
+    next();
 });
 
 export default router
