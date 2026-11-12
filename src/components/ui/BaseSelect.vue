@@ -516,6 +516,12 @@ $smooth: cubic-bezier(.22, 1, .36, 1);
     background: transparent;
     color: $ink;
     font: 600 16px "Nunito", sans-serif; // 16px — iOS не збільшує сторінку при фокусі
+
+    // підказка «Пошук…» — того ж кольору, що й лупа
+    &::placeholder {
+      color: #7E8089;
+      opacity: 1;
+    }
   }
 }
 
