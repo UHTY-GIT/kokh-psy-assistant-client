@@ -4302,3 +4302,18 @@ button:hover .icon-trash__lid,
 button:focus-visible .icon-trash__lid {
   transform: translateY(-1.5px) rotate(-14deg);
 }
+
+// «Загальна інформація» в картці клієнта: мітки однакової ширини — під найдовшу назву.
+// На вузькому екрані мітка не заходить під вкладку «Відкрити» справа (довга назва тоді переноситься).
+.container-info-output .block_info_client .text-template-for-view > .type-for-view {
+  width: min(260px, calc(100% - 128px)) !important;
+  max-width: none;
+}
+
+@media (max-width: 480px) {
+  // на телефоні трохи компактніші мітки — найдовша назва вміщається в один рядок
+  .container-info-output .block_info_client .text-template-for-view > .type-for-view {
+    padding: 9px 12px 8px !important;
+    font-size: 14px;
+  }
+}
