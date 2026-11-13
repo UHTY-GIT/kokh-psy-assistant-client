@@ -24,19 +24,13 @@
           <span class="validate-error" v-if="v$.profile.name.$dirty && v$.profile.name.required.$invalid">Це поле не може бути пустим</span>
         </div>
 
-        <!-- Поля для завантаження файлів -->
+        <!-- Поля для завантаження файлів: клік або перетягування файлу -->
         <div class="file-upload-field">
           <div class="container-input user-profile">
             <div class="type-for-view">
               <label>Встановити аватар</label>
             </div>
-            <input
-                type="file"
-                ref="fileInputAvatar"
-                @change="handleFileUpload($event, 'avatar')"
-                style="display: none;"
-            >
-            <span class="file-chosen" @click="triggerFileInputAvatar">{{ fileNameAvatar ? fileNameAvatar : "Натисніть щоб вибрати файл" }}</span>
+            <FileDrop :name="fileNameAvatar" target="аватар" accept="image/*" @file="setFile('avatar', $event)" />
           </div>
         </div>
 
@@ -45,13 +39,7 @@
             <div class="type-for-view">
               <label>Встановити зображення</label>
             </div>
-            <input
-                type="file"
-                ref="fileInputBackPhoto"
-                @change="handleFileUpload($event, 'background_photo')"
-                style="display: none;"
-            >
-            <span class="file-chosen" @click="triggerFileInputBackPhoto">{{ fileNameImage ? fileNameImage : "Натисніть щоб вибрати файл" }}</span>
+            <FileDrop :name="fileNameImage" target="зображення" accept="image/*" @file="setFile('background_photo', $event)" />
           </div>
         </div>
 
@@ -160,10 +148,12 @@ import { timezoneNames } from '@progress/kendo-date-math';
 import '@progress/kendo-date-math/tz/all';
 import apiService from "@/services/apiService";
 import DatePicker from "@/components/ui/DatePicker.vue";
+import FileDrop from "@/components/ui/FileDrop.vue";
 
 export default {
   components: {
-    DatePicker
+    DatePicker,
+    FileDrop
   },
   setup() {
     const profile = ref({
@@ -179,8 +169,6 @@ export default {
     const v$ = useVuelidate(); // Визначено тут для спрощення
     const now = new Date();
     const todayIso = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
-    const fileInputAvatar = ref(null);
-    const fileInputBackPhoto = ref(null);
     const timezones = ref([]);
 
 
@@ -223,26 +211,14 @@ export default {
     const fileNameAvatar = ref("Натисніть щоб вибрати файл");
     const fileNameImage = ref("Натисніть щоб вибрати файл");
 
-    // Завантаження файлів з компютера (відображення необхідних полів у прелодері)
-    const handleFileUpload = (event, field) => {
-      if (event.target.files.length > 0) {
-        profile.value[field] = event.target.files[0];
-
-        // Оновлюємо назву файлу залежно від поля
-        if(field === 'avatar') {
-          fileNameAvatar.value = event.target.files[0].name;
-        } else if(field === 'background_photo') {
-          fileNameImage.value = event.target.files[0].name;
-        }
-      } else {
-        console.error('Файл не був вибраний');
+    // Файл вибрали або перетягнули в поле — зберігаємо його й показуємо назву
+    const setFile = (field, file) => {
+      profile.value[field] = file;
+      if (field === 'avatar') {
+        fileNameAvatar.value = file.name;
+      } else if (field === 'background_photo') {
+        fileNameImage.value = file.name;
       }
-    }
-    const triggerFileInputAvatar = () => {
-      fileInputAvatar.value.click(); // Використовуємо реф для активації кліку на input
-    }
-    const triggerFileInputBackPhoto = () => {
-      fileInputBackPhoto.value.click(); // Використовуємо реф для активації кліку на input
     }
 
     // Завантажуємо часові пояси і налаштовуємо метод натискання
@@ -265,13 +241,9 @@ export default {
       profile,
       v$,
       submitUserProfile,
-      handleFileUpload,
+      setFile,
       fileNameAvatar,
       fileNameImage,
-      fileInputAvatar,
-      fileInputBackPhoto,
-      triggerFileInputAvatar,
-      triggerFileInputBackPhoto,
       timezones,
       todayIso,
     };
