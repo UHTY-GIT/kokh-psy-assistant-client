@@ -3447,10 +3447,9 @@ Statistic styles
   text-align: left;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
-  box-shadow: 0 0 0 #DAB189, 0 6px 16px -16px rgba(56, 94, 108, 0);
   animation: list-card-in 0.5s var(--cs-ease) backwards;
   animation-delay: calc(var(--i, 0) * 45ms);
-  transition: transform var(--cs-time) var(--cs-ease), box-shadow var(--cs-time) var(--cs-ease);
+  transition: transform var(--cs-time) var(--cs-ease);
 }
 .client-session::after {
   content: "";
@@ -3468,7 +3467,6 @@ Statistic styles
 }
 .client-session:hover, .client-session:focus-visible {
   transform: translateY(-3px);
-  box-shadow: 0 4px 0 #DAB189, 0 16px 26px -16px rgba(56, 94, 108, 0.55);
 }
 .client-session:hover::after, .client-session:focus-visible::after {
   opacity: 1;

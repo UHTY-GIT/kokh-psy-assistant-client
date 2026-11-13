@@ -3608,12 +3608,10 @@ $ease-smooth: cubic-bezier(.22, 1, .36, 1);
   text-align: left;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
-  // золотий «виступ» знизу сховано під карткою (зсув 0) і при наведенні він плавно висувається
-  box-shadow: 0 0 0 $button-color, 0 6px 16px -16px rgba(56, 94, 108, 0);
   // лише backwards: після появи анімація більше не тримає transform, тож підйом при наведенні йде плавним переходом
   animation: list-card-in .5s var(--cs-ease) backwards;
   animation-delay: calc(var(--i, 0) * 45ms); // картки з'являються одна за одною
-  transition: transform var(--cs-time) var(--cs-ease), box-shadow var(--cs-time) var(--cs-ease);
+  transition: transform var(--cs-time) var(--cs-ease);
 
   // відблиск, що повільно пропливає карткою при наведенні
   &::after {
@@ -3635,7 +3633,6 @@ $ease-smooth: cubic-bezier(.22, 1, .36, 1);
   &:hover,
   &:focus-visible {
     transform: translateY(-3px);
-    box-shadow: 0 4px 0 $button-color, 0 16px 26px -16px rgba(56, 94, 108, .55);
 
     &::after {
       opacity: 1;
