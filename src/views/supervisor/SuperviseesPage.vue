@@ -139,7 +139,7 @@ export default {
           const params = {
             page: currentPage.value,
             per_page: itemsPerPage,
-            search: searchQuery.value,
+            search: searchFromUrl(),
             origin_type: 'individual_supervision' // Фільтрація по типу на сервері
           };
 
@@ -165,25 +165,32 @@ export default {
       }
     };
 
-    const handleSearch = () => {
-        if (currentPage.value === 1) {
-            fetchClients();
-        } else {
-            updatePage(1);
-        }
+    // Сторінка й пошук живуть в адресі (?page=2&search=Олена): після перезавантаження,
+    // «Назад» з картки чи повторного входу відкривається той самий список
+    const ownRoute = route.name;
+    const searchFromUrl = () => (typeof route.query.search === 'string' ? route.query.search : '');
+
+    const updateUrl = (page, search) => {
+        const query = { ...route.query };
+        if (page > 1) query.page = String(page);
+        else delete query.page;
+        if (search) query.search = search;
+        else delete query.search;
+        // така адреса вже відкрита (той самий пошук ще раз) — просто оновлюємо список
+        if (query.page === route.query.page && query.search === route.query.search) fetchClients();
+        else router.push({ query });
     };
-    
+
+    const handleSearch = () => {
+        updateUrl(1, searchQuery.value.trim());
+    };
+
     // Функція оновлення сторінки
     const changePage = (step) => {
       const nextPage = currentPage.value + step;
       if (nextPage >= 1 && nextPage <= totalPages.value) {
-        updatePage(nextPage);
+        updateUrl(nextPage, searchFromUrl());
       }
-    };
-
-    const updatePage = (page) => {
-        // Оновлюємо URL, це тригерне watcher
-        router.push({ query: { ...route.query, page: page } });
     };
 
     const fetchTemplates = async () => {
@@ -251,25 +258,21 @@ export default {
       }
     }
 
-    // Ініціалізація
-    const initialize = () => {
-        const pageFromUrl = parseInt(route.query.page) || 1;
-        currentPage.value = pageFromUrl;
-        fetchClients();
-    }
-    initialize();
+    // Ініціалізація: сторінка й пошук — з адреси
+    const readUrl = () => {
+        const page = Number.parseInt(route.query.page, 10);
+        currentPage.value = page > 1 ? page : 1;
+        searchQuery.value = searchFromUrl();
+    };
+    readUrl();
+    fetchClients();
 
-    // Слідкуємо за зміною сторінки в URL
-    watch(() => route.query.page, (newPage) => {
-       const page = parseInt(newPage) || 1;
-       if (page !== currentPage.value) {
-           currentPage.value = page;
-           fetchClients();
-       } else if (page === 1 && !newPage) {
-            fetchClients();
-       } else {
-           fetchClients();
-       }
+    // Адреса змінилась (кнопки сторінок, пошук, «Назад» у браузері) — показуємо відповідний список.
+    // Під час переходу на іншу сторінку ?page і ?search зникають — тоді список не чіпаємо.
+    watch([() => route.query.page, () => route.query.search], () => {
+        if (route.name !== ownRoute) return;
+        readUrl();
+        fetchClients();
     });
 
     return {
